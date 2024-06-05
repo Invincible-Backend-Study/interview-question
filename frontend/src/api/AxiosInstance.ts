@@ -1,5 +1,5 @@
 import axios from "axios";
-import {NETWORK} from "../constants/api.ts";
+import {NETWORK} from "@/constants/api";
 
 export const axiosInstance = axios.create({
   baseURL: 'http://localhost:8080/api/v1',
