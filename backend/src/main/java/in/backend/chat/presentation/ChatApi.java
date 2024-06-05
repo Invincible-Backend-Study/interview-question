@@ -35,12 +35,14 @@ public class ChatApi {
                         나는 면접을 보는 지원자.
                                                
                         
-                        질문은 내가 지정해줄께. [\{interviewRequest.question()}]
-                        그리고 내가 질문에 대한 답변을 주면 다음과 같은 응답을 줘
-                                               
+                        질문은 내가 지정해줄께.
+                        질문:[\{interviewRequest.question()}]
+                        대답:[\{interviewRequest.response()}]
+
+                        질문에 대한 답변을 보고 아래 응답을 줘 대신 각 항목마다 '---------'로 구분해줘
                         - 질문에 대한 답변의 점수 (100점 만점)
                         - 질문에 대한 피드백
-                        - 질문에 대한 꼬리질문 
+                        - 질문에 대한 꼬리질문(1개)
                         """,
                 OpenAiChatOptions.builder()
                         .withModel("gpt-4o")
