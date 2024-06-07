@@ -1,10 +1,15 @@
 package in.backend.domain.questionset.entity.policy;
 
+import static in.backend.domain.exception.DomainExceptionCode.QUESTION_SET_GENERATION_FAIL;
 import static in.backend.domain.exception.DomainExceptionCode.QUESTION_SET_RULES_GENERATION_FAIL;
 
+import in.backend.domain.questionset.entity.QuestionSetEntity;
 import in.backend.domain.questionset.entity.QuestionSetRules;
+import java.util.Objects;
 
 public class QuestionSetPolicy {
+
+    private static final int TITLE_SIZE_MAX = 100;
 
     private static final int TAIL_QUESTION_DEPTH_MIN = 0;
     private static final int TAIL_QUESTION_DEPTH_MAX = 10;
@@ -34,4 +39,11 @@ public class QuestionSetPolicy {
     }
 
 
+    public static void validate(QuestionSetEntity questionSet) {
+        final var title = questionSet.getTitle();
+
+        QUESTION_SET_GENERATION_FAIL.invokeByCondition(Objects.isNull(title));
+        QUESTION_SET_GENERATION_FAIL.invokeByCondition(title.length() > TITLE_SIZE_MAX);
+
+    }
 }
