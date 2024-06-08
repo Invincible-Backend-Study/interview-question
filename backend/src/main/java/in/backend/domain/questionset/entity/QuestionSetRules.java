@@ -4,6 +4,7 @@ package in.backend.domain.questionset.entity;
 import in.backend.domain.questionset.entity.policy.QuestionSetPolicy;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ public class QuestionSetRules {
     private Long defaultTimeToAnswer;
 
 
+    @Builder
     public QuestionSetRules(
             Long defaultTailQuestionDepth,
             Long defaultTimeToThink,

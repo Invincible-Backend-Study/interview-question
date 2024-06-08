@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,31 +21,35 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuestionSetEntity extends BaseEntity {
 
-
     /**
      * question set이 가지는 질문 목록
      */
+    @Embedded
+    private final Questions questions = Questions.empty();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     /**
      * questionSet을 만든 관리자
      */
+    @Column(nullable = false)
     private Long adminId;
+
     /**
      * question set의 제목
      */
     @Column(nullable = false)
+
     private String title;
     /**
      * question set을 interview로 변환할 때 사용할 기본 규칙
      */
     @Embedded
-    private Questions questions = Questions.empty();
-    @Embedded
     private QuestionSetRules questionSetRules;
 
+    @Builder
     public QuestionSetEntity(Long adminId, String title, QuestionSetRules questionSetRules) {
         this.adminId = adminId;
         this.title = title;
