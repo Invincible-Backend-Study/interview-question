@@ -10,8 +10,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @Table(name = "interview")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,4 +34,9 @@ public class InterviewEntity extends BaseEntity {
     @Embedded
     private InterviewSettings settings;
 
+
+    public InterviewEntity(Long userId, InterviewSettings settings) {
+        this.userId = userId;
+        this.settings = settings;
+    }
 }
