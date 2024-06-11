@@ -1,10 +1,10 @@
-package in.backend.core.questionset.entity.policy;
+package in.backend.core.questionset.domain.policy;
 
 import static in.backend.core.exception.DomainExceptionCode.QUESTION_SET_GENERATION_FAIL;
 import static in.backend.core.exception.DomainExceptionCode.QUESTION_SET_RULES_GENERATION_FAIL;
 
-import in.backend.core.questionset.entity.QuestionSetEntity;
-import in.backend.core.questionset.entity.QuestionSetRules;
+import in.backend.core.questionset.domain.QuestionSetEntity;
+import in.backend.core.questionset.domain.QuestionSetRules;
 import java.util.Objects;
 
 public class QuestionSetPolicy {

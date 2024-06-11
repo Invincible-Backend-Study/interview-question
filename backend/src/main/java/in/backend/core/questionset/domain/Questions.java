@@ -1,4 +1,4 @@
-package in.backend.core.questionset.entity;
+package in.backend.core.questionset.domain;
 
 
 import in.backend.core.question.entity.QuestionEntity;
@@ -6,6 +6,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,11 +19,26 @@ public class Questions {
 
     @OneToMany
     @JoinColumn(nullable = false)
-    private List<QuestionEntity> questions = new ArrayList<>();
+    private List<QuestionEntity> value = new ArrayList<>();
 
 
     public static Questions empty() {
         return new Questions();
     }
 
+    public boolean isEmpty() {
+        return value.isEmpty();
+    }
+
+    public boolean hasSameSize(int count) {
+        return value.size() == count;
+    }
+
+    public List<QuestionEntity> getQuestions() {
+        return Collections.unmodifiableList(value);
+    }
+
+    public int size() {
+        return value.size();
+    }
 }

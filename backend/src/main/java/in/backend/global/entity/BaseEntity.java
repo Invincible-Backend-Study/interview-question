@@ -24,4 +24,9 @@ public class BaseEntity {
             consumer.accept(input);
         }
     }
+
+
+    protected <T> T getIfPresent(T input, T other) {
+        return input == null ? other : input;
+    }
 }

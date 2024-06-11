@@ -1,7 +1,7 @@
-package in.backend.core.questionset.entity;
+package in.backend.core.questionset.domain;
 
 
-import in.backend.core.questionset.entity.policy.QuestionSetPolicy;
+import in.backend.core.questionset.domain.policy.QuestionSetPolicy;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,16 +13,16 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuestionSetRules {
-    private Long defaultTailQuestionDepth;
-    private Long defaultTimeToThink;
-    private Long defaultTimeToAnswer;
+    private Integer defaultTailQuestionDepth;
+    private Integer defaultTimeToThink;
+    private Integer defaultTimeToAnswer;
 
 
     @Builder
     public QuestionSetRules(
-            Long defaultTailQuestionDepth,
-            Long defaultTimeToThink,
-            Long defaultTimeToAnswer
+            Integer defaultTailQuestionDepth,
+            Integer defaultTimeToThink,
+            Integer defaultTimeToAnswer
     ) {
         this.defaultTailQuestionDepth = defaultTailQuestionDepth;
         this.defaultTimeToThink = defaultTimeToThink;

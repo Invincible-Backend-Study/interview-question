@@ -2,16 +2,20 @@ package in.backend.core.report.entity;
 
 
 import in.backend.global.entity.BaseEntity;
-import in.backend.report.domain.ReportState;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @Table(name = "reports")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,9 +38,30 @@ public class ReportEntity extends BaseEntity {
     @Column(nullable = false)
     private Long userId;
 
-    private Long totalScore;
 
+    @Column(nullable = false)
+    private Integer totalScore;
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private ReportState reportState;
+
+
+    @Builder(access = AccessLevel.PROTECTED)
+    public ReportEntity(Long interviewId, Long userId, ReportState reportState) {
+        this.interviewId = interviewId;
+        this.userId = userId;
+        this.totalScore = 0;
+        this.reportState = reportState;
+    }
+
+    public static ReportEntity init(Long userId, Long interviewId) {
+        return ReportEntity.builder()
+                .userId(userId)
+                .interviewId(interviewId)
+                .build();
+    }
 
 
 }
