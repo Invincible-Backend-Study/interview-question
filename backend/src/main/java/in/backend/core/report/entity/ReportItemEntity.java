@@ -12,8 +12,10 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @Table(name = "report_item")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -41,5 +43,8 @@ public class ReportItemEntity extends BaseEntity {
         this.reportId = reportId;
         this.userId = userId;
         this.questionId = questionId;
+    }
+
+    public void solve() {
     }
 }

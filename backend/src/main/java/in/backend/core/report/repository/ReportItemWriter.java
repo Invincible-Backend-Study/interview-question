@@ -13,16 +13,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReportItemWriter {
     private final ReportItemRepository reportItemRepository;
 
-    public void write(Long userId, Long reportId, List<Long> questionIds) {
-
+    public List<Long> write(Long memberId, Long reportId, List<Long> questionIds) {
         final var reportItems = questionIds.stream()
                 .map(questionId -> ReportItemEntity.builder()
-                        .userId(userId)
+                        .userId(memberId)
                         .reportId(reportId)
                         .questionId(questionId)
                         .build()
                 ).toList();
 
-        reportItemRepository.saveAll(reportItems);
+        return reportItemRepository.saveAll(reportItems)
+                .stream()
+                .map(ReportItemEntity::getId)
+                .toList();
     }
 }

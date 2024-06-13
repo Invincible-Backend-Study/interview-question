@@ -30,21 +30,32 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    // spring ai
-    implementation 'org.springframework.ai:spring-ai-openai'
-    implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
+    // swagger
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.2.0'
 
+    // spring ai
+//    implementation 'org.springframework.ai:spring-ai-openai'
+//    implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
+
+
+    // jwt
+    implementation 'org.springframework.security:spring-security-oauth2-jose:6.2.4'
 
     // cloud speech
     implementation 'com.google.cloud:google-cloud-speech:4.38.0'
 
     // jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    // 2h
+
+    // 인수 테스트
+    testImplementation 'io.rest-assured:rest-assured:5.4.0'
+    // h2
     runtimeOnly 'com.h2database:h2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

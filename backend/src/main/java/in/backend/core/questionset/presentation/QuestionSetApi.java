@@ -1,7 +1,10 @@
 package in.backend.core.questionset.presentation;
 
+import in.backend.core.questionset.presentation.payload.response.QuestionSetSearchResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.data.domain.Slice;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,10 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/question-set")
 public class QuestionSetApi {
 
-
-    @PostMapping
-    public void create() {
-
+    @GetMapping
+    @ApiResponse(description = "question set 목록을 조회하는 api 입니다.", responseCode = "200")
+    public Slice<QuestionSetSearchResponse> get() {
+        return null;
     }
+
 
 }

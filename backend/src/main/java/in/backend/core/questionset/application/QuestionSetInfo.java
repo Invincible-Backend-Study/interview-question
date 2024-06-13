@@ -1,14 +1,14 @@
 package in.backend.core.questionset.application;
 
-import in.backend.core.questionset.entity.QuestionSetEntity;
-import in.backend.core.questionset.entity.QuestionSetRules;
+import in.backend.core.questionset.domain.QuestionSetEntity;
+import in.backend.core.questionset.domain.QuestionSetRules;
 
 public record QuestionSetInfo(
         String title,
         Long adminId,
-        Long defaultTailQuestionDepth,
-        Long defaultTimeToThink,
-        Long defaultTimeToAnswer
+        Integer defaultTailQuestionDepth,
+        Integer defaultTimeToThink,
+        Integer defaultTimeToAnswer
 ) {
     public QuestionSetEntity toEntity() {
         var questionSetRules = QuestionSetRules.builder()

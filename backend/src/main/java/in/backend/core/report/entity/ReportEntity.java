@@ -9,7 +9,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,7 +41,7 @@ public class ReportEntity extends BaseEntity {
      * 누가 만들었는지 확인
      */
     @Column(nullable = false)
-    private Long userId;
+    private Long memberId;
 
 
     @Column(nullable = false)
@@ -48,20 +53,53 @@ public class ReportEntity extends BaseEntity {
     private ReportState reportState;
 
 
+    @Column(nullable = false)
+    private Integer index;
+
+    @Column(nullable = false)
+    private Integer size;
+
+
+    @OneToMany
+    @JoinColumn(nullable = false)
+    private List<ReportItemEntity> reportItems = new ArrayList<>();
+
+
     @Builder(access = AccessLevel.PROTECTED)
-    public ReportEntity(Long interviewId, Long userId, ReportState reportState) {
+    protected ReportEntity(Long interviewId, Long memberId, Integer size) {
         this.interviewId = interviewId;
-        this.userId = userId;
+        this.memberId = memberId;
         this.totalScore = 0;
-        this.reportState = reportState;
+        this.size = size;
+        this.index = 0;
+        this.reportState = ReportState.PROGRESS;
     }
 
-    public static ReportEntity init(Long userId, Long interviewId) {
+    public static ReportEntity init(Long userId, Long interviewId, Integer size) {
         return ReportEntity.builder()
-                .userId(userId)
+                .memberId(userId)
+                .size(size)
                 .interviewId(interviewId)
                 .build();
     }
 
 
+    public void giveUp() {
+        reportState = ReportState.GIVE_UP;
+    }
+
+    public void solve(Integer solvedIndex, ReportState reportState) {
+        // 풀고 있는 문제 번호가 다른 경우
+        if (!Objects.equals(solvedIndex, this.index)) {
+            throw new IllegalArgumentException();
+        }
+
+        // 문제 크기 보다 초과해서 푸는 경우
+        if (this.index >= size) {
+            throw new IllegalArgumentException();
+        }
+        this.index += 1;
+
+        reportItems.get(index).solve();
+    }
 }

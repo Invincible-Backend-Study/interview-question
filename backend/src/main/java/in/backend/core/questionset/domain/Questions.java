@@ -3,7 +3,6 @@ package in.backend.core.questionset.domain;
 
 import in.backend.core.question.entity.QuestionEntity;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,8 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Questions {
 
-    @OneToMany
-    @JoinColumn(nullable = false)
+
+    @OneToMany(mappedBy = "questionSet")
     private List<QuestionEntity> value = new ArrayList<>();
 
 
@@ -34,7 +33,7 @@ public class Questions {
         return value.size() == count;
     }
 
-    public List<QuestionEntity> getQuestions() {
+    public List<QuestionEntity> getValue() {
         return Collections.unmodifiableList(value);
     }
 

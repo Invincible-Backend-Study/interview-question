@@ -11,8 +11,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @Table(name = "answers")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,7 +28,7 @@ public class AnswerEntity {
     /**
      * 답변한 사용자
      */
-    private Long userId;
+    private Long memberId;
 
     /**
      * 답변 내용
@@ -46,4 +49,11 @@ public class AnswerEntity {
     private Integer timeToAnswer;
 
 
+    @Builder
+    public AnswerEntity(Long memberId, String content, AnswerState answerState, Integer timeToAnswer) {
+        this.memberId = memberId;
+        this.content = content;
+        this.answerState = answerState;
+        this.timeToAnswer = timeToAnswer;
+    }
 }

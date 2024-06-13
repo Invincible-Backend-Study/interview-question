@@ -21,7 +21,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Getter
 @Entity
 @Table(name = "question_sets")
@@ -32,11 +34,12 @@ public class QuestionSetEntity extends BaseEntity {
      * question set이 가지는 질문 목록
      */
     @Embedded
-    private final Questions questions = Questions.empty();
+    private Questions questions = Questions.empty();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
 
     /**
      * questionSet을 만든 관리자
@@ -82,12 +85,12 @@ public class QuestionSetEntity extends BaseEntity {
 
 
     public List<QuestionEntity> extractQuestions(int count) {
+        log.info("{}", questions.size());
         INTERVIEW_CREATE_FAIL.invokeByCondition(questions.isEmpty());
         INTERVIEW_CREATE_FAIL.invokeByCondition(count > questions.size());
 
-        final var originalQuestions = questions.getQuestions();
-
-        if (questions.hasSameSize(count)) {
+        final var originalQuestions = questions.getValue();
+        if (questions.size() == count) {
             return originalQuestions;
         }
 

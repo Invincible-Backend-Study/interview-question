@@ -2,12 +2,15 @@ package in.backend.core.question.entity;
 
 
 import in.backend.core.question.application.QuestionWriter.QuestionInfo;
+import in.backend.core.questionset.domain.QuestionSetEntity;
 import in.backend.global.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -31,11 +34,15 @@ public class QuestionEntity extends BaseEntity {
     @Column(nullable = false)
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "question_set_id")
+    private QuestionSetEntity questionSet;
+
     /**
      * 질문 목록에서 순서 정렬 기준이 됨
      */
     @Column(nullable = false)
-    private Integer sequence;
+    private int sequence;
 
     /**
      * 콤마로 링크를 구분합니다.
@@ -47,11 +54,13 @@ public class QuestionEntity extends BaseEntity {
     public QuestionEntity(
             String content,
             String referenceLinks,
+            QuestionSetEntity questionSet,
             int sequence
     ) {
         this.content = content;
         this.referenceLinks = referenceLinks;
         this.sequence = sequence;
+        this.questionSet = questionSet;
     }
 
 

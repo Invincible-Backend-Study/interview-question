@@ -2,9 +2,12 @@ package in.backend.core.interview.entity;
 
 
 import jakarta.persistence.Embeddable;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Embeddable
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class InterviewSettings {
     private int tailQuestionDepth;
     private int timeToThink;
