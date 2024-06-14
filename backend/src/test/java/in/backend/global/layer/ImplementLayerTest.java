@@ -5,6 +5,8 @@ import in.backend.core.interview.repository.InterviewQuestionRepository;
 import in.backend.core.interview.repository.InterviewRepository;
 import in.backend.core.question.repository.QuestionRepository;
 import in.backend.core.questionset.repository.QuestionSetRepository;
+import jakarta.persistence.EntityManager;
+import java.util.function.Supplier;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +34,21 @@ public class ImplementLayerTest {
 
     @Autowired
     protected InterviewQuestionRepository interviewQuestionRepository;
+
+    @Autowired
+    protected EntityManager entityManager;
+
+    protected void given(Runnable runnable) {
+        runnable.run();
+        entityManager.clear();
+    }
+
+    protected <T> T given(Supplier<T> supplier) {
+        var value = supplier.get();
+
+        entityManager.clear();
+
+        return value;
+    }
 
 }

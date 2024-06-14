@@ -22,17 +22,15 @@ class InterviewWriterTest extends ImplementLayerTest {
 
 
     @Test
-    void 인터뷰를_생성하면_요청한_개수만큼_질문을_만듭니다(@Autowired EntityManager entityManager) {
-
-        var questionSet = questionSetRepository.save(QuestionSetFixture.create());
-        questionRepository.saveAll(QuestionFixture.creates(questionSet, 10));
-
-        System.out.println("before clear");
-        entityManager.clear();
-        System.out.println("clear");
+    void 인터뷰를_생성하면_요청한_개수만큼_질문을_만듭니다() {
+        var questionSetId = given(() -> {
+            var questionSet = questionSetRepository.save(QuestionSetFixture.create());
+            questionRepository.saveAll(QuestionFixture.creates(questionSet, 10));
+            return questionSet.getId();
+        });
 
         interviewWriter.write(2L, InterviewCreateCommand.builder()
-                .questionSetId(questionSet.getId())
+                .questionSetId(questionSetId)
                 .totalOfProblemCount(5)
                 .build()
         );
