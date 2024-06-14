@@ -6,9 +6,9 @@ import in.backend.core.questionset.entity.QuestionSetRules;
 public record QuestionSetInfo(
         String title,
         Long adminId,
-        Long defaultTailQuestionDepth,
-        Long defaultTimeToThink,
-        Long defaultTimeToAnswer
+        Integer defaultTailQuestionDepth,
+        Integer defaultTimeToThink,
+        Integer defaultTimeToAnswer
 ) {
     public QuestionSetEntity toEntity() {
         var questionSetRules = QuestionSetRules.builder()

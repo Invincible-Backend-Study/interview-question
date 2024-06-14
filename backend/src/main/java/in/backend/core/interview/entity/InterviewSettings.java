@@ -3,8 +3,13 @@ package in.backend.core.interview.entity;
 
 import jakarta.persistence.Embeddable;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+
+@Getter
 @Embeddable
+@NoArgsConstructor
 public class InterviewSettings {
     private int tailQuestionDepth;
     private int timeToThink;
