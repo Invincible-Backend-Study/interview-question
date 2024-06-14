@@ -1,10 +1,15 @@
 package in.backend.core.interview.entity;
 
 
+import static in.backend.core.exception.DomainExceptionCode.INTERVIEW_STATE_DID_NOT_MATCH;
+import static in.backend.core.exception.DomainExceptionCode.INTERVIEW_STATE_IS_DONE;
+
 import in.backend.global.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,7 +28,6 @@ public class InterviewEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     /**
      * 면접을 시작하는 사용자 id
@@ -51,6 +55,9 @@ public class InterviewEntity extends BaseEntity {
     @Embedded
     private InterviewSettings settings;
 
+    @Enumerated(EnumType.STRING)
+    private InterviewState interviewState;
+
 
     @Builder(access = AccessLevel.PROTECTED)
     protected InterviewEntity(Long memberId, int index, int size, InterviewSettings settings) {
@@ -58,6 +65,7 @@ public class InterviewEntity extends BaseEntity {
         this.index = index;
         this.size = size;
         this.settings = settings;
+        this.interviewState = InterviewState.PROGRESS;
     }
 
     public static InterviewEntity init(Long memberId, int size, InterviewSettings settings) {
@@ -72,4 +80,21 @@ public class InterviewEntity extends BaseEntity {
         return this.settings.getTailQuestionDepth();
     }
 
+    public int getCurrentProgressIndex() {
+        INTERVIEW_STATE_IS_DONE.invokeByCondition(interviewState != InterviewState.PROGRESS);
+
+        return index;
+    }
+
+    public void increaseIndex(int currentIndex) {
+        INTERVIEW_STATE_IS_DONE.invokeByCondition(interviewState != InterviewState.PROGRESS);
+        INTERVIEW_STATE_DID_NOT_MATCH.invokeByCondition(index != currentIndex);
+        INTERVIEW_STATE_IS_DONE.invokeByCondition(index == size);
+
+        index = index + 1;
+
+        if (index == size) {
+            interviewState = InterviewState.DONE;
+        }
+    }
 }

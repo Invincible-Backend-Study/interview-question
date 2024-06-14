@@ -22,7 +22,12 @@ public enum DomainExceptionCode {
 
     INTERVIEW(400, "인터뷰"),
     INTERVIEW_CREATE_FAIL(INTERVIEW.code + 1, "인터뷰를 생성할 수 없습니다."),
+    INTERVIEW_NOT_FOUND(INTERVIEW.code + 2, "인터뷰를 찾을 수 없습니다."),
+    INTERVIEW_STATE_IS_DONE(INTERVIEW.code + 3, "종료된 인터뷰입니다."),
+    INTERVIEW_STATE_DID_NOT_MATCH(INTERVIEW.code + 4, "현재 풀고 있는 문제가 이미 풀었거나 풀어야 할 문제가 아닙니다."),
 
+    INTERVIEW_QUESTION(500, "인터뷰 질문"),
+    INTERVIEW_QUESTION_NOT_FOUND(INTERVIEW_QUESTION.code + 1, "인터뷰 질문을 찾을 수 없습니다."),
     ;
 
 
