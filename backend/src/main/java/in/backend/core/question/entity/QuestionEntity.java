@@ -2,12 +2,15 @@ package in.backend.core.question.entity;
 
 
 import in.backend.core.question.application.QuestionWriter.QuestionInfo;
+import in.backend.core.questionset.entity.QuestionSetEntity;
 import in.backend.global.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,7 +26,6 @@ public class QuestionEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     /**
      * 질문 내용입니다.
@@ -43,14 +45,21 @@ public class QuestionEntity extends BaseEntity {
     private String referenceLinks;
 
 
+    @ManyToOne
+    @JoinColumn(name = "question_set_id", nullable = false)
+    private QuestionSetEntity questionSet;
+
+
     @Builder
     public QuestionEntity(
             String content,
             String referenceLinks,
+            QuestionSetEntity questionSet,
             int sequence
     ) {
         this.content = content;
         this.referenceLinks = referenceLinks;
+        this.questionSet = questionSet;
         this.sequence = sequence;
     }
 

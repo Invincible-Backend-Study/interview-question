@@ -1,6 +1,10 @@
 package in.backend.core.questionset.entity;
 
 
+import static in.backend.core.exception.DomainExceptionCode.INTERVIEW_CREATE_FAIL;
+import static java.util.Comparator.comparing;
+
+import in.backend.core.question.entity.QuestionEntity;
 import in.backend.core.questionset.entity.policy.QuestionSetPolicy;
 import in.backend.global.entity.BaseEntity;
 import jakarta.persistence.Column;
@@ -10,22 +14,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Getter
 @Entity
 @Table(name = "question_sets")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuestionSetEntity extends BaseEntity {
 
-    /**
-     * question set이 가지는 질문 목록
-     */
-    @Embedded
-    private final Questions questions = Questions.empty();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +51,14 @@ public class QuestionSetEntity extends BaseEntity {
     @Embedded
     private QuestionSetRules questionSetRules;
 
+
+    /**
+     * question set이 가지는 질문 목록
+     */
+    @Embedded
+    private Questions questions = Questions.empty();
+
+
     @Builder
     public QuestionSetEntity(Long adminId, String title, QuestionSetRules questionSetRules) {
         this.adminId = adminId;
@@ -57,6 +67,32 @@ public class QuestionSetEntity extends BaseEntity {
 
         QuestionSetPolicy.validate(this);
     }
+
+    public List<QuestionEntity> extractQuestions(int count) {
+        INTERVIEW_CREATE_FAIL.invokeByCondition(count <= 0);
+        INTERVIEW_CREATE_FAIL.invokeByCondition(questions.size() <= 0);
+        INTERVIEW_CREATE_FAIL.invokeByCondition(questions.size() < count);
+
+        if (questions.hasSameSize(count)) {
+            return questions.getValue();
+        }
+
+        return questions.shuffle()
+                .subList(0, count)
+                .stream()
+                .sorted(comparing(QuestionEntity::getSequence))
+                .toList();
+    }
+
+
+    public void setQuestions(List<QuestionEntity> questions) {
+        this.questions = new Questions(questions);
+    }
+
+    public int getQuestionSize() {
+        return questions.size();
+    }
+
 }
 
 

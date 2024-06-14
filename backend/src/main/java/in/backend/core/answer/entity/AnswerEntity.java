@@ -25,7 +25,7 @@ public class AnswerEntity {
     /**
      * 답변한 사용자
      */
-    private Long userId;
+    private Long memberId;
 
     /**
      * 답변 내용

@@ -1,7 +1,7 @@
-package in.backend.core.questionset.domain;
+package in.backend.core.questionset.entity;
 
 
-import in.backend.core.questionset.domain.policy.QuestionSetPolicy;
+import in.backend.core.questionset.entity.policy.QuestionSetPolicy;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Builder;
