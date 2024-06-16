@@ -36,7 +36,7 @@ public class InterviewService {
                 .interviewQuestionId(interviewQuestion.getId())
                 .question(interviewQuestion.getQuestionContent())
                 .remainTailQuestionCount(interviewQuestion.getRemainTailQuestionCount())
-                .sequence(interview.getIndex())
+                .index(interview.getIndex())
                 .build();
     }
 

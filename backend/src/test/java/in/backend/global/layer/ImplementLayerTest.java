@@ -1,8 +1,10 @@
 package in.backend.global.layer;
 
 
+import in.backend.core.auth.domain.Visitor;
 import in.backend.core.interview.repository.InterviewQuestionRepository;
 import in.backend.core.interview.repository.InterviewRepository;
+import in.backend.core.question.infrastrcuture.TailQuestionRepository;
 import in.backend.core.question.repository.QuestionRepository;
 import in.backend.core.questionset.repository.QuestionSetRepository;
 import jakarta.persistence.EntityManager;
@@ -21,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class ImplementLayerTest {
 
+    @Autowired
+    protected EntityManager entityManager;
 
     @Autowired
     protected QuestionSetRepository questionSetRepository;
@@ -35,8 +39,10 @@ public class ImplementLayerTest {
     @Autowired
     protected InterviewQuestionRepository interviewQuestionRepository;
 
+
     @Autowired
-    protected EntityManager entityManager;
+    protected TailQuestionRepository tailQuestionRepository;
+
 
     protected void given(Runnable runnable) {
         runnable.run();
@@ -49,6 +55,14 @@ public class ImplementLayerTest {
         entityManager.clear();
 
         return value;
+    }
+
+    protected Long memberId() {
+        return visitor().memberId();
+    }
+
+    protected Visitor visitor() {
+        return Visitor.member(1L);
     }
 
 }
