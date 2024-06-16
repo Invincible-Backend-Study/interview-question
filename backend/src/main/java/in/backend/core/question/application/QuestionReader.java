@@ -2,7 +2,7 @@ package in.backend.core.question.application;
 
 
 import in.backend.core.question.entity.QuestionEntity;
-import in.backend.core.question.repository.QuestionRepository;
+import in.backend.core.question.infrastrcuture.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

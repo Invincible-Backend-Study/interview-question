@@ -1,11 +1,9 @@
-package in.backend.core.question.repository;
+package in.backend.core.question.infrastrcuture;
 
 
 import in.backend.core.interview.repository.InterviewQuestionReader;
 import in.backend.core.question.application.TailQuestionSubmitCommand;
 import in.backend.core.question.application.TailQuestionSubmitResult;
-import in.backend.core.question.infrastrcuture.TailQuestionReader;
-import in.backend.core.question.infrastrcuture.TailQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
