@@ -70,7 +70,7 @@ public class QuestionSetEntity extends BaseEntity {
 
     public List<QuestionEntity> extractQuestions(int count) {
         INTERVIEW_CREATE_FAIL.invokeByCondition(count <= 0);
-        INTERVIEW_CREATE_FAIL.invokeByCondition(questions.size() <= 0);
+        INTERVIEW_CREATE_FAIL.invokeByCondition(questions.isEmpty());
         INTERVIEW_CREATE_FAIL.invokeByCondition(questions.size() < count);
 
         if (questions.hasSameSize(count)) {
@@ -84,10 +84,6 @@ public class QuestionSetEntity extends BaseEntity {
                 .toList();
     }
 
-
-    public void setQuestions(List<QuestionEntity> questions) {
-        this.questions = new Questions(questions);
-    }
 
     public int getQuestionSize() {
         return questions.size();

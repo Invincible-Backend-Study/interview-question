@@ -4,18 +4,14 @@ package in.backend.core.interview.entity;
 import in.backend.core.interview.application.InterviewSubmitCommand.AnswerInfo;
 import in.backend.core.interview.application.InterviewSubmitCommand.FeedbackInfo;
 import in.backend.core.question.entity.AnswerState;
-import in.backend.core.question.entity.QuestionEntity;
 import in.backend.core.question.entity.TailQuestionEntity;
 import in.backend.global.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.Optional;
 import lombok.AccessLevel;
@@ -39,10 +35,12 @@ public class InterviewQuestionEntity extends BaseEntity {
     @Column(nullable = false)
     private Long memberId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    private QuestionEntity question;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(nullable = false)
+//    private QuestionEntity question;
 
+    @Column(nullable = false)
+    private Long questionId;
 
     /**
      * 질문 가져올 때 조인 횟수 최소화 용도
@@ -64,13 +62,14 @@ public class InterviewQuestionEntity extends BaseEntity {
     public InterviewQuestionEntity(
             Long interviewId,
             Long memberId,
-            QuestionEntity question,
+            Long questionId,
+            String questionContent,
             int remainTailQuestionCount
     ) {
         this.interviewId = interviewId;
         this.memberId = memberId;
-        this.question = question;
-        this.questionContent = question.getContent();
+        this.questionId = questionId;
+        this.questionContent = questionContent;
         this.remainTailQuestionCount = remainTailQuestionCount;
     }
 
@@ -98,16 +97,29 @@ public class InterviewQuestionEntity extends BaseEntity {
         return answer.isComplete() && remainTailQuestionCount > 0;
     }
 
-    public Optional<TailQuestionEntity> createTailQuestion() {
+
+    private Optional<TailQuestionEntity> createTailQuestion(String content) {
         if (hasTailQuestionCount()) {
             remainTailQuestionCount--;
             return Optional.of(TailQuestionEntity.builder()
+                    .memberId(memberId)
                     .interviewId(interviewId)
                     .interviewQuestionId(id)
-                    .content(aiFeedback.getTailQuestion())
+                    .question(content)
                     .build());
         }
         return Optional.empty();
     }
 
+    public Optional<TailQuestionEntity> createTailQuestion() {
+        return createTailQuestion(aiFeedback.getTailQuestion());
+    }
+
+
+    public Optional<TailQuestionEntity> createTailQuestion(TailQuestionEntity previousQuestion) {
+        if (!previousQuestion.isComplete()) {
+            return Optional.empty();
+        }
+        return createTailQuestion(previousQuestion.getTailQuestion());
+    }
 }

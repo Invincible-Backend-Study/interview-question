@@ -17,31 +17,31 @@ public class AIFeedback {
 
     private String tailQuestion;
 
-    private String content;
+    private String feedbackContent;
 
     private int score;
 
 
     @Column(length = 1000)
-    private String origianlContent;
+    private String originalContent;
 
 
     @Builder(access = AccessLevel.PROTECTED)
-    protected AIFeedback(String tailQuestion, String content, int score, String origianlContent) {
+    protected AIFeedback(String tailQuestion, String feedbackContent, int score, String originalContent) {
         this.tailQuestion = tailQuestion;
-        this.content = content;
+        this.feedbackContent = feedbackContent;
         this.score = score;
-        this.origianlContent = origianlContent;
+        this.originalContent = originalContent;
     }
 
     public static AIFeedback empty() {
-        return null;
+        return new AIFeedback();
     }
 
     public static AIFeedback from(FeedbackInfo feedbackInfo) {
         return AIFeedback.builder()
-                .content(feedbackInfo.aiFeedback())
-                .origianlContent(feedbackInfo.originalContent())
+                .feedbackContent(feedbackInfo.aiFeedback())
+                .originalContent(feedbackInfo.originalContent())
                 .score(feedbackInfo.score())
                 .tailQuestion(feedbackInfo.tailQuestion())
                 .build();

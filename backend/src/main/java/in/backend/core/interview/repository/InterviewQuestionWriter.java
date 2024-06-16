@@ -15,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class InterviewQuestionWriter {
     private final InterviewQuestionRepository questionRepository;
 
-
     public void write(Long memberId, InterviewEntity interview, List<QuestionEntity> questions) {
         questionRepository.saveAll(questions.stream()
                 .map(question -> InterviewQuestionEntity.builder()
                         .interviewId(interview.getId())
                         .remainTailQuestionCount(interview.getTailQuestionDepth())
                         .memberId(memberId)
-                        .question(question)
+                        .questionId(question.getId())
+                        .questionContent(question.getContent())
                         .build()
                 ).toList());
     }
