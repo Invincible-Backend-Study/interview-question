@@ -12,7 +12,7 @@ public class QuestionFixture {
         return QuestionEntity.builder()
                 .referenceLinks("")
                 .sequence(sequence)
-                .content("question content")
+                .content(STR."질문\{sequence}")
                 .questionSet(questionSet)
                 .build();
     }
