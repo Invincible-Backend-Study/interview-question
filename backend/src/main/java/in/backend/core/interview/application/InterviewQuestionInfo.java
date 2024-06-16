@@ -9,7 +9,7 @@ public record InterviewQuestionInfo(
 
         String question,
 
-        int sequence,
+        int index,
         int remainTailQuestionCount
 ) {
 }
