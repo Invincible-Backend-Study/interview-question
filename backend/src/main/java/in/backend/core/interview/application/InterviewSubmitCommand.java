@@ -15,12 +15,15 @@ public record InterviewSubmitCommand(
 
 ) {
 
+    @Builder
     public record AnswerInfo(
             String content,
             int timeToAnswer
     ) {
     }
 
+
+    @Builder
     public record FeedbackInfo(
             String aiFeedback,
             String tailQuestion,
