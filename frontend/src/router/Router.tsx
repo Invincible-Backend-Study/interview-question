@@ -1,6 +1,7 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Root from "@/router/Root";
 import LoginPage from "@/pages/LoginPage";
+import MainPage from "@/pages/MainPage";
 
 function Router() {
 
@@ -9,7 +10,7 @@ function Router() {
       path:'/',
       element: <Root.Layout/>,
       children: [
-        {index: true, element: <LoginPage/>}
+        {index: true, element: <MainPage/>}
       ]
     },
     {
