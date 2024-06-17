@@ -31,7 +31,6 @@ public class TailQuestionManager {
                 .map(tailQuestionRepository::save)
                 .map(TailQuestionSubmitResult::create)
                 .orElseGet(TailQuestionSubmitResult::empty);
-
     }
 
 }
