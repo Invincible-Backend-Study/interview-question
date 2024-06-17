@@ -1,8 +1,8 @@
-package in.backend.core.questionset.application;
+package in.backend.core.questionset.presentation;
 
 
 import in.backend.core.questionset.entity.QuestionSetEntity;
-import in.backend.core.questionset.repository.QuestionSetRepository;
+import in.backend.core.questionset.infrastructure.QuestionSetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

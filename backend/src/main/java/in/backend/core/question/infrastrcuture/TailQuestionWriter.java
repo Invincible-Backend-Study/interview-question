@@ -9,5 +9,4 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class TailQuestionWriter {
     private final TailQuestionRepository tailQuestionRepository;
-
 }

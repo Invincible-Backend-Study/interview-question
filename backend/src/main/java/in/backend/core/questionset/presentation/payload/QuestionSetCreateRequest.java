@@ -1,4 +1,4 @@
-package in.backend.core.questionset.payload;
+package in.backend.core.questionset.presentation.payload;
 
 public record QuestionSetCreateRequest(
         String title,

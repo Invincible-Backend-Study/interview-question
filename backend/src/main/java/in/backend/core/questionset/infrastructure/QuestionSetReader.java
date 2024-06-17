@@ -3,7 +3,6 @@ package in.backend.core.questionset.infrastructure;
 
 import in.backend.core.exception.DomainExceptionCode;
 import in.backend.core.questionset.entity.QuestionSetEntity;
-import in.backend.core.questionset.repository.QuestionSetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

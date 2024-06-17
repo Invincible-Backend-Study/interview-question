@@ -17,4 +17,5 @@ public class QuestionReader {
         return questionRepository.findById(questionId)
                 .orElseThrow(IllegalArgumentException::new);
     }
+    
 }

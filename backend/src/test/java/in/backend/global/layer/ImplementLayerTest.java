@@ -6,7 +6,7 @@ import in.backend.core.interview.repository.InterviewQuestionRepository;
 import in.backend.core.interview.repository.InterviewRepository;
 import in.backend.core.question.infrastrcuture.QuestionRepository;
 import in.backend.core.question.infrastrcuture.TailQuestionRepository;
-import in.backend.core.questionset.repository.QuestionSetRepository;
+import in.backend.core.questionset.infrastructure.QuestionSetRepository;
 import jakarta.persistence.EntityManager;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.DisplayNameGeneration;
