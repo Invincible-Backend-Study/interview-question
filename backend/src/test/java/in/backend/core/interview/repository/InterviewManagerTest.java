@@ -20,6 +20,7 @@ class InterviewManagerTest extends ImplementLayerTest {
 
     @Test
     void 질문을_제출을_제출했을_때_꼬리질문_제출횟수가_남아있으면_꼬리질문을_만들어냅니다() {
+
         var tailQuestionCount = 1;
         var interview = interviewRepository.save(InterviewFixture.create());
         var interviewQuestion = interviewQuestionRepository.save(
@@ -31,7 +32,7 @@ class InterviewManagerTest extends ImplementLayerTest {
                 .answer(new AnswerInfo("대답", 1))
                 .feedback(new FeedbackInfo("피드백", "꼬리질문", "원본", 100))
                 .currentIndex(interview.getIndex())
-                .interviewId(interviewQuestion.getId())
+                .interviewId(interviewQuestion.getInterviewId())
                 .interviewQuestionId(interviewQuestion.getId())
                 .build()
         );
@@ -48,13 +49,12 @@ class InterviewManagerTest extends ImplementLayerTest {
                 interview.getId(),
                 tailQuestionCount
         ));
-
         interviewManager.submit(memberId(), InterviewSubmitCommand.builder()
                 .answerState(AnswerState.COMPLETE)
                 .answer(new AnswerInfo("대답", 1))
                 .feedback(new FeedbackInfo("피드백", "꼬리질문", "원본", 100))
                 .currentIndex(0)
-                .interviewId(interviewQuestion.getId())
+                .interviewId(interview.getId())
                 .interviewQuestionId(interviewQuestion.getId())
                 .build()
         );

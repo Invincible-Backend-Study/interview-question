@@ -4,8 +4,8 @@ package in.backend.global.layer;
 import in.backend.core.auth.domain.Visitor;
 import in.backend.core.interview.repository.InterviewQuestionRepository;
 import in.backend.core.interview.repository.InterviewRepository;
+import in.backend.core.question.infrastrcuture.QuestionRepository;
 import in.backend.core.question.infrastrcuture.TailQuestionRepository;
-import in.backend.core.question.repository.QuestionRepository;
 import in.backend.core.questionset.repository.QuestionSetRepository;
 import jakarta.persistence.EntityManager;
 import java.util.function.Supplier;
@@ -32,13 +32,11 @@ public class ImplementLayerTest {
     @Autowired
     protected QuestionRepository questionRepository;
 
-
     @Autowired
     protected InterviewRepository interviewRepository;
 
     @Autowired
     protected InterviewQuestionRepository interviewQuestionRepository;
-
 
     @Autowired
     protected TailQuestionRepository tailQuestionRepository;
@@ -46,12 +44,15 @@ public class ImplementLayerTest {
 
     protected void given(Runnable runnable) {
         runnable.run();
+        entityManager.flush();
         entityManager.clear();
     }
+
 
     protected <T> T given(Supplier<T> supplier) {
         var value = supplier.get();
 
+        entityManager.flush();
         entityManager.clear();
 
         return value;
