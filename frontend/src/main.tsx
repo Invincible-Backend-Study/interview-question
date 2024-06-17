@@ -9,7 +9,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <NextUIProvider>
       <QueryClientProvider client={queryClient}>
-        <App/>
+        <main className="dark text-foreground bg-background">
+          <App/>
+        </main>
       </QueryClientProvider>
     </NextUIProvider>
   </React.StrictMode>,
