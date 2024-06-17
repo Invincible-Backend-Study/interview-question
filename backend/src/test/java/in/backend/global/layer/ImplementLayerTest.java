@@ -32,13 +32,11 @@ public class ImplementLayerTest {
     @Autowired
     protected QuestionRepository questionRepository;
 
-
     @Autowired
     protected InterviewRepository interviewRepository;
 
     @Autowired
     protected InterviewQuestionRepository interviewQuestionRepository;
-
 
     @Autowired
     protected TailQuestionRepository tailQuestionRepository;
@@ -46,12 +44,15 @@ public class ImplementLayerTest {
 
     protected void given(Runnable runnable) {
         runnable.run();
+        entityManager.flush();
         entityManager.clear();
     }
+
 
     protected <T> T given(Supplier<T> supplier) {
         var value = supplier.get();
 
+        entityManager.flush();
         entityManager.clear();
 
         return value;
