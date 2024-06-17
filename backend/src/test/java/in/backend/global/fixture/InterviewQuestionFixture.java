@@ -23,4 +23,23 @@ public class InterviewQuestionFixture {
                 .remainTailQuestionCount(remainTailQuestionCount)
                 .build();
     }
+
+    public static InterviewQuestionEntity create(String questionContent) {
+        return InterviewQuestionEntity.builder()
+                .memberId(1L)
+                .questionId(1L)
+                .interviewId(1L)
+                .questionContent(questionContent)
+                .remainTailQuestionCount(1)
+                .build();
+    }
+
+    public static InterviewQuestionEntity create() {
+        return InterviewQuestionFixture.create("질문");
+    }
+
+    public static InterviewQuestionEntity create(int remainTailQuestionCount) {
+        return create(1L, remainTailQuestionCount);
+
+    }
 }
