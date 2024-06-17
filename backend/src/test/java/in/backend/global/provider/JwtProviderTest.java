@@ -66,7 +66,7 @@ public class JwtProviderTest {
     @DisplayName("토큰을 복호화하는 과정에서")
     class TokenDecoding {
         private final Long accessTokenExpiry = 7 * 24 * 60 * 60L;// 1주
-        private final Long refreshTokenExpiry = 14 * 24 * 60 * 60L; // 2주
+        private final Long refreshTokenExpiry = 21 * 24 * 60 * 60L; // 2주
 
         @Test
         void 유효하지_않는_토큰의_경우_오류가_발생한다() {
@@ -95,6 +95,7 @@ public class JwtProviderTest {
         @ValueSource(ints = {60, 60 * 60, 60 * 60 * 24})
         void refresh_token_이_만료된지_7일이_지난_경우_오류가_발생한다(final int error) {
             // 14일 + error(오차)
+
             var issuanceTime = Instant.now()
                     .minusSeconds(refreshTokenExpiry)
                     .minusSeconds(error);
