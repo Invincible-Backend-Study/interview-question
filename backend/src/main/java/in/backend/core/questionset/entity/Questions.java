@@ -2,7 +2,6 @@ package in.backend.core.questionset.entity;
 
 
 import in.backend.core.question.entity.QuestionEntity;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Questions {
 
 
-    @OneToMany(mappedBy = "questionSet", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "questionSet")
     private List<QuestionEntity> value = new ArrayList<>();
 
     public static Questions empty() {
