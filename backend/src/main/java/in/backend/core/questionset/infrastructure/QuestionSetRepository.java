@@ -1,4 +1,4 @@
-package in.backend.core.questionset.repository;
+package in.backend.core.questionset.infrastructure;
 
 
 import in.backend.core.questionset.entity.QuestionSetEntity;

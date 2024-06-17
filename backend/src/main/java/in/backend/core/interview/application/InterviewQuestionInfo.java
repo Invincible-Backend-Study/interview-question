@@ -6,9 +6,7 @@ import lombok.Builder;
 public record InterviewQuestionInfo(
         Long interviewId,
         Long interviewQuestionId,
-
         String question,
-
         int index,
         int remainTailQuestionCount
 ) {
