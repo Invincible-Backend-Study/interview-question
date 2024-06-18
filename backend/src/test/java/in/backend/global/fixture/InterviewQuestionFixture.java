@@ -1,6 +1,9 @@
 package in.backend.global.fixture;
 
+import in.backend.core.interview.entity.InterviewEntity;
 import in.backend.core.interview.entity.InterviewQuestionEntity;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class InterviewQuestionFixture {
 
@@ -40,6 +43,11 @@ public class InterviewQuestionFixture {
 
     public static InterviewQuestionEntity create(int remainTailQuestionCount) {
         return create(1L, remainTailQuestionCount);
+    }
 
+    public static List<InterviewQuestionEntity> creates(InterviewEntity interviewEntity, int n) {
+        return Stream.generate(() -> create(interviewEntity.getId()))
+                .limit(n)
+                .toList();
     }
 }
