@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface InterviewQuestionRepository extends JpaRepository<InterviewQuestionEntity, Long> {
 
@@ -19,5 +20,5 @@ public interface InterviewQuestionRepository extends JpaRepository<InterviewQues
                 where I.interviewId in :interviewIds
                 group by I.interviewId
             """)
-    List<InterviewQuestionCount> countByInterviewIds(List<Long> interviewIds);
+    List<InterviewQuestionCount> countByInterviewIds(@Param("interviewIds") List<Long> interviewIds);
 }
