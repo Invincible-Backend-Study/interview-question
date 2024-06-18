@@ -43,8 +43,6 @@ public class InterviewEntity extends BaseEntity {
      */
     @Column(nullable = false)
     private int index;
-
-
     /**
      * 인터뷰 면접 질문의 수
      */
@@ -62,7 +60,13 @@ public class InterviewEntity extends BaseEntity {
 
 
     @Builder(access = AccessLevel.PROTECTED)
-    protected InterviewEntity(Long memberId, int index, String title, int size, InterviewSettings settings) {
+    protected InterviewEntity(
+            Long memberId,
+            int index,
+            String title,
+            int size,
+            InterviewSettings settings
+    ) {
         this.memberId = memberId;
         this.index = index;
         this.size = size;

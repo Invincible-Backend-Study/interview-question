@@ -10,6 +10,7 @@ import in.backend.core.interview.presentation.payload.InterviewCreateRequest;
 import in.backend.core.interview.presentation.payload.InterviewCreateResponse;
 import in.backend.core.interview.presentation.payload.InterviewQuestionResponse;
 import in.backend.core.interview.presentation.payload.InterviewSubmitRequest;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,7 +44,7 @@ public class InterviewApi {
     @GetMapping("/{interviewId}/current/problem")
     public InterviewQuestionResponse getCurrentProblem(
             @Auth Visitor visitor,
-            @PathVariable Long interviewId
+            @NotNull @PathVariable Long interviewId
     ) {
         var interviewQuestionInfo = interviewService.loadByCurrentProblem(visitor, interviewId);
         return InterviewQuestionResponse.from(interviewQuestionInfo);

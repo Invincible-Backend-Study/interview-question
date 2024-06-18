@@ -9,7 +9,6 @@ import lombok.Builder;
 public record TailQuestionSubmitCommand(
         Long interviewQuestionId,
         Long tailQuestionId,
-
         AnswerState answerState,
         AnswerInfo answerInfo,
         FeedbackInfo feedbackInfo

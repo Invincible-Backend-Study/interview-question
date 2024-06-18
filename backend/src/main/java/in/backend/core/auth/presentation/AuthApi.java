@@ -17,6 +17,7 @@ import in.backend.core.auth.presentation.payload.response.AccessTokenResponse;
 import in.backend.core.auth.presentation.payload.response.OAuthProfileResponse;
 import in.backend.global.utils.CookieProvider;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,7 +41,7 @@ public class AuthApi {
 
     @PostMapping("/signup")
     public ResponseEntity<AccessTokenResponse> signup(
-            @RequestBody SignupRequest signupRequest,
+            @Valid @RequestBody SignupRequest signupRequest,
             HttpServletResponse response
     ) {
         var issuedToken = socialLoginProcessor.signup(signupRequest);
@@ -53,7 +54,7 @@ public class AuthApi {
 
     @PostMapping("/signin")
     public ResponseEntity<AccessTokenResponse> signin(
-            @RequestBody SigninRequest signinRequest,
+            @Valid @RequestBody SigninRequest signinRequest,
             HttpServletResponse response
     ) {
         var issuedToken = socialLoginProcessor.signin(signinRequest);
