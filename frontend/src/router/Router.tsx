@@ -2,6 +2,10 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Root from "@/router/Root";
 import LoginPage from "@/pages/LoginPage";
 import MainPage from "@/pages/MainPage";
+import InterviewPage from "@/pages/InterviewPage";
+import SignupPage from "@/pages/SignupPage";
+import ReportPage from "@/pages/ReportPage";
+import InterviewHistoryPage from "@/pages/InterviewHistoryPage";
 
 function Router() {
 
@@ -10,14 +14,24 @@ function Router() {
       path:'/',
       element: <Root.Layout/>,
       children: [
-        {index: true, element: <MainPage/>}
+        {index: true, element: <MainPage/>},
+        {path: '/report', element: <ReportPage/>},
+        {path: '/history', element: <InterviewHistoryPage/>}
       ]
     },
     {
       path: '/login',
       element: <Root.LoginLayout/>,
       children: [
-        {index: true, element: <LoginPage/>}
+        {index: true, element: <LoginPage/>},
+        {path: '/login/auth/signin', element:  <SignupPage/>}
+      ]
+    },
+    {
+      path: '/interview/:interviewId',
+      element: <Root.InterviewLayout/>,
+      children: [
+        {index: true, element: <InterviewPage/>}
       ]
     }
   ])
