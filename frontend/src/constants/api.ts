@@ -4,6 +4,13 @@ export const NETWORK = {
 }as const;
 
 
+
+const wrap = (url: string) => {
+  return (params: object) => url + '?' + Object.entries(params)
+    .map(arr => `${arr[0]}:${arr[1]}`)
+    .join("&")
+}
+
 export const END_POINT = {
   TAIL_QUESTION_SUBMIT: "/tail-questions/submit",
 
@@ -14,10 +21,12 @@ export const END_POINT = {
 
   SIGNUP: "/auth/signup",
   SIGNIN: "/auth/signin",
-  PROFILE: "/auth/profile",
+  PROFILE: wrap( "/auth/profile"),
   LOGOUT: "/auth/logout",
   TOKEN_REISSUE: "/auth/token/reissue",
 
   QUESTION_SETS: "/v1/question-set"
 
 } as const;
+
+
