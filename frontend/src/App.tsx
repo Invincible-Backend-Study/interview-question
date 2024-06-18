@@ -1,9 +1,10 @@
 import Router from "@/router/Router";
+import {ScrollShadow} from "@nextui-org/react";
 
 function App() {
-  return <div className="container h-screen">
+  return <ScrollShadow className="h-screen">
     <Router/>
-  </div>
+  </ScrollShadow>
 }
 
 export default App

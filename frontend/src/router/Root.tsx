@@ -1,15 +1,26 @@
 import {Outlet} from "react-router-dom";
+import CompactNavbar from "@/components/CompactNavbar/CompactNavbar";
 
 
 function Layout(){
 
   return (
     <>
-      <Outlet/>
+      <div className="flex flex-shrink-0 ">
+        <CompactNavbar/>
+        <Outlet/>
+      </div>
     </>
   )
 }
 
+function InterviewLayout(){
+  return (
+    <>
+      <Outlet/>
+    </>
+  )
+}
 
 function LoginLayout() {
   return  (
@@ -22,6 +33,7 @@ function LoginLayout() {
 }
 
 export default {
+  InterviewLayout,
   LoginLayout,
   Layout
 };
