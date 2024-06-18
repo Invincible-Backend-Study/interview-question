@@ -8,13 +8,9 @@ import lombok.Builder;
 @Builder
 public record InterviewCreateCommand(
         Long questionSetId,
-
         Integer totalOfProblemCount,
-
         Integer tailQuestionDepth,
-
         Integer timeToThink,
-
         Integer timeToAnswer
 
 ) {
