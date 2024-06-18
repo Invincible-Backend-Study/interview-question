@@ -10,7 +10,8 @@ public record QuestionSetInfo(
         Long questionSetId,
         String title,
         String description,
-        Long count
+        Long count,
+        Integer tailQuestionDepth
 ) {
 
     public static QuestionSetInfo from(QuestionSetEntity questionSet, Long problemCount) {
@@ -18,6 +19,7 @@ public record QuestionSetInfo(
                 .title(questionSet.getTitle())
                 .description(questionSet.getDescription())
                 .count(problemCount)
+                .tailQuestionDepth(questionSet.getTailQuestionDepth())
                 .build();
     }
 

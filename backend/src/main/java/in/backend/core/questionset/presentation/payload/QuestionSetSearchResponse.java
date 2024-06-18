@@ -11,7 +11,8 @@ public record QuestionSetSearchResponse(
         Long questionSetId,
         String description,
         String title,
-        Long count
+        Long count,
+        Integer tailQuestionDepth
 ) {
 
     public static QuestionSetSearchResponse from(QuestionSetInfo questionSet) {
@@ -20,6 +21,7 @@ public record QuestionSetSearchResponse(
                 .title(questionSet.title())
                 .description(questionSet.description())
                 .count(questionSet.count())
+                .tailQuestionDepth(questionSet.tailQuestionDepth())
                 .build();
     }
 }

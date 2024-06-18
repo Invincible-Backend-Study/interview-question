@@ -5,11 +5,14 @@ import in.backend.core.auth.domain.Visitor;
 import in.backend.core.auth.domain.attributes.Auth;
 import in.backend.core.auth.domain.attributes.MemberOnly;
 import in.backend.core.interview.application.InterviewService;
+import in.backend.core.interview.application.MyInterviewResult;
 import in.backend.core.interview.presentation.payload.InterviewCreateRequest;
 import in.backend.core.interview.presentation.payload.InterviewCreateResponse;
 import in.backend.core.interview.presentation.payload.InterviewQuestionResponse;
 import in.backend.core.interview.presentation.payload.InterviewSubmitRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,9 +45,8 @@ public class InterviewApi {
             @Auth Visitor visitor,
             @PathVariable Long interviewId
     ) {
-        return InterviewQuestionResponse.from(
-                interviewService.loadByCurrentProblem(visitor, interviewId)
-        );
+        var interviewQuestionInfo = interviewService.loadByCurrentProblem(visitor, interviewId);
+        return InterviewQuestionResponse.from(interviewQuestionInfo);
     }
 
     @MemberOnly
@@ -55,6 +57,16 @@ public class InterviewApi {
     ) {
         interviewService.submit(visitor, request.to());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
+    @MemberOnly
+    @GetMapping("/me")
+    public Page<MyInterviewResult> getMe(
+            @Auth Visitor visitor,
+            Pageable pageable
+    ) {
+        return interviewService.search(visitor, pageable);
     }
 
 

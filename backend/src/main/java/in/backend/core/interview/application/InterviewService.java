@@ -1,12 +1,16 @@
 package in.backend.core.interview.application;
 
 
+import static java.util.stream.Collectors.toMap;
+
 import in.backend.core.auth.domain.Visitor;
 import in.backend.core.interview.repository.InterviewManager;
 import in.backend.core.interview.repository.InterviewQuestionReader;
 import in.backend.core.interview.repository.InterviewReader;
 import in.backend.core.interview.repository.InterviewWriter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -46,4 +50,16 @@ public class InterviewService {
     }
 
 
+    public Page<MyInterviewResult> search(Visitor visitor, Pageable pageable) {
+        var interviews = interviewReader.read(visitor.memberId(), pageable);
+        var interviewQuestionCountTable = interviewQuestionReader.readByCount(interviews.toList())
+                .stream()
+                .collect(toMap(InterviewQuestionCount::interviewId, InterviewQuestionCount::count));
+
+        return interviews.map(interview -> MyInterviewResult.from(
+                interview,
+                interviewQuestionCountTable.get(interview.getId())
+        ));
+
+    }
 }

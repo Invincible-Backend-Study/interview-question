@@ -93,6 +93,10 @@ public class QuestionSetEntity extends BaseEntity {
         return questions.size();
     }
 
+    public int getTailQuestionDepth() {
+        return questionSetRules.getDefaultTailQuestionDepth();
+    }
+
 }
 
 
