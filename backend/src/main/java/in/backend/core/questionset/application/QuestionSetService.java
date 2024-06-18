@@ -1,7 +1,9 @@
 package in.backend.core.questionset.application;
 
 
-import in.backend.core.questionset.entity.QuestionSetEntity;
+import static java.util.stream.Collectors.toMap;
+
+import in.backend.core.question.application.QuestionReader;
 import in.backend.core.questionset.infrastructure.QuestionSetReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,8 +15,18 @@ import org.springframework.stereotype.Service;
 public class QuestionSetService {
 
     private final QuestionSetReader questionSetReader;
+    private final QuestionReader questionReader;
 
-    public Page<QuestionSetEntity> find(Pageable pageable) {
-        return questionSetReader.read(pageable);
+    public Page<QuestionSetInfo> find(Pageable pageable) {
+        var questionSets = questionSetReader.read(pageable);
+        var questionSetProblemCounts = questionReader.readByCount(questionSets.toList())
+                .stream()
+                .collect(toMap(QuestionSetProblemCount::id, QuestionSetProblemCount::count));
+
+        return questionSets
+                .map(questionSet -> QuestionSetInfo.from(
+                        questionSet,
+                        questionSetProblemCounts.get(questionSet.getId())
+                ));
     }
 }

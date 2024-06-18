@@ -21,10 +21,8 @@ public class AIFeedback {
 
     private int score;
 
-
     @Column(length = 1000)
     private String originalContent;
-
 
     @Builder(access = AccessLevel.PROTECTED)
     protected AIFeedback(String tailQuestion, String feedbackContent, int score, String originalContent) {

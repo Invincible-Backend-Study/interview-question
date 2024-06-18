@@ -3,6 +3,9 @@ package in.backend.core.question.application;
 
 import in.backend.core.question.entity.QuestionEntity;
 import in.backend.core.question.infrastrcuture.QuestionRepository;
+import in.backend.core.questionset.application.QuestionSetProblemCount;
+import in.backend.core.questionset.entity.QuestionSetEntity;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,4 +22,11 @@ public class QuestionReader {
     }
 
 
+    public List<QuestionSetProblemCount> readByCount(List<QuestionSetEntity> questionSets) {
+        var questionSetIds = questionSets.stream()
+                .map(QuestionSetEntity::getId)
+                .toList();
+
+        return questionRepository.countByQuestionIds(questionSetIds);
+    }
 }
