@@ -14,7 +14,7 @@ const InterviewPage = () => {
 
 
   return (
-    <div className="grid grid-rows-3 grid-flow-col gap-1 min-h-screen">
+    <div className="grid grid-rows-3 grid-flow-col gap-3 min-h-screen">
       <div className="row-span-3 border-r-1 p-3">
           <span>총 50문제</span>
         <ScrollShadow className="h-[90vh]">
@@ -61,7 +61,7 @@ const InterviewPage = () => {
       </div>
       <div className="row-span-1 border-t-1 border-l-1 col-span-2 grid grid-rows-4 grid-flow-col gap-1 h-full p-3">
         <div className="row-span-3">
-          <Textarea minRows={10} rows={10} maxRows={10}/>
+          <Textarea placeholder="여기에 답을 적어주세요" minRows={10} rows={10} maxRows={10}/>
         </div>
         <div className="row-span-1 flex flex-col-reverse">
           <InterviewController/>

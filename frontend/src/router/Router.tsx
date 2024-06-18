@@ -20,11 +20,11 @@ function Router() {
       ]
     },
     {
-      path: '/login',
+      path: '/auth',
       element: <Root.LoginLayout/>,
       children: [
         {index: true, element: <LoginPage/>},
-        {path: '/login/auth/signin', element:  <SignupPage/>}
+        {path: '/auth/signup', element:  <SignupPage/>}
       ]
     },
     {
