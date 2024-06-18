@@ -6,7 +6,7 @@ import in.backend.core.interview.entity.InterviewSettings;
 public class InterviewFixture {
 
     public static InterviewEntity create() {
-        return InterviewEntity.init(1L, 10, InterviewSettings.builder()
+        return InterviewEntity.init(1L, "제목", 10, InterviewSettings.builder()
                 .tailQuestionDepth(1)
                 .timeToAnswer(10)
                 .timeToThink(10)
@@ -15,7 +15,7 @@ public class InterviewFixture {
     }
 
     public static InterviewEntity create(int depth) {
-        return InterviewEntity.init(1L, 10, InterviewSettings.builder()
+        return InterviewEntity.init(1L, "제목", 10, InterviewSettings.builder()
                 .tailQuestionDepth(depth)
                 .timeToAnswer(10)
                 .timeToThink(10)

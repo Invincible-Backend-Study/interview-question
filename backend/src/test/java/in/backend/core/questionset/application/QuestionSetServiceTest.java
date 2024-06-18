@@ -27,7 +27,7 @@ class QuestionSetServiceTest extends ImplementLayerTest {
             );
         });
 
-        var expected = questionSetService.find(PageRequest.of(0, 1))
+        var expected = questionSetService.find(PageRequest.of(0, 2))
                 .toList();
 
         assertThat(expected.get(0).count()).isEqualTo(10);
