@@ -77,3 +77,21 @@ export interface InterviewSubmitRequest {
   answerContent: string;
 
 }
+
+export interface MyInterviewResponse {
+  interviewId: number;
+  title: string;
+  interviewState: "INIT" | "STOP" | "COMPLETE";
+  questionCount: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+
+export interface InterviewQuestionResponse {
+  interviewId: number;
+  interviewQuestionId: number;
+  question: string;
+  index: number;
+  remainTailQuestionCount: number;
+}
