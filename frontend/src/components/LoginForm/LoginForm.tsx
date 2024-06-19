@@ -9,6 +9,10 @@ const LoginForm = () => {
     location.href = "https://github.com/invincible-Backend-Study"
   }, []);
 
+  const handleOAuthLoginPage = useCallback(() => {
+    location.assign("https://github.com/login/oauth/authorize?client_id=Ov23li2P6dxh8LyV5RHk&redirect_url=http:localhost:5173/auth/signup");
+  }, [])
+
 
   return (
     <Card className="p-4 bg-default-100 w-[40vw]">
@@ -24,7 +28,7 @@ const LoginForm = () => {
         <p className="whitespace-pre-wrap">{AUTH_TEXT.DESCRIPTION}</p>
       </CardBody>
       <CardFooter>
-        <Button color="primary">GITHUB 로그인</Button>
+        <Button color="primary" onClick={handleOAuthLoginPage}>GITHUB 로그인</Button>
       </CardFooter>
     </Card>
   )

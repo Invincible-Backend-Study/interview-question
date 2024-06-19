@@ -7,7 +7,7 @@ export const NETWORK = {
 
 const wrap = (url: string) => {
   return (params: object) => url + '?' + Object.entries(params)
-    .map(arr => `${arr[0]}:${arr[1]}`)
+    .map(arr => `${arr[0]}=${arr[1]}`)
     .join("&")
 }
 
@@ -30,3 +30,7 @@ export const END_POINT = {
 } as const;
 
 
+export const TOKEN = {
+  ACCESS: "accessToken",
+  bearer: (accessToken: string) => `Bearer ${accessToken}`,
+}
