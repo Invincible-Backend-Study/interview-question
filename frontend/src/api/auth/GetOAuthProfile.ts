@@ -4,7 +4,9 @@ import {END_POINT} from "@/constants/api";
 
 
 export const getOAuthProfile = async (request: OAuthProfileRequest) => {
-  const {data} = await axiosInstance.get<OAuthProfileResponse>(END_POINT.PROFILE(request));
+  const {data} = await axiosInstance.get<OAuthProfileResponse>(END_POINT.PROFILE(request), {
+    useAuth: false
+  });
 
   return data;
 }

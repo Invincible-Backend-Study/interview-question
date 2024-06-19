@@ -4,7 +4,9 @@ import {AccessTokenResponse, SignupRequest} from "@/types/auth";
 
 
 export const signup = async (request: SignupRequest) => {
-  const {data} = await  axiosInstance.post<AccessTokenResponse>(END_POINT.SIGNUP, request);
+  const {data} = await  axiosInstance.post<AccessTokenResponse>(END_POINT.SIGNUP, request, {
+    useAuth:false
+  });
 
   return data;
 }
