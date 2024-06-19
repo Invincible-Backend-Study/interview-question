@@ -93,6 +93,7 @@ export interface InterviewQuestionResponse {
   interviewQuestionId: number;
   question: string;
   index: number;
+  size: number;
   remainTailQuestionCount: number;
 }
 

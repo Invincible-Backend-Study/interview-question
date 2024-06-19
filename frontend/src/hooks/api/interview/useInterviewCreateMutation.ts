@@ -1,4 +1,3 @@
-import {InterviewSettings} from "@/types/interview";
 import {useMutation} from "@tanstack/react-query";
 import {createInterview} from "@/api/interview/CreateInterview";
 import {useNavigate} from "react-router-dom";
