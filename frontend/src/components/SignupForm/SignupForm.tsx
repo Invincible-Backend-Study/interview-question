@@ -1,27 +1,28 @@
 
 import {Button, Card, CardBody, CardFooter, CardHeader, Chip, Input, Spacer} from "@nextui-org/react";
-import {useCallback } from "react";
-import {useNavigate, useSearchParams} from "react-router-dom";
-import {PATH} from "@/constants/path";
+import {useCallback, useEffect} from "react";
+import { useSearchParams} from "react-router-dom";
 import {useOAuthProfileQuery} from "@/hooks/api/auth/useOAuthProfileQuery";
 import {useSignupForm} from "@/components/SignupForm/useSignupForm";
+import {useSignInMutation} from "@/hooks/api/auth/useSignInMutation";
 
 const SignupForm = () => {
-
-  const navigate = useNavigate();
   const [urlParams] = useSearchParams();
   const providerId = urlParams.get("code") ?? "";
   const {profile} = useOAuthProfileQuery({providerId});
   const {memberInfo, updateInputValue, handleSignup} = useSignupForm(profile);
+  const signInMutation = useSignInMutation();
 
   const handleRedirectGithubRepository = useCallback(() => {
     location.assign("https://github.com/invincible-Backend-Study");
   },[])
 
-  if(profile.isRegistered) {
-    navigate(PATH.MAIN_PAGE);
-    return ;
-  }
+  useEffect(() => {
+    if(profile.isRegistered) {
+      signInMutation.mutate({providerId:profile.providerId})
+    }
+  }, []);
+
 
   return (<Card className="p-4 bg-default-100 w-[40vw]">
       <CardHeader className="flex justify-between ">
