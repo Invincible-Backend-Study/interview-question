@@ -95,3 +95,16 @@ export interface InterviewQuestionResponse {
   index: number;
   remainTailQuestionCount: number;
 }
+
+
+export interface InterviewCreateFormCommand {
+  questionSetId: number;
+  count: number;
+  tailQuestionDepth: number;
+}
+
+export interface InterviewSettings{
+  questionSetId: number;
+  count: number;
+  tailQuestionDepth: number;
+}

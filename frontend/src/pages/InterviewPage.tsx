@@ -12,7 +12,6 @@ const InterviewPage = () => {
     return;
   }
 
-
   return (
     <div className="grid grid-rows-3 grid-flow-col gap-3 min-h-screen">
       <div className="row-span-3 border-r-1 p-3">
@@ -20,28 +19,9 @@ const InterviewPage = () => {
         <ScrollShadow className="h-[90vh]">
         <Accordion variant="splitted">
           <AccordionItem key="1" aria-label="check Accordion 1" title="✅ Accordion 1" />
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
-          <AccordionItem key="2" aria-label="Accordion 2" title="📌 Accordion 2"/>
+          {new Array(12).fill(0).map((_, index) =>
+            <AccordionItem key={index + 2} aria-label="Accordion 2" title="📌 Accordion 2"/>
+          )}
         </Accordion>
         </ScrollShadow>
       </div>

@@ -27,7 +27,7 @@ export const END_POINT = {
   LOGOUT: "/auth/logout",
   TOKEN_REISSUE: "/auth/token/reissue",
 
-  QUESTION_SETS: "/v1/question-set"
+  QUESTION_SETS: wrap( "/v1/question-set")
 
 } as const;
 

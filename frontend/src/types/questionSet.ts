@@ -4,7 +4,7 @@ export interface QuestionSetSearchResponse {
   /**
    * question set id
    */
-  id: number;
+  questionSetId: number;
 
   /**
    * question set title
@@ -21,4 +21,5 @@ export interface QuestionSetSearchResponse {
    */
   count: number;
 
+  tailQuestionDepth: number;
 }
