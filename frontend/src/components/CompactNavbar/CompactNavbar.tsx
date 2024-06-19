@@ -4,7 +4,18 @@ import {FaHome} from "react-icons/fa";
 import {IoSettingsOutline} from "react-icons/io5";
 import ProfileAvatar from "@/components/ProfileAvatar/ProfileAvatar";
 
-const CompactNavbar = () => {
+
+
+interface CompactNavbarProps {
+  profile: {
+    nickname: string;
+    avatarUrl: string;
+  }
+}
+
+const CompactNavbar = ({profile}: CompactNavbarProps) => {
+
+
   return (
     <nav
       className="z-1 flex flex-col items-center w-16 py-4  min-h-screen " style={{
@@ -21,7 +32,7 @@ const CompactNavbar = () => {
       </div>
 
       <div className={"p-2 flex flex-col items-center"}>
-        <ProfileAvatar profile={{email:"", nickname:"", avatar:""}}/>
+        <ProfileAvatar profile={profile}/>
         <Spacer y={5}/>
         <Button color="danger" isIconOnly>
           <IoSettingsOutline size={25}/>

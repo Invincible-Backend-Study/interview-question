@@ -2,9 +2,8 @@ import {Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@ne
 
 interface ProfileAvatarProps{
   profile: {
-    avatar: string;
+    avatarUrl: string;
     nickname:string;
-    email:string;
   }
 }
 
@@ -18,13 +17,12 @@ const ProfileAvatar = ({profile}: ProfileAvatarProps) => {
             size="sm"
             as="button"
             className="transition-transform"
-            src={profile.avatar}
+            src={profile.avatarUrl}
           />
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions" variant="flat">
           <DropdownItem key="profile" className="h-14 gap-2">
             <p className="font-semibold">닉네임: {profile.nickname}</p>
-            <p className="font-semibold">{profile.email}</p>
           </DropdownItem>
           <DropdownItem key="settings">
             프로필

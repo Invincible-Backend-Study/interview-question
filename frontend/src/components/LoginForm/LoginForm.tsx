@@ -10,7 +10,7 @@ const LoginForm = () => {
   }, []);
 
   const handleOAuthLoginPage = useCallback(() => {
-    location.assign("https://github.com/login/oauth/authorize?client_id=Ov23li2P6dxh8LyV5RHk&redirect_url=http:localhost:5173/auth/signup");
+    location.assign("https://github.com/login/oauth/authorize?client_id=Ov23li2P6dxh8LyV5RHk");
   }, [])
 
 

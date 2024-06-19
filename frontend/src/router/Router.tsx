@@ -6,13 +6,17 @@ import InterviewPage from "@/pages/InterviewPage";
 import SignupPage from "@/pages/SignupPage";
 import ReportPage from "@/pages/ReportPage";
 import InterviewHistoryPage from "@/pages/InterviewHistoryPage";
+import {lazy, Suspense} from "react";
+
+
+const DefaultLayout = lazy(() => import("@/router/DefaultLayout"))
 
 function Router() {
 
   const router = createBrowserRouter([
     {
       path:'/',
-      element: <Root.Layout/>,
+      element: (<Suspense fallback={"wait"}><DefaultLayout/></Suspense>),
       children: [
         {index: true, element: <MainPage/>},
         {path: '/report', element: <ReportPage/>},

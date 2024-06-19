@@ -12,6 +12,8 @@ const wrap = (url: string) => {
 }
 
 export const END_POINT = {
+  ME: '/members/me',
+
   TAIL_QUESTION_SUBMIT: "/tail-questions/submit",
 
   INTERVIEWS: "/interviews",
