@@ -6,9 +6,13 @@ import in.backend.core.auth.infrastrcutrue.payload.request.GithubAccessTokenRequ
 import in.backend.core.auth.infrastrcutrue.payload.response.GithubAccessTokenResponse;
 import in.backend.core.auth.infrastrcutrue.payload.response.GithubProfileResponse;
 import in.backend.global.property.GithubApiProperty;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
+
+@Slf4j
 @Component
 public class GithubApiClient {
 
@@ -32,10 +36,14 @@ public class GithubApiClient {
     }
 
     public GithubProfileResponse requestProfile(String code, String redirectUrl) {
-        final var accessToken = this.requestAccessToken(code, redirectUrl);
+        final var response = this.requestAccessToken(code, redirectUrl);
+
+        log.info(">>>>>> {}", response);
+        log.info(STR."Bearer \{response.accessToken()}");
         return restClient.get()
-                .uri("https://github.com/user")
-                .header("Authorization", STR."Bearer \{accessToken}")
+                .uri("https://api.github.com/user")
+                .header(HttpHeaders.AUTHORIZATION, STR."Bearer \{response.accessToken()}")
+                .accept(APPLICATION_JSON)
                 .retrieve()
                 .body(GithubProfileResponse.class);
     }
