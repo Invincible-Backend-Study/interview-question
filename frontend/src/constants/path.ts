@@ -3,5 +3,6 @@
 
 export const PATH = {
   MAIN_PAGE: "/",
-  AUTH: "/auth"
+  AUTH: "/auth" ,
+  INTERVIEW: (id: number) => `/interviews/${id}`
 } as const;

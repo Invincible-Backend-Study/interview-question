@@ -1,12 +1,33 @@
 import {Button, Card, CardBody, CardFooter, CardHeader, Divider, Image} from "@nextui-org/react";
+import {InterviewCreateFormCommand} from "@/types/interview";
+import {useCallback} from "react";
 
-const QuestionSetItem = () => {
+
+interface QuestionSetItemProps {
+  questionSetId: number;
+  title: string;
+  description: string;
+  count: number;
+  tailQuestionDepth: number;
+
+  openInterviewSetting: (command: InterviewCreateFormCommand) => void;
+}
+
+const QuestionSetItem = ({questionSetId, title, description, tailQuestionDepth, count, openInterviewSetting}: QuestionSetItemProps) => {
+
+  const handleOpenSettings = useCallback(() => {
+    openInterviewSetting({
+      questionSetId,
+      count,
+      tailQuestionDepth
+    })
+  },[])
   return (
     <Card className="max-w-[300px] ">
       <CardHeader className="flex flex-col items-start ">
         <span className="text-blue-500">NEW</span>
-        <span>자바 면접 시리즈</span>
-        <span>대충 난이도가 어떻고 이거 내가 제대로 알고 있는지 궁금하면 한번 풀어보세요</span>
+        <span>{title}</span>
+        <span>{description}</span>
       </CardHeader>
       <CardBody>
         <Image
@@ -17,7 +38,7 @@ const QuestionSetItem = () => {
       </CardBody>
       <Divider/>
       <CardFooter className="flex flex-row-reverse">
-        <Button color="primary" variant="light">시작하기</Button>
+        <Button color="primary" variant="light" onClick={handleOpenSettings}>시작하기</Button>
       </CardFooter>
     </Card>
   )

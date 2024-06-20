@@ -1,4 +1,4 @@
-import {Outlet, useNavigate} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import CompactNavbar from "@/components/CompactNavbar/CompactNavbar";
 import {useMyProfileQuery} from "@/hooks/api/member/useMyProfileQuery";
 

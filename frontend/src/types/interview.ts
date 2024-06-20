@@ -93,5 +93,19 @@ export interface InterviewQuestionResponse {
   interviewQuestionId: number;
   question: string;
   index: number;
+  size: number;
   remainTailQuestionCount: number;
+}
+
+
+export interface InterviewCreateFormCommand {
+  questionSetId: number;
+  count: number;
+  tailQuestionDepth: number;
+}
+
+export interface InterviewSettings{
+  questionSetId: number;
+  count: number;
+  tailQuestionDepth: number;
 }

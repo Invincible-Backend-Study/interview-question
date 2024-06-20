@@ -32,7 +32,7 @@ function Router() {
       ]
     },
     {
-      path: '/interview/:interviewId',
+      path: '/interviews/:interviewId',
       element: <Root.InterviewLayout/>,
       children: [
         {index: true, element: <InterviewPage/>}
