@@ -1,7 +1,11 @@
 package in.backend.core.auth.infrastrcutrue.payload.request;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import in.backend.global.property.GithubApiProperty;
 
+
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record GithubAccessTokenRequest(
         String clientId,
         String clientSecret,
