@@ -1,12 +1,18 @@
 import {Button,  Kbd} from "@nextui-org/react";
 
 
-const InterviewController = () => {
+interface InterviewControllerProps {
+  onSubmit: () => void
+  onPass: () => void
+}
+
+
+const InterviewController = ({onSubmit, onPass}: InterviewControllerProps) => {
   return <div className="flex flex-row-reverse gap-3 p-3">
-    <Button >
+    <Button onClick={onSubmit}>
       제출 <Kbd keys={["option", "command"]}>S</Kbd>
     </Button>
-    <Button>
+    <Button onClick={onPass}>
       패스 <Kbd keys={["option", "command"]}>A</Kbd>
     </Button>
     <Button isDisabled>일시정지</Button>
