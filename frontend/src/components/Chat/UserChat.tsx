@@ -1,6 +1,6 @@
-import {Answer} from "@/types/question";
+import { Chat} from "@/types/question";
 
-const UserChat = ({content}: Answer) => {
+const UserChat = ({content}: Chat) => {
   return (
     <div className='flex flex-row-reverse gap-2.5'>
       {/*<img className='w-8 h-8 rounded-full' src='/docs/images/people/profile-picture-3.jpg' alt='Jese image'/>*/}

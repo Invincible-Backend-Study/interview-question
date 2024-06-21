@@ -5,7 +5,6 @@ import {Strings} from "@/utils/Strings";
 
 const SEPARATOR = "---------";
 
-
 export const useAnswerQuestionMutation = (setTailQuestion: (score: number, feedback: string, tailQuestion: string) => void) => {
   return useMutation({
     mutationKey: ['answerQuestion'],

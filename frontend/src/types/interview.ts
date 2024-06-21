@@ -47,6 +47,7 @@ export interface InterviewSubmitRequest {
    */
   interviewQuestionId: number;
 
+  currentIndex: number;
   /**
    * 답변 상태
    */
@@ -69,13 +70,17 @@ export interface InterviewSubmitRequest {
   /**
    * 답변에 걸린 시간
    */
-  timeToAnswer?: number;
+  timeToAnswer: number;
 
   /**
    * 내가 작성한 답변
    */
   answerContent: string;
 
+}
+
+export interface InterviewSubmitResponse {
+  tailQuestionId: number | null;
 }
 
 export interface MyInterviewResponse {

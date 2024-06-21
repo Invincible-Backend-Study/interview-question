@@ -22,8 +22,13 @@ export interface MainQuestion extends Question {
   content: string;
 }
 
-
 export interface Interview {
   history: Question[]
-
 }
+
+
+export interface Chat {
+  type: Type,
+  content: string;
+}
+

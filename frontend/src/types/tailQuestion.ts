@@ -39,3 +39,6 @@ export interface TailQuestionSubmitRequest {
 
 }
 
+export interface TailQuestionSubmitResponse {
+  tailQuestionId: number | null;
+}
