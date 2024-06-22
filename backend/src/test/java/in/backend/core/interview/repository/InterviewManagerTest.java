@@ -27,7 +27,7 @@ class InterviewManagerTest extends ImplementLayerTest {
                 InterviewQuestionFixture.create(interview.getId(), tailQuestionCount)
         );
 
-        interviewManager.submit(memberId(), InterviewSubmitCommand.builder()
+        var result = interviewManager.submit(memberId(), InterviewSubmitCommand.builder()
                 .answerState(AnswerState.COMPLETE)
                 .answer(new AnswerInfo("대답", 1))
                 .feedback(new FeedbackInfo("피드백", "꼬리질문", "원본", 100))
@@ -37,8 +37,14 @@ class InterviewManagerTest extends ImplementLayerTest {
                 .build()
         );
 
+        var tailQuestion = tailQuestionRepository.findById(result.tailQuestionId())
+                .orElseThrow(IllegalArgumentException::new);
+
         assertThat(interview.getIndex()).isEqualTo(1);
         assertThat(tailQuestionRepository.count()).isEqualTo(1);
+        assertThat(tailQuestion.getQuestion()).isEqualTo("꼬리질문");
+
+
     }
 
     @Test
