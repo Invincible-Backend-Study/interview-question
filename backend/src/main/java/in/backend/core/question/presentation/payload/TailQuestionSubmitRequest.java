@@ -5,7 +5,9 @@ import in.backend.core.interview.application.InterviewSubmitCommand.FeedbackInfo
 import in.backend.core.question.application.TailQuestionSubmitCommand;
 import in.backend.core.question.entity.AnswerState;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
+@Builder
 public record TailQuestionSubmitRequest(
         @NotNull Long interviewQuestionId,
         @NotNull Long tailQuestionId,
@@ -18,9 +20,11 @@ public record TailQuestionSubmitRequest(
 
 ) {
     public TailQuestionSubmitCommand to() {
+
         var feedback = FeedbackInfo.builder()
                 .aiFeedback(aiFeedback)
                 .originalContent(originalContent)
+                .tailQuestion(tailQuestion)
                 .build();
 
         var answer = AnswerInfo.builder()

@@ -2,6 +2,8 @@ package in.backend.core.interview.repository;
 
 
 import in.backend.core.interview.application.InterviewSubmitCommand;
+import in.backend.core.interview.application.InterviewSubmitResult;
+import in.backend.core.question.entity.TailQuestionEntity;
 import in.backend.core.question.infrastrcuture.TailQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +22,8 @@ public class InterviewManager {
     private final TailQuestionRepository tailQuestionRepository;
 
 
-    public void submit(Long memberId, InterviewSubmitCommand interviewSubmitCommand) {
+    public InterviewSubmitResult submit(Long memberId, InterviewSubmitCommand interviewSubmitCommand) {
+        log.info("{}", interviewSubmitCommand);
         var interview = interviewReader.read(interviewSubmitCommand.interviewId(), memberId);
         interview.increaseIndex(interviewSubmitCommand.currentIndex());
 
@@ -32,8 +35,10 @@ public class InterviewManager {
                 interviewSubmitCommand.feedback()
         );
 
-        interviewQuestion.createTailQuestion()
-                .ifPresent(tailQuestionRepository::save);
-
+        return interviewQuestion.createTailQuestion()
+                .map(tailQuestionRepository::save)
+                .map(TailQuestionEntity::getId)
+                .map(InterviewSubmitResult::new)
+                .orElseGet(InterviewSubmitResult::empty);
     }
 }

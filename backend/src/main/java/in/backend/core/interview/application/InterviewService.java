@@ -35,18 +35,13 @@ public class InterviewService {
                 interview.getCurrentProgressIndex()
         );
 
-        return InterviewQuestionInfo.builder()
-                .interviewId(interview.getId())
-                .interviewQuestionId(interviewQuestion.getId())
-                .question(interviewQuestion.getQuestionContent())
-                .remainTailQuestionCount(interviewQuestion.getRemainTailQuestionCount())
-                .index(interview.getIndex())
-                .build();
+        return InterviewQuestionInfo.from(interview, interviewQuestion);
+
     }
 
 
-    public void submit(Visitor visitor, InterviewSubmitCommand interviewSubmitCommand) {
-        interviewManager.submit(visitor.memberId(), interviewSubmitCommand);
+    public InterviewSubmitResult submit(Visitor visitor, InterviewSubmitCommand interviewSubmitCommand) {
+        return interviewManager.submit(visitor.memberId(), interviewSubmitCommand);
     }
 
 

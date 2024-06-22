@@ -16,6 +16,7 @@ public record QuestionSetInfo(
 
     public static QuestionSetInfo from(QuestionSetEntity questionSet, Long problemCount) {
         return QuestionSetInfo.builder()
+                .questionSetId(questionSet.getId())
                 .title(questionSet.getTitle())
                 .description(questionSet.getDescription())
                 .count(problemCount)

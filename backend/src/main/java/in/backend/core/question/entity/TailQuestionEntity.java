@@ -17,8 +17,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
+@ToString
 @Getter
 @Entity
 @Table(name = "tail_questions")
@@ -55,6 +57,7 @@ public class TailQuestionEntity {
     }
 
     public void submit(AnswerState answerState, AnswerInfo answerInfo, FeedbackInfo feedbackInfo) {
+
         switch (answerState) {
             case PASS -> answer = Answer.pass();
             case COMPLETE -> {
