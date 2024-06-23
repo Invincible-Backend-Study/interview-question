@@ -44,7 +44,7 @@ public class AuthApi {
             @Valid @RequestBody SignupRequest signupRequest,
             HttpServletResponse response
     ) {
-        var issuedToken = socialLoginProcessor.signup(signupRequest);
+        var issuedToken = socialLoginProcessor.signup(signupRequest.toDto());
 
         response.addHeader(SET_COOKIE, cookieProvider.createCookie(issuedToken.refreshToken()).toString());
         return ResponseEntity.status(CREATED)

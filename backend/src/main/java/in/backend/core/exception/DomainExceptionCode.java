@@ -10,7 +10,7 @@ public enum DomainExceptionCode {
     USER(100, "사용자"),
     PROVIDER_ID_NOT_EXISTS(USER.code + 1, "사용자가 존재하지 않습니다."),
     PROVIDER_ID_EXISTS(USER.code + 2, "이미 회원가입 했습니다."),
-
+    NICK_NAME_EXISTS(USER.code + 3, "이미 사용중인 닉네임니다."),
 
     QUESTION(200, "질문"),
 
@@ -31,7 +31,8 @@ public enum DomainExceptionCode {
 
 
     TAIL_QUESTION(600, "꼬리 질문"),
-    TAIL_QUESTION_NOT_FOUND(TAIL_QUESTION.code + 1, "꼬리질문을 찾을 수 없습니다");
+    TAIL_QUESTION_NOT_FOUND(TAIL_QUESTION.code + 1, "꼬리질문을 찾을 수 없습니다"),
+    ;
 
 
     private final int code;
