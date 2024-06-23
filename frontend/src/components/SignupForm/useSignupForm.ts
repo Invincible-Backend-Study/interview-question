@@ -30,7 +30,7 @@ export const useSignupForm = (profile: DefaultProfile) => {
       ...memberInfo,
       ...profile
     })
-  }, [])
+  }, [memberInfo])
 
   return {
     memberInfo, updateInputValue, handleSignup

@@ -1,14 +1,16 @@
 
 import {Button, Card, CardBody, CardFooter, CardHeader, Chip, Input, Spacer} from "@nextui-org/react";
 import {useCallback, useEffect} from "react";
-import { useSearchParams} from "react-router-dom";
 import {useOAuthProfileQuery} from "@/hooks/api/auth/useOAuthProfileQuery";
 import {useSignupForm} from "@/components/SignupForm/useSignupForm";
 import {useSignInMutation} from "@/hooks/api/auth/useSignInMutation";
 
-const SignupForm = () => {
-  const [urlParams] = useSearchParams();
-  const providerId = urlParams.get("code") ?? "";
+
+interface SignupFormProps {
+  providerId: string;
+}
+
+const SignupForm = ({providerId}: SignupFormProps) => {
   const {profile} = useOAuthProfileQuery({providerId});
   const {memberInfo, updateInputValue, handleSignup} = useSignupForm(profile);
   const signInMutation = useSignInMutation();
@@ -19,7 +21,9 @@ const SignupForm = () => {
 
   useEffect(() => {
     if(profile.isRegistered) {
-      signInMutation.mutate({providerId:profile.providerId})
+      signInMutation.mutate({
+        providerId:profile.providerId
+      })
     }
   }, []);
 
