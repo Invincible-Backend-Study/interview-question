@@ -1,4 +1,5 @@
 import {AnswerState} from "@/types/answer";
+import {Interview} from "@/types/question";
 
 /**
  * 인터뷰 생성 요청
@@ -83,10 +84,11 @@ export interface InterviewSubmitResponse {
   tailQuestionId: number | null;
 }
 
+export type InterviewState =  "INIT" | "STOP" | "COMPLETE";
 export interface MyInterviewResponse {
   interviewId: number;
   title: string;
-  interviewState: "INIT" | "STOP" | "COMPLETE";
+  interviewState: InterviewState;
   questionCount: number;
   createdAt: Date;
   updatedAt: Date;
@@ -113,4 +115,42 @@ export interface InterviewSettings{
   questionSetId: number;
   count: number;
   tailQuestionDepth: number;
+}
+
+
+
+export interface MyInterview {
+  interviewId: number;
+  title: string;
+  interviewState: "INIT" | "STOP" | "COMPLETE";
+  questionCount: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+
+export interface MyInterviewResult {
+  interviewId: number;
+  title: string;
+  interviewState: "INIT" | "STOP" | "COMPLETE";
+  interviewQuestions: InterviewQuestionDetail[]
+}
+
+interface InterviewQuestionDetail {
+  interviewQuestionId: number;
+  answerState: "INIT" | "PASS" | "COMPLETE",
+  question: string;
+  answer: string;
+  referenceLinks: string;
+  feedback: string;
+  remainTailQuestionCount: number;
+  tailQuestions: TailQuestionDetail[]
+}
+
+interface TailQuestionDetail {
+  tailQuestionId: number;
+  answerState: "INIT" | "PASS" | "COMPLETE";
+  question: string;
+  answer: string;
+  feedback: string;
 }

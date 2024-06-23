@@ -17,9 +17,10 @@ export const END_POINT = {
   TAIL_QUESTION_SUBMIT: "/tail-questions/submit",
 
   INTERVIEWS: "/interviews",
+  INTERVIEWS_GET_RESULT: (interviewId: number) => `/interviews/${interviewId}`,
   INTERVIEWS_SUBMIT: "/interviews/submit",
   INTERVIEWS_GET_PROBLEM: (interviewId: number) => `/interviews/${interviewId}/current/problem`,
-  INTERVIEWS_ME: "/interviews/me",
+  INTERVIEWS_ME: wrap( "/interviews/me"),
 
   SIGNUP: "/auth/signup",
   SIGNIN: "/auth/signin",

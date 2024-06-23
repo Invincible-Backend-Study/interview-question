@@ -7,6 +7,7 @@ import SignupPage from "@/pages/SignupPage";
 import ReportPage from "@/pages/ReportPage";
 import InterviewHistoryPage from "@/pages/InterviewHistoryPage";
 import {lazy, Suspense} from "react";
+import InterviewResultPage from "@/pages/InterviewResultPage";
 
 
 const DefaultLayout = lazy(() => import("@/router/DefaultLayout"))
@@ -20,7 +21,8 @@ function Router() {
       children: [
         {index: true, element: <MainPage/>},
         {path: '/report', element: <ReportPage/>},
-        {path: '/history', element: <InterviewHistoryPage/>}
+        {path: '/history', element: <InterviewHistoryPage/>},
+        {path: '/interview/result/:interviewId', element: <InterviewResultPage/>}
       ]
     },
     {
