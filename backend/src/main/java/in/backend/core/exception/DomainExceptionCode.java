@@ -2,6 +2,7 @@ package in.backend.core.exception;
 
 
 import java.util.function.Supplier;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -36,6 +37,7 @@ public enum DomainExceptionCode {
 
 
     private final int code;
+    @Getter
     private final String message;
 
 
