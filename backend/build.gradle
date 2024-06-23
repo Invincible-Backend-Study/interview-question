@@ -58,7 +58,7 @@ dependencies {
     testImplementation 'io.rest-assured:rest-assured:5.4.0'
 
     // spring-devtools
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    //developmentOnly 'org.springframework.boot:spring-boot-devtools'
     // h2
     runtimeOnly 'com.h2database:h2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
