@@ -23,4 +23,5 @@ public class InterviewReader {
     public Page<InterviewEntity> read(Long memberId, Pageable pageable) {
         return interviewRepository.findByMemberId(memberId, pageable);
     }
+
 }

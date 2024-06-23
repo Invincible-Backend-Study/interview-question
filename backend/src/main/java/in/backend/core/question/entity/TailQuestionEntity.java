@@ -82,4 +82,19 @@ public class TailQuestionEntity {
         }
         return aiFeedback.getTailQuestion();
     }
+
+    public String getAnswer() {
+        return answer.getContent();
+    }
+
+    public String getFeedback() {
+        if (Objects.isNull(aiFeedback)) {
+            return "";
+        }
+        return aiFeedback.getFeedbackContent();
+    }
+
+    public AnswerState getAnswerState() {
+        return answer.getAnswerState();
+    }
 }

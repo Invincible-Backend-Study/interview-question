@@ -4,10 +4,13 @@ package in.backend.core.interview.application;
 import static java.util.stream.Collectors.toMap;
 
 import in.backend.core.auth.domain.Visitor;
+import in.backend.core.interview.application.InterviewDetail.InterviewQuestionDetail;
 import in.backend.core.interview.repository.InterviewManager;
 import in.backend.core.interview.repository.InterviewQuestionReader;
 import in.backend.core.interview.repository.InterviewReader;
 import in.backend.core.interview.repository.InterviewWriter;
+import in.backend.core.question.infrastrcuture.TailQuestionReader;
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +22,7 @@ public class InterviewService {
 
     private final InterviewWriter interviewWriter;
     private final InterviewReader interviewReader;
+    private final TailQuestionReader tailQuestionReader;
     private final InterviewQuestionReader interviewQuestionReader;
     private final InterviewManager interviewManager;
 
@@ -55,6 +59,21 @@ public class InterviewService {
                 interview,
                 interviewQuestionCountTable.get(interview.getId())
         ));
+    }
+
+    public InterviewDetail getDetail(Long interviewId, Long memberId) {
+        var interview = interviewReader.read(interviewId, memberId);
+        var interviewQuestions = interviewQuestionReader.read(interviewId, memberId);
+        var tailQuestionMap = tailQuestionReader.read(interviewId);
+
+        var interviewDetails = interviewQuestions.stream()
+                .map(interviewQuestion -> InterviewQuestionDetail.from(
+                        interviewQuestion,
+                        tailQuestionMap.getOrDefault(interviewQuestion.getId(), new ArrayList<>())
+                )).toList();
+
+        return InterviewDetail.from(interview, interviewDetails);
 
     }
 }
+

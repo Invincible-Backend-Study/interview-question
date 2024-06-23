@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class InterviewQuestionReader {
     private final InterviewQuestionRepository interviewQuestionRepository;
 
-
     public InterviewQuestionEntity read(Long interviewId, Long memberId, int index) {
         var interviewQuestions = interviewQuestionRepository.findByInterviewIdAndMemberId(
                 interviewId,
@@ -32,6 +31,11 @@ public class InterviewQuestionReader {
 
         return interviewQuestions.getFirst();
     }
+
+    public List<InterviewQuestionEntity> read(Long interviewId, Long memberId) {
+        return interviewQuestionRepository.findByInterviewIdAndMemberId(interviewId, memberId);
+    }
+
 
     public InterviewQuestionEntity read(Long interviewQuestionId) {
         return interviewQuestionRepository.findById(interviewQuestionId)

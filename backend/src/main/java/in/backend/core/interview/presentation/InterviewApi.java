@@ -4,6 +4,7 @@ package in.backend.core.interview.presentation;
 import in.backend.core.auth.domain.Visitor;
 import in.backend.core.auth.domain.attributes.Auth;
 import in.backend.core.auth.domain.attributes.MemberOnly;
+import in.backend.core.interview.application.InterviewDetail;
 import in.backend.core.interview.application.InterviewService;
 import in.backend.core.interview.application.InterviewSubmitResult;
 import in.backend.core.interview.application.MyInterviewResult;
@@ -37,6 +38,16 @@ public class InterviewApi {
     ) {
         var interviewId = interviewService.create(visitor, request.to());
         return new InterviewCreateResponse(interviewId);
+    }
+
+    @MemberOnly
+    @GetMapping("/{interviewId}")
+    public InterviewDetail getDetail(
+            @Auth Visitor visitor,
+            @NotNull @PathVariable("interviewId") Long interviewId
+    ) {
+        return interviewService.getDetail(interviewId, visitor.memberId());
+
     }
 
     @MemberOnly

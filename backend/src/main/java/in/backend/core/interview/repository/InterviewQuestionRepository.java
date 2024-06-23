@@ -13,6 +13,8 @@ public interface InterviewQuestionRepository extends JpaRepository<InterviewQues
 
     List<InterviewQuestionEntity> findByInterviewIdAndMemberId(Long interviewId, Long memberId, Pageable pageable);
 
+    List<InterviewQuestionEntity> findByInterviewIdAndMemberId(Long interviewId, Long memberId);
+
 
     @Query("""
                 select new in.backend.core.interview.application.InterviewQuestionCount(I.interviewId, count(I.interviewId)) 

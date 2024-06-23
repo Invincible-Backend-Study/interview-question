@@ -123,8 +123,20 @@ public class InterviewQuestionEntity extends BaseEntity {
             return Optional.empty();
         }
 
-        log.info("{}", previousQuestion);
-        log.info(">>> {}", previousQuestion.getTailQuestion());
         return createTailQuestion(previousQuestion.getTailQuestion());
     }
+
+    public AnswerState getAnswerState() {
+        return answer.getAnswerState();
+    }
+
+    public String getReferenceLinks() {
+        return "";
+
+    }
+
+    public String getFeedback() {
+        return aiFeedback.getFeedbackContent();
+    }
 }
+
