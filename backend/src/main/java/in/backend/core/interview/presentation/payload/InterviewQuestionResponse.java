@@ -9,6 +9,7 @@ public record InterviewQuestionResponse(
         Long interviewQuestionId,
         String question,
         int index,
+        int size,
         int remainTailQuestionCount
 ) {
     public static InterviewQuestionResponse from(InterviewQuestionInfo interviewQuestionInfo) {
@@ -17,6 +18,7 @@ public record InterviewQuestionResponse(
                 .interviewQuestionId(interviewQuestionInfo.interviewQuestionId())
                 .question(interviewQuestionInfo.question())
                 .index(interviewQuestionInfo.index())
+                .size(interviewQuestionInfo.size())
                 .remainTailQuestionCount(interviewQuestionInfo.remainTailQuestionCount())
                 .build();
     }

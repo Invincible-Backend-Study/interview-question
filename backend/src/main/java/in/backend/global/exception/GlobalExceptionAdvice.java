@@ -1,6 +1,8 @@
 package in.backend.global.exception;
 
 
+import in.backend.core.exception.DomainException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +16,24 @@ public class GlobalExceptionAdvice {
     public ResponseEntity<ErrorResponse> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
         return ResponseEntity.badRequest()
                 .body(new ErrorResponse(0, "유효하지 않은 요쳥입니다."));
+    }
+
+    @ExceptionHandler({UnAuthorizedException.class})
+    public ResponseEntity<ErrorResponse> exception(UnAuthorizedException exception) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(new ErrorResponse(exception.getCode(), exception.getMessage()));
+    }
+
+    @ExceptionHandler({GlobalException.class})
+    public ResponseEntity<ErrorResponse> exception(GlobalException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(exception.getCode(), exception.getMessage()));
+    }
+
+    @ExceptionHandler({DomainException.class})
+    public ResponseEntity<ErrorResponse> exception(DomainException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(exception.getCode(), exception.getMessage()));
     }
 
 

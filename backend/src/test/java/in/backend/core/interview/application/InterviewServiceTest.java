@@ -4,11 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import in.backend.core.auth.domain.Visitor;
 import in.backend.core.interview.repository.InterviewWriter;
+import in.backend.global.fixture.InterviewFixture;
+import in.backend.global.fixture.InterviewQuestionFixture;
 import in.backend.global.fixture.QuestionFixture;
 import in.backend.global.fixture.QuestionSetFixture;
 import in.backend.global.layer.ImplementLayerTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 
 
 class InterviewServiceTest extends ImplementLayerTest {
@@ -39,6 +42,22 @@ class InterviewServiceTest extends ImplementLayerTest {
 
         assertThat(interviewInfo.index()).isEqualTo(0);
         assertThat(interviewInfo.remainTailQuestionCount()).isEqualTo(3);
+    }
+
+
+    @Test
+    void 내_인터뷰_참여_이력을_볼_수_있습니다() {
+        interviewQuestionRepository.saveAll(InterviewQuestionFixture.creates(
+                interviewRepository.save(InterviewFixture.create()), 10)
+        );
+        interviewQuestionRepository.saveAll(InterviewQuestionFixture.creates(
+                interviewRepository.save(InterviewFixture.create()), 5)
+        );
+
+        var myInterviewResults = interviewService.search(Visitor.member(1L), PageRequest.of(0, 2))
+                .toList();
+        assertThat(myInterviewResults.get(0).questionCount()).isEqualTo(10);
+        assertThat(myInterviewResults.get(1).questionCount()).isEqualTo(5);
     }
 
 

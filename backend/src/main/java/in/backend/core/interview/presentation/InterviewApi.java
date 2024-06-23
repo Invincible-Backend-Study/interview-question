@@ -4,14 +4,18 @@ package in.backend.core.interview.presentation;
 import in.backend.core.auth.domain.Visitor;
 import in.backend.core.auth.domain.attributes.Auth;
 import in.backend.core.auth.domain.attributes.MemberOnly;
+import in.backend.core.interview.application.InterviewDetail;
 import in.backend.core.interview.application.InterviewService;
+import in.backend.core.interview.application.InterviewSubmitResult;
+import in.backend.core.interview.application.MyInterviewResult;
 import in.backend.core.interview.presentation.payload.InterviewCreateRequest;
 import in.backend.core.interview.presentation.payload.InterviewCreateResponse;
 import in.backend.core.interview.presentation.payload.InterviewQuestionResponse;
 import in.backend.core.interview.presentation.payload.InterviewSubmitRequest;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,24 +41,42 @@ public class InterviewApi {
     }
 
     @MemberOnly
+    @GetMapping("/{interviewId}")
+    public InterviewDetail getDetail(
+            @Auth Visitor visitor,
+            @NotNull @PathVariable("interviewId") Long interviewId
+    ) {
+        return interviewService.getDetail(interviewId, visitor.memberId());
+
+    }
+
+    @MemberOnly
     @GetMapping("/{interviewId}/current/problem")
     public InterviewQuestionResponse getCurrentProblem(
             @Auth Visitor visitor,
-            @PathVariable Long interviewId
+            @NotNull @PathVariable("interviewId") Long interviewId
     ) {
-        return InterviewQuestionResponse.from(
-                interviewService.loadByCurrentProblem(visitor, interviewId)
-        );
+        var interviewQuestionInfo = interviewService.loadByCurrentProblem(visitor, interviewId);
+        return InterviewQuestionResponse.from(interviewQuestionInfo);
     }
 
     @MemberOnly
     @PostMapping("/submit")
-    public ResponseEntity<Void> submit(
+    public InterviewSubmitResult submit(
             @Auth Visitor visitor,
             @RequestBody InterviewSubmitRequest request
     ) {
-        interviewService.submit(visitor, request.to());
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return interviewService.submit(visitor, request.to());
+    }
+
+
+    @MemberOnly
+    @GetMapping("/me")
+    public Page<MyInterviewResult> getMe(
+            @Auth Visitor visitor,
+            Pageable pageable
+    ) {
+        return interviewService.search(visitor, pageable);
     }
 
 

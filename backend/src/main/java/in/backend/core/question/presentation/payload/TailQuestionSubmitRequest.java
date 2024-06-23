@@ -4,23 +4,27 @@ import in.backend.core.interview.application.InterviewSubmitCommand.AnswerInfo;
 import in.backend.core.interview.application.InterviewSubmitCommand.FeedbackInfo;
 import in.backend.core.question.application.TailQuestionSubmitCommand;
 import in.backend.core.question.entity.AnswerState;
+import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
+@Builder
 public record TailQuestionSubmitRequest(
-        Long interviewQuestionId,
-        Long tailQuestionId,
-
-        String answerState,
-        String aiFeedback,
-        String tailQuestion,
-        String originalContent,
-        Integer timeToAnswer,
-        String answerContent
+        @NotNull Long interviewQuestionId,
+        @NotNull Long tailQuestionId,
+        @NotNull String answerState,
+        @NotNull String aiFeedback,
+        @NotNull String tailQuestion,
+        @NotNull String originalContent,
+        @NotNull Integer timeToAnswer,
+        @NotNull String answerContent
 
 ) {
     public TailQuestionSubmitCommand to() {
+
         var feedback = FeedbackInfo.builder()
                 .aiFeedback(aiFeedback)
                 .originalContent(originalContent)
+                .tailQuestion(tailQuestion)
                 .build();
 
         var answer = AnswerInfo.builder()

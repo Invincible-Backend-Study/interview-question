@@ -1,26 +1,27 @@
 package in.backend.core.questionset.application;
 
 import in.backend.core.questionset.entity.QuestionSetEntity;
-import in.backend.core.questionset.entity.QuestionSetRules;
+import lombok.AccessLevel;
+import lombok.Builder;
 
+
+@Builder(access = AccessLevel.PRIVATE)
 public record QuestionSetInfo(
+        Long questionSetId,
         String title,
-        Long adminId,
-        Integer defaultTailQuestionDepth,
-        Integer defaultTimeToThink,
-        Integer defaultTimeToAnswer
+        String description,
+        Long count,
+        Integer tailQuestionDepth
 ) {
-    public QuestionSetEntity toEntity() {
-        var questionSetRules = QuestionSetRules.builder()
-                .defaultTimeToAnswer(defaultTimeToAnswer)
-                .defaultTailQuestionDepth(defaultTailQuestionDepth)
-                .defaultTimeToThink(defaultTimeToThink)
-                .build();
 
-        return QuestionSetEntity.builder()
-                .adminId(adminId)
-                .title(title)
-                .questionSetRules(questionSetRules)
+    public static QuestionSetInfo from(QuestionSetEntity questionSet, Long problemCount) {
+        return QuestionSetInfo.builder()
+                .questionSetId(questionSet.getId())
+                .title(questionSet.getTitle())
+                .description(questionSet.getDescription())
+                .count(problemCount)
+                .tailQuestionDepth(questionSet.getTailQuestionDepth())
                 .build();
     }
+
 }

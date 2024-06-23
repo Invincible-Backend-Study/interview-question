@@ -1,13 +1,16 @@
 package in.backend.core.interview.presentation.payload;
 
 import in.backend.core.interview.application.InterviewCreateCommand;
+import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
+@Builder
 public record InterviewCreateRequest(
-        Long questionSetId,
-        Integer tailQuestionDepth,
-        Integer totalProblemCount,
-        Integer timeToAnswer,
-        Integer timeToThink
+        @NotNull Long questionSetId,
+        @NotNull Integer tailQuestionDepth,
+        @NotNull Integer totalProblemCount,
+        @NotNull Integer timeToAnswer,
+        @NotNull Integer timeToThink
 
 ) {
 

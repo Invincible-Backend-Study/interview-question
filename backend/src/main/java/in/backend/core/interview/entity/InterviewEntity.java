@@ -35,14 +35,14 @@ public class InterviewEntity extends BaseEntity {
     @Column(nullable = false)
     private Long memberId;
 
+    @Column(nullable = false)
+    private String title;
 
     /**
      * 현재 진행 중인 면접 질문 번호
      */
     @Column(nullable = false)
     private int index;
-
-
     /**
      * 인터뷰 면접 질문의 수
      */
@@ -60,17 +60,25 @@ public class InterviewEntity extends BaseEntity {
 
 
     @Builder(access = AccessLevel.PROTECTED)
-    protected InterviewEntity(Long memberId, int index, int size, InterviewSettings settings) {
+    protected InterviewEntity(
+            Long memberId,
+            int index,
+            String title,
+            int size,
+            InterviewSettings settings
+    ) {
         this.memberId = memberId;
         this.index = index;
         this.size = size;
+        this.title = title;
         this.settings = settings;
         this.interviewState = InterviewState.PROGRESS;
     }
 
-    public static InterviewEntity init(Long memberId, int size, InterviewSettings settings) {
+    public static InterviewEntity init(Long memberId, String title, int size, InterviewSettings settings) {
         return InterviewEntity.builder()
                 .memberId(memberId)
+                .title(title)
                 .size(size)
                 .settings(settings)
                 .build();

@@ -8,7 +8,6 @@ import in.backend.core.interview.application.InterviewCreateCommand;
 import in.backend.global.fixture.QuestionFixture;
 import in.backend.global.fixture.QuestionSetFixture;
 import in.backend.global.layer.ImplementLayerTest;
-import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -42,12 +41,10 @@ class InterviewWriterTest extends ImplementLayerTest {
 
     @ParameterizedTest
     @ValueSource(ints = {-1, 0, 11, 100})
-    void 인터뷰를_생성하려고_할_때_질문의_개수가_요청한_개수보다_적거나_없거나_많은_경우_에러가_발생합니다(int total, @Autowired EntityManager entityManager) {
+    void 인터뷰를_생성하려고_할_때_질문의_개수가_요청한_개수보다_없거나_초과하는_경우_에러가_발생합니다(int total) {
         var questionSet = questionSetRepository.save(QuestionSetFixture.create());
 
         questionRepository.saveAll(QuestionFixture.creates(questionSet, 10));
-
-        entityManager.flush();
 
         assertThatThrownBy(() -> interviewWriter.write(1L, InterviewCreateCommand.builder()
                 .questionSetId(questionSet.getId())

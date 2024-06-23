@@ -4,6 +4,8 @@ package in.backend.core.interview.repository;
 import in.backend.core.exception.DomainExceptionCode;
 import in.backend.core.interview.entity.InterviewEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,4 +19,9 @@ public class InterviewReader {
         return interviewRepository.findByIdAndMemberId(interviewId, memberId)
                 .orElseThrow(DomainExceptionCode.INTERVIEW_NOT_FOUND::create);
     }
+
+    public Page<InterviewEntity> read(Long memberId, Pageable pageable) {
+        return interviewRepository.findByMemberId(memberId, pageable);
+    }
+
 }

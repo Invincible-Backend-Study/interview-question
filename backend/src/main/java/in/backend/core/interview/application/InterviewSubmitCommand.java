@@ -5,8 +5,8 @@ import lombok.Builder;
 
 @Builder
 public record InterviewSubmitCommand(
-        long interviewId,
-        long interviewQuestionId,
+        Long interviewId,
+        Long interviewQuestionId,
         int currentIndex,
 
         AnswerState answerState,

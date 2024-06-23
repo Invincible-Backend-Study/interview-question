@@ -18,7 +18,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Getter
 @Entity
 @Table(name = "interview_items")
@@ -120,6 +122,21 @@ public class InterviewQuestionEntity extends BaseEntity {
         if (!previousQuestion.isComplete()) {
             return Optional.empty();
         }
+
         return createTailQuestion(previousQuestion.getTailQuestion());
     }
+
+    public AnswerState getAnswerState() {
+        return answer.getAnswerState();
+    }
+
+    public String getReferenceLinks() {
+        return "";
+
+    }
+
+    public String getFeedback() {
+        return aiFeedback.getFeedbackContent();
+    }
 }
+

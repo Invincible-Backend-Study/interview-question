@@ -6,6 +6,7 @@ import in.backend.core.auth.domain.attributes.Auth;
 import in.backend.core.auth.domain.attributes.MemberOnly;
 import in.backend.core.question.application.TailQuestionService;
 import in.backend.core.question.presentation.payload.TailQuestionSubmitRequest;
+import in.backend.core.question.presentation.payload.TailQuestionSubmitResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,10 +22,12 @@ public class TailQuestionApi {
 
     @MemberOnly
     @PostMapping("/submit")
-    public void submit(
+    public TailQuestionSubmitResponse submit(
             @Auth Visitor visitor,
             @RequestBody TailQuestionSubmitRequest tailQuestionSubmitRequest
     ) {
-        this.tailQuestionService.submit(visitor, tailQuestionSubmitRequest.to());
+        var submitResult = this.tailQuestionService.submit(visitor, tailQuestionSubmitRequest.to());
+
+        return TailQuestionSubmitResponse.from(submitResult);
     }
 }

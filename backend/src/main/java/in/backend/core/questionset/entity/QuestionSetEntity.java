@@ -43,8 +43,12 @@ public class QuestionSetEntity extends BaseEntity {
      * question set의 제목
      */
     @Column(nullable = false)
-
     private String title;
+
+    @Column()
+    private String description;
+
+
     /**
      * question set을 interview로 변환할 때 사용할 기본 규칙
      */
@@ -60,11 +64,11 @@ public class QuestionSetEntity extends BaseEntity {
 
 
     @Builder
-    public QuestionSetEntity(Long adminId, String title, QuestionSetRules questionSetRules) {
+    public QuestionSetEntity(Long adminId, String title, String description, QuestionSetRules questionSetRules) {
         this.adminId = adminId;
         this.title = title;
         this.questionSetRules = questionSetRules;
-
+        this.description = description;
         QuestionSetPolicy.validate(this);
     }
 
@@ -87,6 +91,10 @@ public class QuestionSetEntity extends BaseEntity {
 
     public int getQuestionSize() {
         return questions.size();
+    }
+
+    public int getTailQuestionDepth() {
+        return questionSetRules.getDefaultTailQuestionDepth();
     }
 
 }

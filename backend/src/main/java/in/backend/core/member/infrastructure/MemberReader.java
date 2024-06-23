@@ -22,4 +22,9 @@ public class MemberReader {
         return memberRepository.findByProviderId(providerId)
                 .orElseThrow(DomainExceptionCode.PROVIDER_ID_NOT_EXISTS::create);
     }
+
+    public MemberEntity read(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(DomainExceptionCode.PROVIDER_ID_NOT_EXISTS::create);
+    }
 }

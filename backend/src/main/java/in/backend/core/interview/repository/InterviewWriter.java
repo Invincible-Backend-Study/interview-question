@@ -22,10 +22,11 @@ public class InterviewWriter {
 
     public Long write(Long memberId, InterviewCreateCommand interviewCreateCommand) {
         var questionSet = questionSetReader.read(interviewCreateCommand.questionSetId());
-
         var questions = questionSet.extractQuestions(interviewCreateCommand.totalOfProblemCount());
+
         var interview = InterviewEntity.init(
                 memberId,
+                questionSet.getTitle(),
                 questionSet.getQuestionSize(),
                 interviewCreateCommand.toInterviewSettings(questionSet.getQuestionSetRules())
         );
