@@ -1,11 +1,10 @@
 package in.backend.core.auth.presentation.payload.request;
 
 import in.backend.core.member.infrastructure.MemberInfo;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import org.hibernate.validator.constraints.Length;
 
 @Builder
 public record SignupRequest(
@@ -14,8 +13,7 @@ public record SignupRequest(
         @NotNull
         String avatarUrl,
 
-        @Max(20)
-        @Min(4)
+        @Length(min = 3, max = 20)
         @NotNull
         @NotBlank
         String nickname
