@@ -7,8 +7,8 @@ export const useInterviewQuestionLoadQuery = (interviewId: number) => {
   const {data: interview, refetch} = useSuspenseQuery({
     queryKey: ['loadInterviewQuestion'],
     queryFn: () => loadByCurrentInterviewQuestion(interviewId),
-    gcTime: 1000 * 60 * 10,
-    staleTime:1000 * 60 * 10
+    gcTime: 60 * 60 * 10,
+    staleTime: 60* 60 * 10
   });
 
   return {interview, refetch}
