@@ -18,7 +18,10 @@ public enum GlobalExceptionCode {
     INVALID_ACCESS_TOKEN(10005, "유효하지 않은 access token 입니다."),
     INVALID_REFRESH_TOKEN(10006, "유효하지 않은 refresh token 입니다."),
 
-    UNAUTHORIZED_MEMBER(10007, "허가받지 않은 사용자입니다.");
+    UNAUTHORIZED_MEMBER(10007, "허가받지 않은 사용자입니다."),
+
+    INVALID_OAUTH_CODE(10008, "유효하지 않은 OAUTH 요청입니다."),
+    INVALID_OAUTH_SERVER(100009, "현재 서버 연결이 불안정합니다.");
 
     private final int code;
     private final String message;

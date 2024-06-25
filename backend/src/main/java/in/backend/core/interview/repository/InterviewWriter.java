@@ -27,7 +27,7 @@ public class InterviewWriter {
         var interview = InterviewEntity.init(
                 memberId,
                 questionSet.getTitle(),
-                questionSet.getQuestionSize(),
+                questions.size(),
                 interviewCreateCommand.toInterviewSettings(questionSet.getQuestionSetRules())
         );
 

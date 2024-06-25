@@ -54,7 +54,7 @@ public class Answer {
 
 
     public boolean isComplete() {
-        return answerState != AnswerState.INIT;
+        return answerState == AnswerState.COMPLETE;
     }
 
 }

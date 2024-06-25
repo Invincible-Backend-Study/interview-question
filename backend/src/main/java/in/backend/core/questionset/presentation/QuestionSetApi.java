@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/question-set")
+@RequestMapping("/api/question-set")
 public class QuestionSetApi {
 
     private final QuestionSetService questionSetService;

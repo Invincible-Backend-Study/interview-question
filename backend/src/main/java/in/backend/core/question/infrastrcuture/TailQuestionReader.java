@@ -28,6 +28,6 @@ public class TailQuestionReader {
     public Map<Long, List<TailQuestionEntity>> read(Long interviewId) {
         return tailQuestionRepository.findByInterviewId(interviewId)
                 .stream()
-                .collect(groupingBy(TailQuestionEntity::getInterviewId));
+                .collect(groupingBy(TailQuestionEntity::getInterviewQuestionId));
     }
 }

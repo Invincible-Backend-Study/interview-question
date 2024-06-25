@@ -53,6 +53,7 @@ public record InterviewDetail(
                     .interviewQuestionId(interviewQuestion.getId())
                     .answerState(interviewQuestion.getAnswerState())
                     .question(interviewQuestion.getQuestion())
+                    .answer(interviewQuestion.getAnswer())
                     .referenceLinks(interviewQuestion.getReferenceLinks())
                     .feedback(interviewQuestion.getFeedback())
                     .remainTailQuestionCount(interviewQuestion.getRemainTailQuestionCount())
