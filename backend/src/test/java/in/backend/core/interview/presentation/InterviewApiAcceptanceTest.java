@@ -35,10 +35,10 @@ class InterviewApiAcceptanceTest extends AcceptanceTest {
                 .interviewId(interviewId)
                 .interviewQuestionId(interviewQuestionResponse.interviewQuestionId())
                 .currentIndex(0)
+                .score(1)
                 .answerState(AnswerState.COMPLETE.toString())
                 .aiFeedback("피드백")
                 .tailQuestion("꼬리질문")
-                .originalContent("원본 내용")
                 .timeToAnswer(1)
                 .answerContent("질문에 대한 답변")
                 .build();
@@ -161,8 +161,8 @@ class InterviewApiAcceptanceTest extends AcceptanceTest {
                 .tailQuestionId(tailQuestionResponse.tailQuestionId())
                 .answerState(AnswerState.COMPLETE.toString())
                 .aiFeedback("피드백")
+                .score(1)
                 .tailQuestion("꼬리질문")
-                .originalContent("")
                 .timeToAnswer(1)
                 .answerContent("질문에 대한 답")
                 .build();
@@ -197,9 +197,9 @@ class InterviewApiAcceptanceTest extends AcceptanceTest {
                 .interviewQuestionId(interviewId)
                 .tailQuestionId(tailQuestionResponse.tailQuestionId())
                 .answerState(AnswerState.COMPLETE.toString())
+                .score(1)
                 .aiFeedback("피드백")
                 .tailQuestion("꼬리질문")
-                .originalContent("")
                 .timeToAnswer(1)
                 .answerContent("질문에 대한 답")
                 .build();
@@ -220,9 +220,9 @@ class InterviewApiAcceptanceTest extends AcceptanceTest {
                 .interviewQuestionId(interviewId)
                 .tailQuestionId(tailQuestionId)
                 .answerState(AnswerState.COMPLETE.toString())
+                .score(1)
                 .aiFeedback("피드백")
                 .tailQuestion("꼬리질문")
-                .originalContent("")
                 .timeToAnswer(1)
                 .answerContent("질문에 대한 답")
                 .build();
