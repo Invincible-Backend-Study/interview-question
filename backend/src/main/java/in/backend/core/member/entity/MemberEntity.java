@@ -26,11 +26,9 @@ public class MemberEntity {
     @Column(nullable = false)
     private String nickname;
 
-
     private String avatarUrl;
 
     private String providerId;
-
 
     @Builder
     public MemberEntity(String nickname, String avatarUrl, String providerId) {
