@@ -138,5 +138,9 @@ public class InterviewQuestionEntity extends BaseEntity {
     public String getFeedback() {
         return aiFeedback.getFeedbackContent();
     }
+
+    public String getAnswer() {
+        return answer.getContent();
+    }
 }
 
