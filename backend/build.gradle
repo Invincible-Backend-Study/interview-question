@@ -34,9 +34,9 @@ dependencies {
     // swagger
     implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.2.0'
 
-    // spring ai
-//    implementation 'org.springframework.ai:spring-ai-openai'
-//    implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
+    //spring ai
+    implementation 'org.springframework.ai:spring-ai-openai'
+    implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
 
 
     // jwt
