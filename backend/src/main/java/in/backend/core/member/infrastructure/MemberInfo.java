@@ -10,7 +10,6 @@ public record MemberInfo(
         String avatarUrl,
         String providerId
 ) {
-
     public MemberEntity toEntity() {
         return MemberEntity.builder()
                 .nickname(nickname)
