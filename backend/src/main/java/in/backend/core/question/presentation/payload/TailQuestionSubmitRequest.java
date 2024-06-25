@@ -14,17 +14,17 @@ public record TailQuestionSubmitRequest(
         @NotNull String answerState,
         @NotNull String aiFeedback,
         @NotNull String tailQuestion,
-        @NotNull String originalContent,
         @NotNull Integer timeToAnswer,
-        @NotNull String answerContent
+        @NotNull String answerContent,
+        @NotNull Integer score
 
 ) {
     public TailQuestionSubmitCommand to() {
 
         var feedback = FeedbackInfo.builder()
                 .aiFeedback(aiFeedback)
-                .originalContent(originalContent)
                 .tailQuestion(tailQuestion)
+                .score(score)
                 .build();
 
         var answer = AnswerInfo.builder()
