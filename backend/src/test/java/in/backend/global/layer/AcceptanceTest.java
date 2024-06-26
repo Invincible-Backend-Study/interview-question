@@ -9,6 +9,8 @@ import in.backend.global.utils.DatabaseCleaner;
 import io.grpc.netty.shaded.io.netty.handler.codec.http.HttpHeaderNames;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.internal.RequestSpecificationImpl;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -52,6 +54,11 @@ public class AcceptanceTest {
                 .addCookies(response.cookies())
                 .addHeader(HttpHeaderNames.ACCEPT.toString(), APPLICATION_JSON)
                 .build();
+    }
+
+    @AfterEach
+    void cleanup() {
+        ((RequestSpecificationImpl) RestAssured.requestSpecification).removeCookies();
     }
 
 
