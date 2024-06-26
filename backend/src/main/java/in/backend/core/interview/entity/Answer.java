@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Answer {
 
-
     @Enumerated(EnumType.STRING)
     private AnswerState answerState;
 

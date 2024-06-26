@@ -16,17 +16,16 @@ public record InterviewSubmitRequest(
         String answerState,
         String aiFeedback,
         String tailQuestion,
-        String originalContent,
         Integer timeToAnswer,
-        String answerContent
+        String answerContent,
+        Integer score
 ) {
     public InterviewSubmitCommand to() {
         log.info("{}", this);
         var feedback = FeedbackInfo.builder()
                 .aiFeedback(aiFeedback)
-                .originalContent(originalContent)
                 .tailQuestion(tailQuestion)
-                .score(1)
+                .score(score)
                 .build();
 
         var answer = AnswerInfo.builder()

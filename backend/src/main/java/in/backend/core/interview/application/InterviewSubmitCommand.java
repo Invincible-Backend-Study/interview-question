@@ -27,7 +27,6 @@ public record InterviewSubmitCommand(
     public record FeedbackInfo(
             String aiFeedback,
             String tailQuestion,
-            String originalContent,
             int score
     ) {
     }

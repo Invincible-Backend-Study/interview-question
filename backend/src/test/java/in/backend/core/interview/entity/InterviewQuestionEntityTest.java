@@ -29,7 +29,7 @@ class InterviewQuestionEntityTest {
         interviewQuestion.submit(
                 AnswerState.COMPLETE,
                 new AnswerInfo("답변", 1),
-                new FeedbackInfo("피드백", "꼬리 질문", "원본", 100)
+                new FeedbackInfo("피드백", "꼬리 질문", 100)
         );
 
         var tailQuestion = interviewQuestion.createTailQuestion().orElseThrow(IllegalArgumentException::new);
@@ -37,7 +37,7 @@ class InterviewQuestionEntityTest {
         tailQuestion.submit(
                 AnswerState.COMPLETE,
                 new AnswerInfo("답변", 1),
-                new FeedbackInfo("피드백", "꼬리 질문", "원본", 10)
+                new FeedbackInfo("피드백", "꼬리 질문", 10)
         );
         assertThat(interviewQuestion.createTailQuestion(tailQuestion).isPresent()).isTrue();
     }

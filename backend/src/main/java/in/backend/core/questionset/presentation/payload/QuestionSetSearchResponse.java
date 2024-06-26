@@ -12,9 +12,10 @@ public record QuestionSetSearchResponse(
         String description,
         String title,
         Long count,
-        Integer tailQuestionDepth
-) {
+        Integer tailQuestionDepth,
+        String thumbnailUrl
 
+) {
     public static QuestionSetSearchResponse from(QuestionSetInfo questionSet) {
         return QuestionSetSearchResponse.builder()
                 .questionSetId(questionSet.questionSetId())
@@ -22,6 +23,7 @@ public record QuestionSetSearchResponse(
                 .description(questionSet.description())
                 .count(questionSet.count())
                 .tailQuestionDepth(questionSet.tailQuestionDepth())
+                .thumbnailUrl(questionSet.thumbnailUrl())
                 .build();
     }
 }
