@@ -11,7 +11,8 @@ public record QuestionSetInfo(
         String title,
         String description,
         Long count,
-        Integer tailQuestionDepth
+        Integer tailQuestionDepth,
+        String thumbnailUrl
 ) {
 
     public static QuestionSetInfo from(QuestionSetEntity questionSet, Long problemCount) {
@@ -21,6 +22,7 @@ public record QuestionSetInfo(
                 .description(questionSet.getDescription())
                 .count(problemCount)
                 .tailQuestionDepth(questionSet.getTailQuestionDepth())
+                .thumbnailUrl(questionSet.getThumbnailUrl())
                 .build();
     }
 

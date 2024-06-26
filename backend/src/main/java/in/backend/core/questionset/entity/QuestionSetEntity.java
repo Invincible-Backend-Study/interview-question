@@ -28,7 +28,6 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuestionSetEntity extends BaseEntity {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -45,9 +44,11 @@ public class QuestionSetEntity extends BaseEntity {
     @Column(nullable = false)
     private String title;
 
-    @Column()
+    @Column
     private String description;
 
+    @Column
+    private String thumbnailUrl;
 
     /**
      * question set을 interview로 변환할 때 사용할 기본 규칙
