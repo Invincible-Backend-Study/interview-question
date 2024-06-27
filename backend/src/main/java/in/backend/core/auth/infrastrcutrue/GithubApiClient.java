@@ -5,8 +5,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import in.backend.core.auth.infrastrcutrue.payload.request.GithubAccessTokenRequest;
 import in.backend.core.auth.infrastrcutrue.payload.response.GithubAccessTokenResponse;
 import in.backend.core.auth.infrastrcutrue.payload.response.GithubProfileResponse;
-import in.backend.global.exception.GlobalException;
-import in.backend.global.exception.GlobalExceptionCode;
 import in.backend.global.property.GithubApiProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -21,10 +19,19 @@ public class GithubApiClient {
 
     private final RestClient restClient;
     private final GithubApiProperty githubApiProperty;
+    private final Status4xxErrorHandler status4xxErrorHandler;
+    private final Status5xxErrorHandler status5xxErrorHandler;
 
-    public GithubApiClient(RestClient.Builder clientBuilder, GithubApiProperty githubApiProperty) {
+    public GithubApiClient(
+            RestClient.Builder clientBuilder,
+            GithubApiProperty githubApiProperty,
+            Status4xxErrorHandler status4xxErrorHandler,
+            Status5xxErrorHandler status5xxErrorHandler
+    ) {
         this.restClient = clientBuilder.build();
         this.githubApiProperty = githubApiProperty;
+        this.status4xxErrorHandler = status4xxErrorHandler;
+        this.status5xxErrorHandler = status5xxErrorHandler;
     }
 
     private GithubAccessTokenResponse requestAccessToken(String code, String redirectUrl) {
@@ -34,12 +41,8 @@ public class GithubApiClient {
                 .accept(APPLICATION_JSON)
                 .body(GithubAccessTokenRequest.create(githubApiProperty, code, redirectUrl))
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, (_, _) -> {
-                    throw new GlobalException(GlobalExceptionCode.INVALID_OAUTH_CODE);
-                })
-                .onStatus(HttpStatusCode::is5xxServerError, (_, _) -> {
-                    throw new GlobalException(GlobalExceptionCode.INVALID_OAUTH_SERVER);
-                })
+                .onStatus(HttpStatusCode::is4xxClientError, status4xxErrorHandler)
+                .onStatus(HttpStatusCode::is5xxServerError, status5xxErrorHandler)
                 .body(GithubAccessTokenResponse.class);
     }
 
@@ -50,12 +53,8 @@ public class GithubApiClient {
                 .header(HttpHeaders.AUTHORIZATION, STR."Bearer \{response.accessToken()}")
                 .accept(APPLICATION_JSON)
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, (_, _) -> {
-                    throw new GlobalException(GlobalExceptionCode.INVALID_OAUTH_CODE);
-                })
-                .onStatus(HttpStatusCode::is5xxServerError, (_, _) -> {
-                    throw new GlobalException(GlobalExceptionCode.INVALID_OAUTH_SERVER);
-                })
+                .onStatus(HttpStatusCode::is4xxClientError, status4xxErrorHandler)
+                .onStatus(HttpStatusCode::is5xxServerError, status5xxErrorHandler)
                 .body(GithubProfileResponse.class);
     }
 }
