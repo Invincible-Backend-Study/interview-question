@@ -1,4 +1,4 @@
-package in.backend.core.interview.repository;
+package in.backend.core.interview.infrastructure;
 
 
 import in.backend.core.interview.entity.InterviewEntity;

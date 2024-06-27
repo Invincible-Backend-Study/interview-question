@@ -1,4 +1,4 @@
-package in.backend.core.interview.repository;
+package in.backend.core.interview.infrastructure;
 
 
 import static in.backend.core.exception.DomainExceptionCode.INTERVIEW_QUESTION_NOT_FOUND;

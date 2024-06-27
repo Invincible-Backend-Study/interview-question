@@ -5,10 +5,10 @@ import static java.util.stream.Collectors.toMap;
 
 import in.backend.core.auth.domain.Visitor;
 import in.backend.core.interview.application.InterviewDetail.InterviewQuestionDetail;
-import in.backend.core.interview.repository.InterviewManager;
-import in.backend.core.interview.repository.InterviewQuestionReader;
-import in.backend.core.interview.repository.InterviewReader;
-import in.backend.core.interview.repository.InterviewWriter;
+import in.backend.core.interview.infrastructure.InterviewManager;
+import in.backend.core.interview.infrastructure.InterviewQuestionReader;
+import in.backend.core.interview.infrastructure.InterviewReader;
+import in.backend.core.interview.infrastructure.InterviewWriter;
 import in.backend.core.question.infrastrcuture.TailQuestionReader;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
