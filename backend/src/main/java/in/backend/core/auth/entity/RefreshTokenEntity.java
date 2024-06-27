@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "REFRESH_TOKENS")
 public class RefreshTokenEntity {
+
     @Id
     private Long id;
 
