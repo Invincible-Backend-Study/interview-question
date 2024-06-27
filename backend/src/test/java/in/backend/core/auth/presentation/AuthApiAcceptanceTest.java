@@ -48,7 +48,6 @@ class AuthApiAcceptanceTest extends AcceptanceTest {
 
     }
 
-
     @Test
     void 회원가입_후_로그아웃_할_수_있습니다() {
         var response = RestAssured.given().log().all()

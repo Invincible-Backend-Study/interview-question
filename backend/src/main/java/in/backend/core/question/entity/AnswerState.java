@@ -4,6 +4,4 @@ public enum AnswerState {
     INIT,
     COMPLETE,
     PASS,
-
-
 }

@@ -1,7 +1,7 @@
 package in.backend.core.question.infrastrcuture;
 
 
-import in.backend.core.interview.repository.InterviewQuestionReader;
+import in.backend.core.interview.infrastructure.InterviewQuestionReader;
 import in.backend.core.question.application.TailQuestionSubmitCommand;
 import in.backend.core.question.application.TailQuestionSubmitResult;
 import lombok.RequiredArgsConstructor;

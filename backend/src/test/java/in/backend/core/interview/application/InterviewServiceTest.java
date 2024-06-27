@@ -3,7 +3,7 @@ package in.backend.core.interview.application;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import in.backend.core.auth.domain.Visitor;
-import in.backend.core.interview.repository.InterviewWriter;
+import in.backend.core.interview.infrastructure.InterviewWriter;
 import in.backend.global.fixture.InterviewFixture;
 import in.backend.global.fixture.InterviewQuestionFixture;
 import in.backend.global.fixture.QuestionFixture;

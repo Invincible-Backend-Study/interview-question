@@ -57,7 +57,6 @@ public class TailQuestionEntity {
     }
 
     public void submit(AnswerState answerState, AnswerInfo answerInfo, FeedbackInfo feedbackInfo) {
-
         switch (answerState) {
             case PASS -> answer = Answer.pass();
             case COMPLETE -> {
@@ -96,5 +95,9 @@ public class TailQuestionEntity {
 
     public AnswerState getAnswerState() {
         return answer.getAnswerState();
+    }
+
+    public int getScore() {
+        return aiFeedback.getScore();
     }
 }

@@ -8,16 +8,15 @@ import in.backend.core.questionset.entity.QuestionSetRules;
 import in.backend.core.questionset.infrastructure.QuestionSetRepository;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-@Profile(value = {"local"})
 @Component
 @RequiredArgsConstructor
+@Profile(value = {"local"})
 public class DummyDataGenerator implements ApplicationRunner {
     private final QuestionSetRepository questionSetRepository;
     private final QuestionRepository questionRepository;
@@ -58,37 +57,6 @@ public class DummyDataGenerator implements ApplicationRunner {
                                 .build()
                         ).toList()
         );
-
-        var questionSets = IntStream.iterate(1, i -> i + 1)
-                .mapToObj((i) -> QuestionSetEntity.builder()
-                        .title(STR."자바 면접 시리즈 \{i}")
-                        .description("대충 문제 몇개 있는데 한번 풀어보십쇼.")
-                        .questionSetRules(QuestionSetRules.builder()
-                                .defaultTimeToThink(10)
-                                .defaultTailQuestionDepth(10)
-                                .defaultTimeToAnswer(10)
-                                .build())
-                        .adminId(1L)
-                        .build())
-                .limit(100)
-                .toList();
-
-        questionSetRepository.saveAll(questionSets);
-
-        var questions = questionSets.stream()
-                .flatMap(questionSet ->
-                        IntStream.iterate(1, i -> i + 1)
-                                .limit((int) (Math.random() * 20))
-                                .mapToObj(i -> QuestionEntity.builder()
-                                        .referenceLinks("")
-                                        .sequence(i)
-                                        .content(STR."질문\{i}")
-                                        .questionSet(questionSet)
-                                        .build())
-                )
-                .toList();
-
-        questionRepository.saveAll(questions);
     }
 
 }

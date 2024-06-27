@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import in.backend.core.exception.DomainException;
 import in.backend.core.interview.application.InterviewCreateCommand;
+import in.backend.core.interview.infrastructure.InterviewWriter;
 import in.backend.global.fixture.QuestionFixture;
 import in.backend.global.fixture.QuestionSetFixture;
 import in.backend.global.layer.ImplementLayerTest;

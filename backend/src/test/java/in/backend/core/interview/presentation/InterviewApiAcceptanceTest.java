@@ -17,11 +17,14 @@ import in.backend.core.questionset.infrastructure.QuestionSetRepository;
 import in.backend.global.fixture.QuestionFixture;
 import in.backend.global.fixture.QuestionSetFixture;
 import in.backend.global.layer.AcceptanceTest;
+import in.backend.global.layer.AcceptanceTest.LogIn;
 import io.restassured.RestAssured;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
+@LogIn
 class InterviewApiAcceptanceTest extends AcceptanceTest {
 
     @Autowired
@@ -74,7 +77,7 @@ class InterviewApiAcceptanceTest extends AcceptanceTest {
                 .body(interviewCreateRequest)
                 .when().log().all()
                 .post("/api/interviews")
-                .then()
+                .then().log().all()
                 .extract()
                 .as(InterviewCreateResponse.class)
                 .interviewId();
@@ -180,6 +183,7 @@ class InterviewApiAcceptanceTest extends AcceptanceTest {
         assertThat(tailQuestionId).isNotNull();
 
     }
+
 
     @Test
     void 인터뷰를_생성하고_문제를_푼_다음_꼬리질문에_답변하고_다시_꼬리질문에_답변합니다() {

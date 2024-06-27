@@ -17,8 +17,8 @@ public class TokenReissue {
     private final RefreshTokenWriter refreshTokenWriter;
 
     public IssuedToken publish(Visitor visitor) {
-
         var now = Instant.now();
+
         var accessToken = jwtProvider.createAccessToken(visitor.memberId(), now);
         var refreshToken = jwtProvider.createRefreshToken(visitor.memberId(), now);
 
