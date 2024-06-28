@@ -9,6 +9,7 @@ import {problemCount, tailQuestionCount} from "@/components/InterviewCreatorForm
 import {InterviewSettings} from "@/types/interview";
 import {useInterviewCreateMutation} from "@/hooks/api/interview/useInterviewCreateMutation";
 import {useCallback} from "react";
+import {useInterviewCreateForm} from "@/components/InterviewCreatorForm/useInterviewCreateForm";
 
 
 interface InterviewSettingsSliderProps {
@@ -51,24 +52,34 @@ interface InterviewCreateFormProps {
 }
 
 const InterviewCreateForm = ({ interviewSettings: {questionSetId, count, tailQuestionDepth}}: InterviewCreateFormProps) => {
-
   const {mutate} = useInterviewCreateMutation();
-
+  const {interviewCreateForm, handleOnChange} = useInterviewCreateForm({tailQuestionDepth, totalProblemCount:count})
 
   const handleInterviewCreate = useCallback(() => {
-    mutate({questionSetId, tailQuestionDepth, totalProblemCount: count});
-  }, []);
+    mutate({questionSetId, ...interviewCreateForm});
+  }, [interviewCreateForm]);
 
   return (
     <ModalContent>
-      {(onClose) => (
+      {(_) => (
         <>
         <ModalHeader>
           면접 시작하기
         </ModalHeader>
         <ModalBody>
-          <Slider maxValue={count} {...problemCount}/>
-          <Slider defaultValue={tailQuestionDepth}  {...tailQuestionCount}  color="danger" radius="none" formatOptions={{signDisplay: 'always'}}/>
+          <Slider
+                  onChange={(value) => handleOnChange('totalProblemCount', value)}
+                  maxValue={count}
+                  defaultValue={count}
+                  {...problemCount}
+          />
+          <Slider defaultValue={tailQuestionDepth}
+                  onChange={(value) => handleOnChange('tailQuestionDepth', value)}
+                  {...tailQuestionCount}
+                  color="danger"
+                  radius="none"
+                  formatOptions={{signDisplay: 'always'}}
+          />
 
           <p>*아직 지원하지 않습니다.</p>
           <InterviewSettingsSlider label={"문항 별 대기 시간"} disabled={true}/>

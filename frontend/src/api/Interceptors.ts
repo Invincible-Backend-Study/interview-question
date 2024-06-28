@@ -5,11 +5,15 @@ import {reIssueToken} from "@/api/auth/ReIssueToken";
 import {axiosInstance} from "@/api/AxiosInstance";
 
 export interface ErrorResponseData {
-  statusCode?: number;
-  message?: string;
+  statusCode: number;
+  message: string;
   code: number;
 }
 
+export class HTTPError {
+  constructor(readonly statusCode: number, readonly message: string, readonly code: number) {
+  }
+}
 
 export const checkAndSetToken = (config: InternalAxiosRequestConfig) => {
 
@@ -46,9 +50,7 @@ export const handleTokenError = async(error: AxiosError<ErrorResponseData>) => {
   ) {
     localStorage.removeItem(TOKEN.ACCESS);
     window.location.href = PATH.AUTH;
-
-    throw new Error();
-    //throw new HTTPError(status, data.message, data.code);
   }
+  throw new HTTPError(status, data.message, data.code);
 
 }

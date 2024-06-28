@@ -3,9 +3,8 @@
 
 export const problemCount = {
   label: "문항 수",
-  minValue: 1,
+  minValue: 0,
   step: 1,
-  defaultValue:1,
   className:"max-w-md",
   showTooltip:true,
   showOutline: true

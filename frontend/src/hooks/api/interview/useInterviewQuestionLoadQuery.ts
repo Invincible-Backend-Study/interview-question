@@ -4,12 +4,15 @@ import {loadByCurrentInterviewQuestion} from "@/api/interview/LoadByCurrentInter
 
 export const useInterviewQuestionLoadQuery = (interviewId: number) => {
   // TODO: 변수명 바꾸기
-  const {data: interview, refetch} = useSuspenseQuery({
-    queryKey: ['loadInterviewQuestion'],
+  const {data: interview, refetch, error} = useSuspenseQuery({
+    queryKey: ['loadInterviewQuestion', interviewId],
     queryFn: () => loadByCurrentInterviewQuestion(interviewId),
-    gcTime: 1000 * 60 * 10,
-    staleTime:1000 * 60 * 10
+    gcTime: 60 * 60 * 10,
+    staleTime: 60* 60 * 10
   });
 
-  return {interview, refetch}
+  return {interview, refetch, error}
 }
+
+
+

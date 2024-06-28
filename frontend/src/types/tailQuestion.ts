@@ -37,6 +37,10 @@ export interface TailQuestionSubmitRequest {
    */
   answerContent: string;
 
+  /**
+   * 내 답변에 대한 점수
+   */
+  score: number;
 }
 
 export interface TailQuestionSubmitResponse {

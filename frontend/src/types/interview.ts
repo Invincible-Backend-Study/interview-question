@@ -1,4 +1,5 @@
 import {AnswerState} from "@/types/answer";
+import {Interview} from "@/types/question";
 
 /**
  * 인터뷰 생성 요청
@@ -62,10 +63,6 @@ export interface InterviewSubmitRequest {
    */
   tailQuestion: string;
 
-  /**
-   * GPT가 넘겨준 답변 전체
-   */
-  originalContent: string;
 
   /**
    * 답변에 걸린 시간
@@ -77,16 +74,22 @@ export interface InterviewSubmitRequest {
    */
   answerContent: string;
 
+
+  /**
+   * 몇점인지
+   */
+  score: number;
 }
 
 export interface InterviewSubmitResponse {
   tailQuestionId: number | null;
 }
 
+export type InterviewState =  "PROGRESS" | "DONE";
 export interface MyInterviewResponse {
   interviewId: number;
   title: string;
-  interviewState: "INIT" | "STOP" | "COMPLETE";
+  interviewState: InterviewState;
   questionCount: number;
   createdAt: Date;
   updatedAt: Date;
@@ -103,6 +106,7 @@ export interface InterviewQuestionResponse {
 }
 
 
+
 export interface InterviewCreateFormCommand {
   questionSetId: number;
   count: number;
@@ -113,4 +117,58 @@ export interface InterviewSettings{
   questionSetId: number;
   count: number;
   tailQuestionDepth: number;
+}
+
+
+
+export interface MyInterview {
+  interviewId: number;
+  title: string;
+  interviewState: InterviewState
+  questionCount: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+
+export interface MyInterviewResult {
+  interviewId: number;
+  title: string;
+
+  interviewState: InterviewState
+  interviewQuestions: InterviewQuestionDetail[]
+}
+
+export interface InterviewQuestionDetail {
+  interviewQuestionId: number;
+  answerState: "INIT" | "PASS" | "COMPLETE",
+  question: string;
+  answer: string;
+  referenceLinks: string;
+  feedback: string;
+  remainTailQuestionCount: number;
+  score: number;
+  tailQuestions: TailQuestionDetail[]
+}
+
+export interface TailQuestionDetail {
+  tailQuestionId: number;
+  answerState: "INIT" | "PASS" | "COMPLETE";
+  question: string;
+  answer: string;
+  score: number;
+  feedback: string;
+}
+
+
+
+export interface FeedbackRequest{
+  question: string;
+  answer: string;
+}
+
+export interface FeedbackResponse {
+  score: number;
+  feedback: string;
+  tailQuestion: string;
 }

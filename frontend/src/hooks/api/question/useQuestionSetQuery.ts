@@ -1,14 +1,16 @@
-import {useSuspenseQuery} from "@tanstack/react-query";
+import {useInfiniteQuery} from "@tanstack/react-query";
 import {getQuestionSet} from "@/api/question/GetQuestionSet";
 
 
 export const useQuestionSetQuery = () => {
-  const {data: {content: questionSetList}, isLoading} = useSuspenseQuery({
+  const {data ,isLoading, fetchNextPage} = useInfiniteQuery({
     queryKey: ['question set'],
-    queryFn: () => getQuestionSet({size: 30, page: 0}),
-    staleTime: 60 * 60 * 60 * 100,
-    gcTime: 60 * 60 * 60 * 100,
+    queryFn: ({pageParam}) => getQuestionSet({size: 30, page: Number(pageParam)}),
+    staleTime: 60 * 60 * 10,
+    gcTime: 60 * 60 * 10,
+    getNextPageParam: response => response.last ? undefined : response.number + 1,
+    initialPageParam: 0,
   })
 
-  return {questionSetList,isLoading};
+  return {data,isLoading, fetchNextPage};
 }

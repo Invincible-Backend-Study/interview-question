@@ -17,9 +17,11 @@ export const END_POINT = {
   TAIL_QUESTION_SUBMIT: "/tail-questions/submit",
 
   INTERVIEWS: "/interviews",
+  INTERVIEWS_GET_RESULT: (interviewId: number) => `/interviews/${interviewId}`,
+  INTERVIEWS_FEEDBACK: "/interviews/feedback",
   INTERVIEWS_SUBMIT: "/interviews/submit",
   INTERVIEWS_GET_PROBLEM: (interviewId: number) => `/interviews/${interviewId}/current/problem`,
-  INTERVIEWS_ME: "/interviews/me",
+  INTERVIEWS_ME: wrap( "/interviews/me"),
 
   SIGNUP: "/auth/signup",
   SIGNIN: "/auth/signin",
@@ -27,7 +29,7 @@ export const END_POINT = {
   LOGOUT: "/auth/logout",
   TOKEN_REISSUE: "/auth/token/reissue",
 
-  QUESTION_SETS: wrap( "/v1/question-set")
+  QUESTION_SETS: wrap( "/question-set")
 
 } as const;
 

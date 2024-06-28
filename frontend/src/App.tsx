@@ -1,14 +1,16 @@
 import Router from "@/router/Router";
-import {ScrollShadow} from "@nextui-org/react";
 import LogIn from "@/components/LogIn/LogIn";
+import {Toaster} from "sonner";
+import {ErrorBoundary} from "react-error-boundary";
 
 function App() {
   return (
-    <LogIn>
-      <ScrollShadow className="h-screen">
+    <ErrorBoundary fallback={<div>1234</div>}>
+      <LogIn>
+        <Toaster richColors closeButton />
         <Router/>
-      </ScrollShadow>
-    </LogIn>
+      </LogIn>
+    </ErrorBoundary>
   )
 }
 

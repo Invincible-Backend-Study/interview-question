@@ -1,19 +1,15 @@
 import {Button, Card, CardBody, CardFooter, CardHeader, Divider, Image} from "@nextui-org/react";
 import {InterviewCreateFormCommand} from "@/types/interview";
 import {useCallback} from "react";
+import {QuestionSet} from "@/types/questionSet";
 
 
 interface QuestionSetItemProps {
-  questionSetId: number;
-  title: string;
-  description: string;
-  count: number;
-  tailQuestionDepth: number;
-
+  questionSet: QuestionSet
   openInterviewSetting: (command: InterviewCreateFormCommand) => void;
 }
 
-const QuestionSetItem = ({questionSetId, title, description, tailQuestionDepth, count, openInterviewSetting}: QuestionSetItemProps) => {
+const QuestionSetItem = ({questionSet:{questionSetId, title, description, tailQuestionDepth, count}, openInterviewSetting}: QuestionSetItemProps) => {
 
   const handleOpenSettings = useCallback(() => {
     openInterviewSetting({
@@ -23,7 +19,7 @@ const QuestionSetItem = ({questionSetId, title, description, tailQuestionDepth, 
     })
   },[])
   return (
-    <Card className="max-w-[300px] ">
+    <Card className="max-w-[270px] ">
       <CardHeader className="flex flex-col items-start ">
         <span className="text-blue-500">NEW</span>
         <span>{title}</span>
@@ -34,7 +30,8 @@ const QuestionSetItem = ({questionSetId, title, description, tailQuestionDepth, 
           isBlurred
           width={300}
           height={200}
-          src="https://velog.velcdn.com/images/pak4184/post/98ba8b4f-7b89-4d28-8376-0dc8d1be805a/image.png"/>
+          src="https://velog.velcdn.com/images/pak4184/post/98ba8b4f-7b89-4d28-8376-0dc8d1be805a/image.png"
+        />
       </CardBody>
       <Divider/>
       <CardFooter className="flex flex-row-reverse">

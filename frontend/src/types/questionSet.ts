@@ -1,5 +1,3 @@
-
-
 export interface QuestionSetSearchResponse {
   /**
    * question set id
@@ -21,5 +19,14 @@ export interface QuestionSetSearchResponse {
    */
   count: number;
 
+  tailQuestionDepth: number;
+}
+
+
+export interface QuestionSet {
+  questionSetId: number;
+  title: string;
+  description: string;
+  count: number;
   tailQuestionDepth: number;
 }
