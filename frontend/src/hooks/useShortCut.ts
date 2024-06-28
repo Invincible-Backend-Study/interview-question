@@ -1,24 +1,29 @@
-import {useCallback, useEffect} from "react";
+import {useCallback, useEffect } from "react";
 
 
 interface useShortCutProps {
-  save?: () => void;
-  pass?: () => void;
+  save: () => void;
+  pass: () => void;
+  isBlocking: boolean;
 }
 
-export const useShortCut = ({save, pass}: useShortCutProps) => {
-  const handleKeyPress = useCallback((event: KeyboardEvent) => {
-    if (save !== undefined && event.metaKey && event.key.toLowerCase() === 's') {
-      event.preventDefault();
+export const useShortCut = ({save, pass, isBlocking}: useShortCutProps) => {
 
+  const handleKeyPress = useCallback((event: KeyboardEvent) => {
+    if(isBlocking){
+      return ;
+    }
+    if(event.metaKey && event.key.toLowerCase() === 's') {
+      event.preventDefault();
       save();
     }
-
-    if(pass !== undefined && event.metaKey && event.key.toLowerCase() === 'p') {
+    if(event.metaKey && event.key.toLowerCase() === 'p') {
+      console.log('call pass')
       event.preventDefault();
       pass();
     }
-  }, [save, pass]);
+  }, [save, pass, isBlocking]); // 1초 동안 같은 이벤트 무시
+
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);

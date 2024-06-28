@@ -3,7 +3,6 @@ import InterviewQuestionBoard from "@/components/InterviewQuestionBoard/Intervie
 import {Textarea} from "@nextui-org/react";
 import InterviewController from "@/components/InterviewController/InterviewController";
 import {useInterviewForm} from "@/components/InterviewForm/useInterviewForm";
-import {useCallback, useEffect} from "react";
 import {useShortCut} from "@/hooks/useShortCut";
 
 
@@ -15,7 +14,6 @@ const border = "1px solid rgb(54, 54, 54)";
 
 
 const InterviewForm = ({interviewId}: InterviewFormProps) => {
-
   const {
     interview,
     handleSubmit,
@@ -26,7 +24,7 @@ const InterviewForm = ({interviewId}: InterviewFormProps) => {
     answer,handleAnswerChange
   } = useInterviewForm(interviewId);
 
-  useShortCut({save: handleSubmit, pass: handlePass});
+  useShortCut({save: handleSubmit, pass: handlePass, isBlocking:feedbackWaiting});
 
 
   return <>
