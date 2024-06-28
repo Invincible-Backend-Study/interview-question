@@ -4,7 +4,6 @@ import {
   ModalBody,
   ModalContent,
   ModalHeader,
-  Slider,
   Spacer,
   Tooltip,
   useDisclosure

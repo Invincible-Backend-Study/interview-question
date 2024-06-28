@@ -11,6 +11,7 @@ const LogIn = ({children }:LogInProps) => {
 
   useLayoutEffect(() => {
     if(localStorage.getItem(TOKEN.ACCESS)){
+      console.log("change login");
       setIsLoggedIn(true);
     }
   }, [setIsLoggedIn]);

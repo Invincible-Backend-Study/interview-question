@@ -5,7 +5,7 @@ import {MyInterviewResponse} from "@/types/interview";
 
 
 export const myInterview = async (pageRequest: Pageable) => {
-  const {data} = await axiosInstance.get<PageResponse<MyInterviewResponse[]>>(
+  const {data} = await axiosInstance.get<PageResponse<MyInterviewResponse>>(
     END_POINT.INTERVIEWS_ME(pageRequest)
   );
   return data;

@@ -37,7 +37,7 @@ export default function(){
       <Spacer y={10}/>
 
       <div className="p-5 flex flex-wrap gap-4">
-        {data?.pages.map(data=> <QuestionSetItemList questionSetItems={data.content} openInterviewSetting={handleOpenInterviewSettings}/>)}
+        {data?.pages.map((data, index)=> <QuestionSetItemList key={index} questionSetItems={data.content} openInterviewSetting={handleOpenInterviewSettings}/>)}
         <div ref={ref}/>
       </div>
       <Modal backdrop="blur" isDismissable={false} isKeyboardDismissDisabled={true} isOpen={isOpen} placement={"top"} className={`text-foreground bg-background dark`} onClose={onClose}>

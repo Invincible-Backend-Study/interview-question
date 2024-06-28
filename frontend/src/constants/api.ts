@@ -18,6 +18,7 @@ export const END_POINT = {
 
   INTERVIEWS: "/interviews",
   INTERVIEWS_GET_RESULT: (interviewId: number) => `/interviews/${interviewId}`,
+  INTERVIEWS_FEEDBACK: "/interviews/feedback",
   INTERVIEWS_SUBMIT: "/interviews/submit",
   INTERVIEWS_GET_PROBLEM: (interviewId: number) => `/interviews/${interviewId}/current/problem`,
   INTERVIEWS_ME: wrap( "/interviews/me"),

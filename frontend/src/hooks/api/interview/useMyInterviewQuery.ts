@@ -1,23 +1,23 @@
-import {useInfiniteQuery, useSuspenseInfiniteQuery} from "@tanstack/react-query";
+import {keepPreviousData, useInfiniteQuery, useQuery, useSuspenseInfiniteQuery} from "@tanstack/react-query";
 import {myInterview} from "@/api/interview/MyInterview";
 
 
 const size = 10;
 
 
-export const useMyInterviewQuery = () => {
-  const {data, isLoading, fetchNextPage} = useInfiniteQuery({
+export const useMyInterviewQuery = (page: number) => {
+
+  const {data, refetch} = useQuery({
     queryKey: ['my interview'],
-    queryFn: ({pageParam}) => myInterview({page: Number(pageParam), size}),
-    getNextPageParam: response => response.last ? undefined : response.number + 1,
-    initialPageParam: 0,
-    gcTime: 60 * 60 * 60 * 1000,
-    staleTime: 60 * 60 * 60 * 1000,
+    queryFn: () => myInterview({page: page - 1, size}),
+    placeholderData: keepPreviousData,
   });
 
-  export default{
-    data,
-    isLoading,
-    fetchNextPage
+
+
+  return {
+    totalPages: data?.totalPages,
+    data: data?.content,
+    refetch
   }
 }

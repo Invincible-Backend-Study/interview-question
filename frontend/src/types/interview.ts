@@ -63,10 +63,6 @@ export interface InterviewSubmitRequest {
    */
   tailQuestion: string;
 
-  /**
-   * GPT가 넘겨준 답변 전체
-   */
-  originalContent: string;
 
   /**
    * 답변에 걸린 시간
@@ -78,13 +74,18 @@ export interface InterviewSubmitRequest {
    */
   answerContent: string;
 
+
+  /**
+   * 몇점인지
+   */
+  score: number;
 }
 
 export interface InterviewSubmitResponse {
   tailQuestionId: number | null;
 }
 
-export type InterviewState =  "INIT" | "STOP" | "COMPLETE";
+export type InterviewState =  "PROGRESS" | "DONE";
 export interface MyInterviewResponse {
   interviewId: number;
   title: string;
@@ -105,6 +106,7 @@ export interface InterviewQuestionResponse {
 }
 
 
+
 export interface InterviewCreateFormCommand {
   questionSetId: number;
   count: number;
@@ -122,7 +124,7 @@ export interface InterviewSettings{
 export interface MyInterview {
   interviewId: number;
   title: string;
-  interviewState: "INIT" | "STOP" | "COMPLETE";
+  interviewState: InterviewState
   questionCount: number;
   createdAt: Date;
   updatedAt: Date;
@@ -132,11 +134,12 @@ export interface MyInterview {
 export interface MyInterviewResult {
   interviewId: number;
   title: string;
-  interviewState: "INIT" | "STOP" | "COMPLETE";
+
+  interviewState: InterviewState
   interviewQuestions: InterviewQuestionDetail[]
 }
 
-interface InterviewQuestionDetail {
+export interface InterviewQuestionDetail {
   interviewQuestionId: number;
   answerState: "INIT" | "PASS" | "COMPLETE",
   question: string;
@@ -144,13 +147,28 @@ interface InterviewQuestionDetail {
   referenceLinks: string;
   feedback: string;
   remainTailQuestionCount: number;
+  score: number;
   tailQuestions: TailQuestionDetail[]
 }
 
-interface TailQuestionDetail {
+export interface TailQuestionDetail {
   tailQuestionId: number;
   answerState: "INIT" | "PASS" | "COMPLETE";
   question: string;
   answer: string;
+  score: number;
   feedback: string;
+}
+
+
+
+export interface FeedbackRequest{
+  question: string;
+  answer: string;
+}
+
+export interface FeedbackResponse {
+  score: number;
+  feedback: string;
+  tailQuestion: string;
 }

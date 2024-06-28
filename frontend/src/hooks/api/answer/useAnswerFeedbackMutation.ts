@@ -1,4 +1,5 @@
 import {useMutation} from "@tanstack/react-query";
+import {requestInterviewFeedback} from "@/api/interview/RequestInterviewFeedback";
 
 
 interface AIFeedbackResponse {
@@ -15,19 +16,21 @@ interface AIFeedbackRequest {
 
 const mock = (request: AIFeedbackRequest): Promise<AIFeedbackResponse> => {
   return new Promise((resolve, reject) => {
-    resolve({
-      tailQuestion: "꼬리질문입니다",
-      originalContent: "원본 컨텐츠 입니다",
-      score: 100,
-      feedback: "피드백입니다",
-    });
+    setTimeout(() => {
+      resolve({
+        tailQuestion: "꼬리질문입니다",
+        originalContent: "원본 컨텐츠 입니다",
+        score: 100,
+        feedback: "피드백입니다",
+      });
+    }, parseInt(String(Math.random() * 10000)))
   })
 }
 
 const useAnswerFeedbackMutation = () => {
   return useMutation({
     mutationKey: ['answerFeedback'],
-    mutationFn: mock,
+    mutationFn: requestInterviewFeedback,
     gcTime: 60 * 60 * 1000,
   })
 
