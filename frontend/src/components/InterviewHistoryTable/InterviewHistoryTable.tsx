@@ -10,29 +10,40 @@ import {
   TableRow
 } from "@nextui-org/react";
 
-import {columns, rows} from "./InterviewHistoryTableConstant";
-import React, {Key, useCallback} from "react";
+import {columns } from "./InterviewHistoryTableConstant";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {InterviewState, MyInterview} from "@/types/interview";
 import InterviewHistoryPagination from "@/components/InterviewHistoryTable/InterviewHistoryPagination";
 import InterviewHistoryTableTopContent from "@/components/InterviewHistoryTable/InterviewHistoryTableTopContent";
 import {dateToString} from "@/utils/Date";
 import { HiDotsVertical } from "react-icons/hi";
+import {useMyInterviewQuery} from "@/hooks/api/interview/useMyInterviewQuery";
+import {useNavigate} from "react-router-dom";
+import {PATH} from "@/constants/path";
 
 
 const statusColorMap: Record<InterviewState, "success" | "danger" | "warning"> = {
-  COMPLETE: "success",
-  STOP: "danger",
-  INIT: "warning",
+  DONE: "success",
+  PROGRESS: "danger",
 };
 const statusDisplay: Record<InterviewState, string> = {
-  COMPLETE: "완료",
-  STOP: "포기",
-  INIT: "미완료",
+  DONE: "완료",
+  PROGRESS: "미완료",
 }
 
 
 
 const InterviewHistoryTable = () => {
+
+
+  const [page, setPage] = useState(1);
+  const {data, totalPages, refetch} = useMyInterviewQuery(page);
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    refetch()
+  }, [page])
 
   const tableClassNames = React.useMemo(
     () => ({
@@ -56,33 +67,32 @@ const InterviewHistoryTable = () => {
     return <InterviewHistoryTableTopContent/>
   }, [])
 
-  const bottomContent = React.useMemo(() => {
-    return <InterviewHistoryPagination/>
-  },[])
+  const bottomContent = useMemo(() => {
+    return <InterviewHistoryPagination page={page} totalPages={totalPages} changePage={(page) => setPage(page)}/>
+  },[page, totalPages])
 
   /**
    * cell renderer
    */
   const renderCell = useCallback((item: MyInterview, cellType: React.Key) => {
     const cellValue = item[cellType as keyof MyInterview];
+    console.log(cellType);
     switch(cellType){
       case "createdAt":
-        return <time>{dateToString(item.createdAt)}</time>
+        return <time>{dateToString(new Date(item.createdAt))}</time>
       case "updatedAt":
-        return <time>{item.interviewState === "INIT" ? "" : dateToString(item.updatedAt)}</time>
+
+        return <time>{item.interviewState === "PROGRESS" ? "" : dateToString(new Date(item.updatedAt))}</time>
       case "action":
         return (
           <Dropdown>
             <DropdownTrigger>
-          <Button isIconOnly variant="right">
+          <Button isIconOnly variant="light">
             <HiDotsVertical />
           </Button>
             </DropdownTrigger>
-            <DropdownMenu>
-              <DropdownItem>결과 보기</DropdownItem>
-              <DropdownItem>재시도 하기</DropdownItem>
-              <DropdownItem>이어서 풀기</DropdownItem>
-            </DropdownMenu>
+            {item.interviewState === "DONE" && <DropdownMenu><DropdownItem onClick={() => navigate(PATH.INTERVIEW_RESULT(item.interviewId))}>결과 보기</DropdownItem></DropdownMenu>}
+            {item.interviewState === "PROGRESS" && <DropdownMenu><DropdownItem onClick={() => navigate(PATH.INTERVIEW(item.interviewId))}>이어서 풀기</DropdownItem></DropdownMenu>}
           </Dropdown>
         )
       case "interviewState":
@@ -127,7 +137,7 @@ const InterviewHistoryTable = () => {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody items={rows} emptyContent={"참여한 면접 이력이 없습니다."}>
+      <TableBody items={data === undefined ? [] : data} emptyContent={"참여한 면접 이력이 없습니다."}>
         {(row) => (
           <TableRow key={row.interviewId}>
             {(columnKey) => <TableCell>{renderCell(row, columnKey)}</TableCell>}

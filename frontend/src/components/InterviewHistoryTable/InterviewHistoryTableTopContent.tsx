@@ -9,6 +9,7 @@ const InterviewHistoryTableTopContent = () => {
     <div className="flex flex-col gap-4">
       <div className="flex gap-3 items-end">
         <Input
+          disabled
           isClearable
           classNames={{
             base: "w-full sm:max-w-[44%]",
@@ -21,8 +22,9 @@ const InterviewHistoryTableTopContent = () => {
         />
         <div className="flex gap-3">
           <Dropdown>
-            <DropdownTrigger className="hidden sm:flex">
+            <DropdownTrigger disabled className="hidden sm:flex">
               <Button
+                disabled
                 endContent={<BiCaretDown className="text-small" />}
                 size="sm"
                 variant="flat"
