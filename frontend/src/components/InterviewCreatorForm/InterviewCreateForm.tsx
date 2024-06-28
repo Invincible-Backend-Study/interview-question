@@ -52,11 +52,8 @@ interface InterviewCreateFormProps {
 }
 
 const InterviewCreateForm = ({ interviewSettings: {questionSetId, count, tailQuestionDepth}}: InterviewCreateFormProps) => {
-
-
   const {mutate} = useInterviewCreateMutation();
   const {interviewCreateForm, handleOnChange} = useInterviewCreateForm({tailQuestionDepth, totalProblemCount:count})
-
 
   const handleInterviewCreate = useCallback(() => {
     mutate({questionSetId, ...interviewCreateForm});
@@ -64,7 +61,7 @@ const InterviewCreateForm = ({ interviewSettings: {questionSetId, count, tailQue
 
   return (
     <ModalContent>
-      {(onClose) => (
+      {(_) => (
         <>
         <ModalHeader>
           면접 시작하기
@@ -73,6 +70,7 @@ const InterviewCreateForm = ({ interviewSettings: {questionSetId, count, tailQue
           <Slider
                   onChange={(value) => handleOnChange('totalProblemCount', value)}
                   maxValue={count}
+                  defaultValue={count}
                   {...problemCount}
           />
           <Slider defaultValue={tailQuestionDepth}
