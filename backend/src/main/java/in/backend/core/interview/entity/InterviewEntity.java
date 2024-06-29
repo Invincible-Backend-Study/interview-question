@@ -4,6 +4,7 @@ package in.backend.core.interview.entity;
 import static in.backend.core.exception.DomainExceptionCode.INTERVIEW_STATE_DID_NOT_MATCH;
 import static in.backend.core.exception.DomainExceptionCode.INTERVIEW_STATE_IS_DONE;
 
+import in.backend.core.interview.entity.policy.InterviewPolicy;
 import in.backend.global.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -76,12 +77,16 @@ public class InterviewEntity extends BaseEntity {
     }
 
     public static InterviewEntity init(Long memberId, String title, int size, InterviewSettings settings) {
-        return InterviewEntity.builder()
+        var interview = InterviewEntity.builder()
                 .memberId(memberId)
                 .title(title)
                 .size(size)
                 .settings(settings)
                 .build();
+
+        InterviewPolicy.validate(interview);
+
+        return interview;
     }
 
     public int getTailQuestionDepth() {

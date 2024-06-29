@@ -13,13 +13,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AIFeedback {
 
-
     private String tailQuestion;
 
     private String feedbackContent;
 
-    private int score;
-
+    private Integer score;
 
     @Builder(access = AccessLevel.PROTECTED)
     protected AIFeedback(String tailQuestion, String feedbackContent, int score) {
