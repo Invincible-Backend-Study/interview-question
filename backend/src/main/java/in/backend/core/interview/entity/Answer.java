@@ -2,6 +2,7 @@ package in.backend.core.interview.entity;
 
 
 import in.backend.core.question.entity.AnswerState;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -19,6 +20,8 @@ public class Answer {
     @Enumerated(EnumType.STRING)
     private AnswerState answerState;
 
+
+    @Column(length = 2000)
     private String content;
 
     private Integer timeToAnswer;
