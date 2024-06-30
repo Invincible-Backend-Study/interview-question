@@ -17,7 +17,7 @@ public class AIFeedback {
 
     private String feedbackContent;
 
-    private Integer score;
+    private int score;
 
     @Builder(access = AccessLevel.PROTECTED)
     protected AIFeedback(String tailQuestion, String feedbackContent, int score) {
