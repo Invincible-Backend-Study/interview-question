@@ -34,6 +34,7 @@ public enum DomainExceptionCode {
 
     TAIL_QUESTION(600, "꼬리 질문"),
     TAIL_QUESTION_NOT_FOUND(TAIL_QUESTION.code + 1, "꼬리질문을 찾을 수 없습니다"),
+    TAIL_QUESTION_CREATE_FAIL(TAIL_QUESTION.code + 2, "꼬리질문을 생성할 수 없습니다."),
     ;
 
 
