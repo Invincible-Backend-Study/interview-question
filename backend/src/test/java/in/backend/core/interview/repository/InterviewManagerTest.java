@@ -56,6 +56,7 @@ class InterviewManagerTest extends ImplementLayerTest {
                 interview.getId(),
                 tailQuestionCount
         ));
+
         interviewManager.submit(memberId(), InterviewSubmitCommand.builder()
                 .answerState(AnswerState.COMPLETE)
                 .answer(new AnswerInfo("대답", 1))

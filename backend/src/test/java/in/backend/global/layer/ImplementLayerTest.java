@@ -2,8 +2,9 @@ package in.backend.global.layer;
 
 
 import in.backend.core.auth.domain.Visitor;
-import in.backend.core.interview.repository.InterviewQuestionRepository;
-import in.backend.core.interview.repository.InterviewRepository;
+import in.backend.core.interview.infrastructure.InterviewQuestionRepository;
+import in.backend.core.interview.infrastructure.InterviewRepository;
+import in.backend.core.member.infrastructure.MemberRepository;
 import in.backend.core.question.infrastrcuture.QuestionRepository;
 import in.backend.core.question.infrastrcuture.TailQuestionRepository;
 import in.backend.core.questionset.infrastructure.QuestionSetRepository;
@@ -11,6 +12,8 @@ import jakarta.persistence.EntityManager;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -20,8 +23,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @SpringBootTest
 @ActiveProfiles("test")
+@Execution(ExecutionMode.SAME_THREAD)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class ImplementLayerTest {
+
+    @Autowired
+    protected MemberRepository memberRepository;
 
     @Autowired
     protected EntityManager entityManager;

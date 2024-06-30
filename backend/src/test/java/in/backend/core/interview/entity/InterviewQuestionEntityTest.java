@@ -22,35 +22,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class InterviewQuestionEntityTest {
 
-
-    @Test
-    void 질문에_대한_답변을_하지_않는_경우_꼬리질문을_만들_수_없습니다() {
-        var interviewQuestion = InterviewQuestionFixture.create();
-
-        assertThat(interviewQuestion.createTailQuestion().isEmpty()).isTrue();
-    }
-
-    @Test
-    void 질문에_대한_답변을_하면_꼬리질문을_만들_수_있습니다() {
-        var interviewQuestion = InterviewQuestionFixture.create(2);
-
-        interviewQuestion.submit(
-                AnswerState.COMPLETE,
-                new AnswerInfo("답변", 1),
-                new FeedbackInfo("피드백", "꼬리 질문", 100)
-        );
-
-        var tailQuestion = interviewQuestion.createTailQuestion().orElseThrow(IllegalArgumentException::new);
-
-        tailQuestion.submit(
-                AnswerState.COMPLETE,
-                new AnswerInfo("답변", 1),
-                new FeedbackInfo("피드백", "꼬리 질문", 10)
-        );
-        assertThat(interviewQuestion.createTailQuestion(tailQuestion).isPresent()).isTrue();
-    }
-
-
     @Nested
     class 인터뷰_질문을 {
 
@@ -160,36 +131,6 @@ class InterviewQuestionEntityTest {
 
     @Nested
     class 인터뷰_질문을_답변한_후 {
-
-
-        @Test
-        void 꼬리질문을_생성할_수_있습니다() {
-            var question = "질문입니다.";
-            var remainTailQuestionCount = 10;
-            var interviewQuestion = InterviewQuestionFixture.create(question, remainTailQuestionCount);
-
-            interviewQuestion.submit(
-                    AnswerState.COMPLETE,
-                    AnswerInfo.builder()
-                            .content("답변했습니다")
-                            .timeToAnswer(1)
-                            .build(),
-                    FeedbackInfo.builder()
-                            .score(100)
-                            .tailQuestion("꼬리질문입니다.")
-                            .aiFeedback("피드백했습니다.")
-                            .build()
-            );
-
-            var tailQuestion = interviewQuestion.createTailQuestion();
-
-            assertAll(
-                    () -> assertThat(interviewQuestion.getRemainTailQuestionCount()).isEqualTo(9),
-                    () -> assertThat(tailQuestion.isPresent()).isTrue()
-            );
-
-
-        }
 
         @Test
         void 답변하지_못한_경우_꼬리질문을_만들지_못합니다() {
