@@ -3,6 +3,7 @@ package in.backend.core.interview.entity;
 
 import in.backend.core.interview.application.InterviewSubmitCommand.AnswerInfo;
 import in.backend.core.interview.application.InterviewSubmitCommand.FeedbackInfo;
+import in.backend.core.interview.entity.policy.InterviewQuestionPolicy;
 import in.backend.core.question.entity.AnswerState;
 import in.backend.core.question.entity.TailQuestionEntity;
 import in.backend.global.entity.BaseEntity;
@@ -73,6 +74,8 @@ public class InterviewQuestionEntity extends BaseEntity {
         this.questionId = questionId;
         this.questionContent = questionContent;
         this.remainTailQuestionCount = remainTailQuestionCount;
+
+        InterviewQuestionPolicy.validate(this);
     }
 
 
@@ -132,7 +135,6 @@ public class InterviewQuestionEntity extends BaseEntity {
 
     public String getReferenceLinks() {
         return "";
-
     }
 
     public String getFeedback() {
@@ -141,6 +143,10 @@ public class InterviewQuestionEntity extends BaseEntity {
 
     public String getAnswer() {
         return answer.getContent();
+    }
+
+    public int getScore() {
+        return aiFeedback.getScore();
     }
 }
 

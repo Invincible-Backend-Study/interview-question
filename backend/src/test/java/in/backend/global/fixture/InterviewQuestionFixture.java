@@ -27,6 +27,16 @@ public class InterviewQuestionFixture {
                 .build();
     }
 
+    public static InterviewQuestionEntity create(String questionContent, int remainTailQuestionCount) {
+        return InterviewQuestionEntity.builder()
+                .memberId(1L)
+                .questionId(1L)
+                .interviewId(1L)
+                .questionContent(questionContent)
+                .remainTailQuestionCount(remainTailQuestionCount)
+                .build();
+    }
+
     public static InterviewQuestionEntity create(String questionContent) {
         return InterviewQuestionEntity.builder()
                 .memberId(1L)

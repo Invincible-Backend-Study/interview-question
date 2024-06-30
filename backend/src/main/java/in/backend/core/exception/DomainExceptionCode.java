@@ -29,6 +29,7 @@ public enum DomainExceptionCode {
 
     INTERVIEW_QUESTION(500, "인터뷰 질문"),
     INTERVIEW_QUESTION_NOT_FOUND(INTERVIEW_QUESTION.code + 1, "인터뷰 질문을 찾을 수 없습니다."),
+    INTERVIEW_QUESTION_CREATE_FAIL(INTERVIEW_QUESTION.code + 2, "인터뷰 질문을 생성할 수 없습니다."),
 
 
     TAIL_QUESTION(600, "꼬리 질문"),
