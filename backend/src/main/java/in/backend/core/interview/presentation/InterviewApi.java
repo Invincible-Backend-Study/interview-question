@@ -8,6 +8,8 @@ import in.backend.core.interview.application.InterviewDetail;
 import in.backend.core.interview.application.InterviewService;
 import in.backend.core.interview.application.InterviewSubmitResult;
 import in.backend.core.interview.application.MyInterviewResult;
+import in.backend.core.interview.infrastructure.AIFeedbackProvider;
+import in.backend.core.interview.infrastructure.AIFeedbackProvider.FeedbackResponse;
 import in.backend.core.interview.presentation.payload.InterviewCreateRequest;
 import in.backend.core.interview.presentation.payload.InterviewCreateResponse;
 import in.backend.core.interview.presentation.payload.InterviewQuestionResponse;
@@ -27,8 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/interviews")
 public class InterviewApi {
-
     private final InterviewService interviewService;
+    private final AIFeedbackProvider feedbackProvider;
 
     @MemberOnly
     @PostMapping
@@ -79,5 +81,16 @@ public class InterviewApi {
         return interviewService.search(visitor, pageable);
     }
 
+    @MemberOnly
+    @PostMapping("/feedback")
+    public FeedbackResponse requestFeedback(
+            @Auth Visitor visitor,
+            @RequestBody FeedbackRequest request
+    ) {
+        return feedbackProvider.execute(request.question, request.answer);
+    }
+
+    public record FeedbackRequest(String question, String answer) {
+    }
 
 }
