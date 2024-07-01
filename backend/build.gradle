@@ -2,18 +2,49 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.0'
     id 'io.spring.dependency-management' version '1.1.5'
-
     // gradle test logger
     id 'com.adarshr.test-logger' version '4.0.0'
+    // gcloud
+    id "com.google.cloud.tools.jib" version "3.4.2"
 }
 
 ext {
     springAiVersion = "1.0.0-M1"
 }
 
-group = 'in'
+group = 'in.backend'
 version = '0.0.1-SNAPSHOT'
 
+
+// gcp deploy settings
+
+jib {
+    from {
+        image = 'openjdk:21-jdk'
+    }
+
+    to {
+        var region = System.getenv("REGION")
+        var projectId = System.getenv("PROJECT_ID")
+        var artifactRegistry = System.getenv('ARTIFACT_REGISTRY')
+        var service = System.getenv('SERVICE')
+
+        image = String.format('%s-docker.pkg.dev/%s/%s/%s:latest', region, projectId, artifactRegistry, service)
+
+        auth {
+            username = '_json_key'
+            password = System.getenv('GOOGLE_AR_CLIENT_SECRET') ?: ''
+        }
+    }
+
+    container {
+        jvmFlags = [
+                String.format('-Dspring.profiles.active=%s', "prod"),
+                '-Xms1024m',
+                '-Xms1024m'
+        ]
+    }
+}
 java {
     sourceCompatibility = '21'
 }
@@ -90,6 +121,8 @@ tasks.withType(JavaExec) {
     jvmArgs += '--enable-preview'
 }
 
+
+// gradle cli test logger settings
 testlogger {
     theme 'mocha'
     showExceptions true
