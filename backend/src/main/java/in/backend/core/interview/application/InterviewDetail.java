@@ -37,6 +37,7 @@ public record InterviewDetail(
             String answer,
             String referenceLinks,
             String feedback,
+            int score,
             int remainTailQuestionCount,
             List<TailQuestionDetail> tailQuestions
     ) {
@@ -56,6 +57,7 @@ public record InterviewDetail(
                     .answer(interviewQuestion.getAnswer())
                     .referenceLinks(interviewQuestion.getReferenceLinks())
                     .feedback(interviewQuestion.getFeedback())
+                    .score(interviewQuestion.getScore())
                     .remainTailQuestionCount(interviewQuestion.getRemainTailQuestionCount())
                     .tailQuestions(tailQuestionDetails)
                     .build();
@@ -66,6 +68,7 @@ public record InterviewDetail(
     public record TailQuestionDetail(
             Long tailQuestionId,
             AnswerState answerState,
+            int score,
             String question,
             String answer,
             String feedback
@@ -77,6 +80,7 @@ public record InterviewDetail(
                     .question(tailQuestion.getQuestion())
                     .answer(tailQuestion.getAnswer())
                     .feedback(tailQuestion.getFeedback())
+                    .score(tailQuestion.getScore())
                     .build();
 
         }

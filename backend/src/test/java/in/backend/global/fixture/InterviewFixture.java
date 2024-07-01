@@ -22,4 +22,13 @@ public class InterviewFixture {
                 .build()
         );
     }
+
+    public static InterviewEntity create(int interviewProblemCount, int tailQuestionDepth) {
+        return InterviewEntity.init(1L, "제목", interviewProblemCount, InterviewSettings.builder()
+                .tailQuestionDepth(tailQuestionDepth)
+                .timeToAnswer(10)
+                .timeToThink(10)
+                .build()
+        );
+    }
 }

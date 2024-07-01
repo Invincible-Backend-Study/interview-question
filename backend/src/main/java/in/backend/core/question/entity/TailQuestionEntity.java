@@ -5,6 +5,7 @@ import in.backend.core.interview.application.InterviewSubmitCommand.AnswerInfo;
 import in.backend.core.interview.application.InterviewSubmitCommand.FeedbackInfo;
 import in.backend.core.interview.entity.AIFeedback;
 import in.backend.core.interview.entity.Answer;
+import in.backend.core.question.entity.policy.TailQuestionPolicy;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -12,7 +13,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,7 +43,7 @@ public class TailQuestionEntity {
     @Column(nullable = false)
     private String question;
 
-    private AIFeedback aiFeedback;
+    private AIFeedback aiFeedback = AIFeedback.empty();
 
     @Embedded
     private Answer answer = Answer.init();
@@ -54,6 +54,8 @@ public class TailQuestionEntity {
         this.interviewQuestionId = interviewQuestionId;
         this.memberId = memberId;
         this.question = question;
+
+        TailQuestionPolicy.validate(this);
     }
 
     public void submit(AnswerState answerState, AnswerInfo answerInfo, FeedbackInfo feedbackInfo) {
@@ -76,9 +78,6 @@ public class TailQuestionEntity {
 
     // null이 발생할 수 있을 것 같은데..? 어떻게 처리해줘야..할까
     public String getTailQuestion() {
-        if (Objects.isNull(aiFeedback)) {
-            return "";
-        }
         return aiFeedback.getTailQuestion();
     }
 
@@ -87,9 +86,6 @@ public class TailQuestionEntity {
     }
 
     public String getFeedback() {
-        if (Objects.isNull(aiFeedback)) {
-            return "";
-        }
         return aiFeedback.getFeedbackContent();
     }
 

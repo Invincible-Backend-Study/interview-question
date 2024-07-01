@@ -25,7 +25,7 @@ class AIFeedbackTest {
         var aiFeedback = AIFeedback.empty();
         assertAll(
                 () -> assertThat(aiFeedback.getFeedbackContent()).isNull(),
-                () -> assertThat(aiFeedback.getScore()).isNull(),
+                () -> assertThat(aiFeedback.getScore()).isEqualTo(0),
                 () -> assertThat(aiFeedback.getTailQuestion()).isNull()
         );
     }

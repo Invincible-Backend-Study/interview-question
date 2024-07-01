@@ -2,6 +2,7 @@ package in.backend.core.interview.entity;
 
 
 import in.backend.core.interview.application.InterviewSubmitCommand.FeedbackInfo;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -15,6 +16,7 @@ public class AIFeedback {
 
     private String tailQuestion;
 
+    @Column(length = 2000)
     private String feedbackContent;
 
     private int score;
