@@ -54,6 +54,10 @@ env:
   REGION: ${{secrets.REGION}}
   ARTIFACT_REGISTRY: ${{secrets.ARTIFACT_REGISTRY}}
 
+defaults:
+  run:
+    working-directory: backend
+
 jobs:
   deploy:
     # Add 'id-token' with the intended permissions for workload identity federation
