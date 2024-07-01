@@ -55,4 +55,4 @@ jobs:
           image: ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY }}/${{ secrets.SERVICE }}:latest
 
       - name: Show Output
-        run: echo ${{ steps.deploy.outputs.url }}un: echo ${{ steps.deploy.outputs.url }}
+        run: echo ${{ steps.deploy.outputs.url }}
