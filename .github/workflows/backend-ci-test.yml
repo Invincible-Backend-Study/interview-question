@@ -1,0 +1,58 @@
+name: Build and Deploy to Cloud Run
+
+on:
+  pull_request:
+    branches: [ main ]
+
+defaults:
+  run: 
+  working-directory: backend
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          token: ${{ secrets.ACTION_TOKEN }}
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: '${{ secrets.WIF_PROVIDER }}' # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
+          service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}' # e.g. - my-service-account@my-project.iam.gserviceaccount.com
+          project_id: '${{secrets.PROJECT_ID}}'
+
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 21
+
+      - name: Build and Push Container using Jib
+        env:
+          GOOGLE_AR_CLIENT_SECRET: ${{ secrets.GOOGLE_AR_CLIENT_SECRET }}
+          SPRING_PROFILES_ACTIVE: dev
+        run: ./gradlew jib
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ secrets.SERVICE }}
+          region: ${{ secrets.REGION }}
+          image: ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.ARTIFACT_REGISTRY }}/${{ secrets.SERVICE }}:latest
+
+      - name: Show Output
+        run: echo ${{ steps.deploy.outputs.url }}un: echo ${{ steps.deploy.outputs.url }}
