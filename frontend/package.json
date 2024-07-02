@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run tailwind:prod && npm run cp:security && vite",
-    "build": "tsc && vite build",
+    "dev": "npm run tailwind:dev && npm run cp:security && vite",
+    "build": "npm run tailwind:prod tsc && vite build --mode prod",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "tailwind:dev": "npx tailwindcss -i ./src/index.css -o ./src/output.css --watch",
