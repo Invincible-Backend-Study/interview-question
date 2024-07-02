@@ -5,6 +5,7 @@ import {TOKEN} from "@/constants/api";
 import {PATH} from "@/constants/path";
 import {useRecoilState} from "recoil";
 import {isLoggedInState} from "@/store/auth";
+import {toast} from "sonner";
 
 
 export const useSignInMutation = () => {
@@ -16,6 +17,7 @@ export const useSignInMutation = () => {
     gcTime: 60 * 60 * 60 * 1000,
     onSuccess: ({accessToken}) => {
       localStorage.setItem(TOKEN.ACCESS, accessToken);
+      toast.info("환영합니다~")
       setLoggedIn(true)
       navigate(PATH.MAIN_PAGE)
     },

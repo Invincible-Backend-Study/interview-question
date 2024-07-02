@@ -1,9 +1,14 @@
 import InterviewQuestionHistory from "@/components/InterviewQuestionHistory/InterviewQuestionHistory";
 import InterviewQuestionBoard from "@/components/InterviewQuestionBoard/InterviewQuestionBoard";
-import {Textarea} from "@nextui-org/react";
+import {Textarea, useDisclosure} from "@nextui-org/react";
 import InterviewController from "@/components/InterviewController/InterviewController";
 import {useInterviewForm} from "@/components/InterviewForm/useInterviewForm";
 import {useShortCut} from "@/hooks/useShortCut";
+import InterviewNotification from "@/components/InterviewNotification/InterviewNotification";
+import {useNavigate} from "react-router-dom";
+import {useCallback} from "react";
+import {PATH} from "@/constants/path";
+import {toast} from "sonner";
 
 
 interface InterviewFormProps{
@@ -24,51 +29,59 @@ const InterviewForm = ({interviewId}: InterviewFormProps) => {
     answer,handleAnswerChange
   } = useInterviewForm(interviewId);
 
-  useShortCut({save: handleSubmit, pass: handlePass, isBlocking:feedbackWaiting});
+  const navigator = useNavigate();
 
+  const quit = useCallback(() => {
+    navigator(PATH.MAIN_PAGE)
+    toast.info("면접을 일시중답합니다.(다시 풀 수 있습니다)");
+  }, [])
+
+
+  useShortCut({save: handleSubmit, pass: handlePass, isBlocking:feedbackWaiting, quit});
+
+  const disclosure = useDisclosure();
 
   return <>
-    <div className="grid grid-rows-3 grid-flow-col gap-1 min-h-screen">
-      <div className="row-span-3 border-r-1 p-3" style={{
-        borderRight: border
-      }}>
+    <div className="min-h-screen max-h-screen w-full flex ">
+      <div className="w-[20%] p-3" style={{borderRight: border}}>
         <InterviewQuestionHistory size={interview.size} index={interview.index}/>
       </div>
-      <div className='row-span-2 col-span-2 grid grid-rows-4 grid-flow-col gap-1 h-full p-3' style={{
+      <div className='min-h-full w-full flex flex-col justify-between' style={{
         borderBottom: border,
         borderLeft: border
       }}>
-        <div className='row-span-4 col-auto'>
+        <div className='p-3'>
           <InterviewQuestionBoard question={interview.question}
                                   chatList={chatList}
                                   remainTailQuestionCount={remainTailQuestionCount}/>
         </div>
-      </div>
 
-      <div className="row-span-1 col-span-2 grid grid-rows-4 grid-flow-col gap-1 h-full p-3" style={{
-        borderTop: border,
-        borderLeft: border
-      }}>
-        <div className="row-span-3">
-          <Textarea
-            placeholder="여기에 답을 적어주세요"
-            value={answer}
-            onChange={(e) => handleAnswerChange(e.target.value)}
-            minRows={10}
-            rows={10}
-            maxRows={10}
-            disabled={feedbackWaiting}
-          />
-        </div>
-        <div className="row-span-1 flex flex-col-reverse">
-          <InterviewController
-            disabled={feedbackWaiting}
-            onSubmit={handleSubmit}
-            onPass={handlePass}
-          />
+        <div className="gap-1 h-full flex flex-col max-h-[310px] p-4"  style={{
+          borderTop:border
+        }}>
+          <div>
+            <Textarea
+              placeholder="여기에 답을 적어주세요"
+              value={answer}
+              onChange={(e) => handleAnswerChange(e.target.value)}
+              minRows={10}
+              rows={10}
+              maxRows={10}
+              disabled={feedbackWaiting}
+            />
+          </div>
+          <div className="row-span-1 flex flex-col-reverse" >
+            <InterviewController
+              onQuit={quit}
+              info={disclosure.onOpen}
+              disabled={feedbackWaiting}
+              onSubmit={handleSubmit}
+              onPass={handlePass}
+            />
+          </div>
         </div>
       </div>
-
+      <InterviewNotification {...disclosure}/>
     </div>
   </>
 

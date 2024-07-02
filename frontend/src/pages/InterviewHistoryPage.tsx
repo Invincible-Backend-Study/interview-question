@@ -3,7 +3,7 @@ import {Spacer} from "@nextui-org/react";
 
 const InterviewHistoryPage= () => {
   return <div className="p-3 w-full">
-    <span className="text-2xl">
+    <span className="text-2xl text-warning">
       면접 이력
     </span>
 

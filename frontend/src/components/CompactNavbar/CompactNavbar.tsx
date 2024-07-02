@@ -1,4 +1,4 @@
-import {Button, Modal, ModalBody, ModalContent, ModalHeader, Spacer, Tooltip, useDisclosure} from "@nextui-org/react";
+import {Button, Modal, Spacer, Tooltip, useDisclosure} from "@nextui-org/react";
 import {MdHistory} from "react-icons/md";
 import {FaHome} from "react-icons/fa";
 import {IoSettingsOutline} from "react-icons/io5";
@@ -8,6 +8,7 @@ import {useLogoutMutation} from "@/hooks/api/auth/useLogoutMutation";
 import {useCallback} from "react";
 import {PATH} from "@/constants/path";
 import {useNavigate} from "react-router-dom";
+import IndividualSettingForm from "@/components/IndividualSettingForm/IndividualSettingForm";
 
 
 interface CompactNavbarProps {
@@ -61,17 +62,7 @@ const CompactNavbar = ({profile}: CompactNavbarProps) => {
       </div>
 
       <Modal backdrop="blur" isDismissable={false} isKeyboardDismissDisabled={true} isOpen={isOpen} placement={"top"} className={`text-foreground bg-background dark`} onClose={onClose}>
-        <ModalContent>
-          {() => (
-            <>
-              <ModalHeader>
-                설정
-              </ModalHeader>
-              <ModalBody>
-              </ModalBody>
-            </>
-          )}
-        </ModalContent>
+        <IndividualSettingForm/>
       </Modal>
     </nav>
   )

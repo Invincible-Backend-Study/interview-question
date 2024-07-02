@@ -32,20 +32,22 @@ const InterviewQuestionBoard = ({question, remainTailQuestionCount, chatList}: I
     if(remainTailQuestionCount === 0) {
       return <span>다음 문제로 넘어갑니다.</span>
     }
-    return <span>{`${remainTailQuestionCount}개의 꼬리질문이 남아 있습니다.`}</span>
+    return <span>{`남은 꼬리질문: ${remainTailQuestionCount}개`}</span>
   }, [remainTailQuestionCount, chatList])
 
   return (
-    <>
+    <div className="max-w-full min-w-full ">
       <div className='row-span-4 col-auto'>
-        <p className="text-3xl">{question}</p>
+        <p className='text-3xl'>{question}</p>
         <TailQuestionMessage/>
 
-        <ScrollShadow className="h-[55vh] p-5 flex flex-col gap-4" ref={scrollRef}>
-          {chatList.map((chat, index)=> chat.type === "TailQuestion" ? <ComputerChat  key={index} {...chat}/> : <UserChat key={index}{...chat}/>)}
+
+        <ScrollShadow className='h-[calc(100vh-450px)] p-5 flex flex-col gap-4' ref={scrollRef}>
+          {chatList.map((chat, index) => chat.type === "TailQuestion" ? <ComputerChat key={index} {...chat}/> :
+            <UserChat key={index}{...chat}/>)}
         </ScrollShadow>
       </div>
-    </>
+    </div>
   )
 }
 

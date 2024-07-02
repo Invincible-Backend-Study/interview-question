@@ -14,7 +14,7 @@ const ComputerChat = ({content}: Chat) => {
         <p className='text-sm font-normal py-2.5 text-gray-900 dark:text-white'>
           {content}
         </p>
-        <span className='text-sm font-normal text-gray-500 dark:text-gray-400'>Delivered</span>
+        <span className='text-sm font-normal text-gray-500 dark:text-gray-400'>AI가 생성한 질문입니다.(잘못된 답안을 만들 수 있기에 주의 부탁드립니다)</span>
       </div>
     </div>
   )

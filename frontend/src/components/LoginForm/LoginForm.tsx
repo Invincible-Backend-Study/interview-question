@@ -1,11 +1,8 @@
-import {Button, Card, CardBody, CardFooter, CardHeader, Chip, Spacer} from "@nextui-org/react";
+import {Button, Card, CardBody, CardFooter, CardHeader, Spacer} from "@nextui-org/react";
 import {useCallback} from "react";
 import {AUTH_TEXT} from "@/constants/auth";
 
 const LoginForm = () => {
-  const handleRedirectGithubPage = useCallback(() => {
-    location.href = "https://github.com/invincible-Backend-Study"
-  }, []);
 
   const handleOAuthLoginPage = useCallback(() => {
     location.assign(`https://github.com/login/oauth/authorize?client_id=${import.meta.env.VITE_CLIENT_ID}`);
@@ -16,16 +13,14 @@ const LoginForm = () => {
     <Card className="p-4 bg-default-100 w-[40vw]">
       <CardHeader className="flex justify-between">
         <div className="flex items-center">
-          <span className="text-2xl">{AUTH_TEXT.LOGIN}</span>
+          <span className="text-2xl text-success">{AUTH_TEXT.LOGIN}</span>
           <Spacer x={2} />
-          <Chip>{AUTH_TEXT.AUTH_TYPE}</Chip>
         </div>
-        <Button color="primary" onClick={handleRedirectGithubPage}>{AUTH_TEXT.REDIRECT_GITHUB}</Button>
       </CardHeader>
-      <CardBody>
+      <CardBody className="w-full">
         <p className="whitespace-pre-wrap">{AUTH_TEXT.DESCRIPTION}</p>
       </CardBody>
-      <CardFooter>
+      <CardFooter className="w-full flex flex-row-reverse">
         <Button color="primary" onClick={handleOAuthLoginPage}>GITHUB 로그인</Button>
       </CardFooter>
     </Card>
