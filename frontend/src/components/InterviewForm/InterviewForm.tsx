@@ -1,9 +1,14 @@
 import InterviewQuestionHistory from "@/components/InterviewQuestionHistory/InterviewQuestionHistory";
 import InterviewQuestionBoard from "@/components/InterviewQuestionBoard/InterviewQuestionBoard";
-import {Textarea} from "@nextui-org/react";
+import {Textarea, useDisclosure} from "@nextui-org/react";
 import InterviewController from "@/components/InterviewController/InterviewController";
 import {useInterviewForm} from "@/components/InterviewForm/useInterviewForm";
 import {useShortCut} from "@/hooks/useShortCut";
+import InterviewNotification from "@/components/InterviewNotification/InterviewNotification";
+import {useNavigate} from "react-router-dom";
+import {useCallback} from "react";
+import {PATH} from "@/constants/path";
+import {toast} from "sonner";
 
 
 interface InterviewFormProps{
@@ -24,8 +29,17 @@ const InterviewForm = ({interviewId}: InterviewFormProps) => {
     answer,handleAnswerChange
   } = useInterviewForm(interviewId);
 
-  useShortCut({save: handleSubmit, pass: handlePass, isBlocking:feedbackWaiting});
+  const navigator = useNavigate();
 
+  const quit = useCallback(() => {
+    navigator(PATH.MAIN_PAGE)
+    toast.info("면접을 일시중답합니다.(다시 풀 수 있습니다)");
+  }, [])
+
+
+  useShortCut({save: handleSubmit, pass: handlePass, isBlocking:feedbackWaiting, quit});
+
+  const disclosure = useDisclosure();
 
   return <>
     <div className="min-h-screen max-h-screen w-full flex ">
@@ -58,6 +72,8 @@ const InterviewForm = ({interviewId}: InterviewFormProps) => {
           </div>
           <div className="row-span-1 flex flex-col-reverse" >
             <InterviewController
+              onQuit={quit}
+              info={disclosure.onOpen}
               disabled={feedbackWaiting}
               onSubmit={handleSubmit}
               onPass={handlePass}
@@ -65,8 +81,7 @@ const InterviewForm = ({interviewId}: InterviewFormProps) => {
           </div>
         </div>
       </div>
-
-
+      <InterviewNotification {...disclosure}/>
     </div>
   </>
 

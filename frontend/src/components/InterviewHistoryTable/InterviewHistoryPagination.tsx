@@ -17,8 +17,8 @@ const InterviewHistoryPagination = ({totalPages, page, changePage}: InterviewHis
           cursor: "bg-foreground text-background",
         }}
         color="default"
-        page={page }
-        total={totalPages ?? 0}
+        page={page}
+        total={totalPages ??  1 }
         variant="light"
 
         onChange={changePage}

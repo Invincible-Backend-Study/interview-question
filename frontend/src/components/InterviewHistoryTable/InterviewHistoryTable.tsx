@@ -79,7 +79,6 @@ const InterviewHistoryTable = () => {
    */
   const renderCell = useCallback((item: MyInterview, cellType: React.Key) => {
     const cellValue = item[cellType as keyof MyInterview];
-    console.log(cellType);
     switch(cellType){
       case "createdAt":
         return <time>{dateToString(new Date(item.createdAt))}</time>
