@@ -4,13 +4,12 @@ import {useCallback} from "react";
 import {AUTH_TEXT} from "@/constants/auth";
 
 const LoginForm = () => {
-
   const handleRedirectGithubPage = useCallback(() => {
     location.href = "https://github.com/invincible-Backend-Study"
   }, []);
 
   const handleOAuthLoginPage = useCallback(() => {
-    location.assign("https://github.com/login/oauth/authorize?client_id=Ov23li2P6dxh8LyV5RHk");
+    location.assign(`https://github.com/login/oauth/authorize?client_id=${import.meta.env.VITE_CLIENT_ID}`);
   }, [])
 
 

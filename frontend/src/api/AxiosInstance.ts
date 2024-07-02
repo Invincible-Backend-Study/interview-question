@@ -3,7 +3,7 @@ import {NETWORK} from "@/constants/api";
 import {checkAndSetToken, handleTokenError} from "@/api/Interceptors";
 
 export const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: `${import.meta.env.VITE_API}/api`,
   timeout: NETWORK.TIMEOUT,
   withCredentials: true,
   useAuth: true

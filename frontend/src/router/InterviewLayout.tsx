@@ -31,7 +31,6 @@ const InterviewLayout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(">>>>", isLoggedIn);
     if(!isLoggedIn) {
       navigate(PATH.MAIN_PAGE)
     }
