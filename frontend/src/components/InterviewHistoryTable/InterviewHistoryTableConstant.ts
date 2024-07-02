@@ -11,9 +11,9 @@ import {MyInterview} from "@/types/interview";
 
 
 export const columns = [
-  {name: "인터뷰 ID", uid: "interviewId", sortable: true},
-  {name: "인터뷰 제목", uid: "title"},
-  {name: "인터뷰 상태", uid: "interviewState"},
+  {name: "면접 ID", uid: "interviewId", sortable: true},
+  {name: "면접 제목", uid: "title"},
+  {name: "면접 상태", uid: "interviewState"},
   {name: "문항 수", uid: "questionCount"},
   {name: "면접 생성 일", uid: "createdAt"},
   {name: "면접 종료 일", uid: "updatedAt"},
