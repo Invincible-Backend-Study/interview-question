@@ -1,4 +1,4 @@
-import {Button,  Kbd} from "@nextui-org/react";
+import {Button, Kbd} from "@nextui-org/react";
 
 
 interface InterviewControllerProps {

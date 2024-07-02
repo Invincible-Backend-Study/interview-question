@@ -1,4 +1,4 @@
-import {Checkbox, Divider, ScrollShadow, Snippet } from "@nextui-org/react";
+import {Checkbox, Divider, ScrollShadow, Snippet} from "@nextui-org/react";
 import ReportItem from "@/components/ReportItem/ReportItem";
 
 const ReportPage = () => {

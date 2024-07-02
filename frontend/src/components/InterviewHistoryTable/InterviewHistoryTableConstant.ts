@@ -22,13 +22,12 @@ export const columns = [
 
 const item = new Array(13).fill( 0)
   .map((_, i)=> ({
-    interviewId: i + 3, interviewState: "STOP", questionCount: 10, createdAt: new Date(), updatedAt: new Date(),
+    interviewId: i + 3, interviewState: "PROGRESS", questionCount: 10,
+    createdAt: new Date().toString(),
+    updatedAt: new Date().toString(),
     title: "자바 면접 시리즈3"
   }) as MyInterview)
 export const rows: MyInterview[] = [
-  {interviewId: 1, interviewState: "INIT", questionCount: 10, createdAt: new Date(), updatedAt: new Date(), title: "자바 면접 시리즈111111111111111111111111111111"},
-  {interviewId: 2, interviewState: "COMPLETE", questionCount: 10, createdAt: new Date(), updatedAt: new Date(), title: "자바 면접 시리즈2"},
-  {interviewId: 3, interviewState: "STOP", questionCount: 10, createdAt: new Date(), updatedAt: new Date(), title: "자바 면접 시리즈3"},
   ...item
 ]
 

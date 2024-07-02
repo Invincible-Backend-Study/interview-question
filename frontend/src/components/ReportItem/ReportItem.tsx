@@ -1,4 +1,4 @@
-import { Checkbox, Chip, cn } from "@nextui-org/react";
+import {Checkbox, Chip, cn} from "@nextui-org/react";
 import {useState} from "react";
 
 

@@ -1,23 +1,13 @@
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  Spacer,
-  Tooltip,
-  useDisclosure
-} from "@nextui-org/react";
+import {Button, Modal, ModalBody, ModalContent, ModalHeader, Spacer, Tooltip, useDisclosure} from "@nextui-org/react";
 import {MdHistory} from "react-icons/md";
 import {FaHome} from "react-icons/fa";
 import {IoSettingsOutline} from "react-icons/io5";
 import ProfileAvatar from "@/components/ProfileAvatar/ProfileAvatar";
-import { SlLogout } from "react-icons/sl";
+import {SlLogout} from "react-icons/sl";
 import {useLogoutMutation} from "@/hooks/api/auth/useLogoutMutation";
 import {useCallback} from "react";
 import {PATH} from "@/constants/path";
-import {useNavigate, useParams} from "react-router-dom";
-
+import {useNavigate} from "react-router-dom";
 
 
 interface CompactNavbarProps {
@@ -72,7 +62,7 @@ const CompactNavbar = ({profile}: CompactNavbarProps) => {
 
       <Modal backdrop="blur" isDismissable={false} isKeyboardDismissDisabled={true} isOpen={isOpen} placement={"top"} className={`text-foreground bg-background dark`} onClose={onClose}>
         <ModalContent>
-          {(onClose) => (
+          {() => (
             <>
               <ModalHeader>
                 설정

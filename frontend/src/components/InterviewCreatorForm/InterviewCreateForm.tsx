@@ -1,10 +1,4 @@
-import {
-  Button,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  Slider
-} from "@nextui-org/react";
+import {Button, ModalBody, ModalContent, ModalHeader, Slider} from "@nextui-org/react";
 import {problemCount, tailQuestionCount} from "@/components/InterviewCreatorForm/InterviewCreateForm.constant";
 import {InterviewSettings} from "@/types/interview";
 import {useInterviewCreateMutation} from "@/hooks/api/interview/useInterviewCreateMutation";
@@ -61,7 +55,7 @@ const InterviewCreateForm = ({ interviewSettings: {questionSetId, count, tailQue
 
   return (
     <ModalContent>
-      {(_) => (
+      {() => (
         <>
         <ModalHeader>
           면접 시작하기

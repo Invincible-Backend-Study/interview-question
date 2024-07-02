@@ -1,4 +1,3 @@
-
 import {Button, Card, CardBody, CardFooter, CardHeader, Chip, Spacer} from "@nextui-org/react";
 import {useCallback} from "react";
 import {AUTH_TEXT} from "@/constants/auth";

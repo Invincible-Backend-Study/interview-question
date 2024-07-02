@@ -1,5 +1,4 @@
 import {AnswerState} from "@/types/answer";
-import {Interview} from "@/types/question";
 
 /**
  * 인터뷰 생성 요청
@@ -91,8 +90,8 @@ export interface MyInterviewResponse {
   title: string;
   interviewState: InterviewState;
   questionCount: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 
@@ -126,8 +125,8 @@ export interface MyInterview {
   title: string;
   interviewState: InterviewState
   questionCount: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 

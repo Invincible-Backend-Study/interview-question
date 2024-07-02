@@ -1,4 +1,4 @@
-import {keepPreviousData, useInfiniteQuery, useQuery, useSuspenseInfiniteQuery} from "@tanstack/react-query";
+import {keepPreviousData, useQuery} from "@tanstack/react-query";
 import {myInterview} from "@/api/interview/MyInterview";
 
 

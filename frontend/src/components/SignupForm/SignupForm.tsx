@@ -1,4 +1,3 @@
-
 import {Button, Card, CardBody, CardFooter, CardHeader, Chip, Input, Spacer} from "@nextui-org/react";
 import {useCallback, useEffect} from "react";
 import {useOAuthProfileQuery} from "@/hooks/api/auth/useOAuthProfileQuery";

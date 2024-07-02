@@ -1,7 +1,10 @@
 import {
   Button,
   Chip,
-  Dropdown, DropdownItem, DropdownMenu, DropdownTrigger,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
   Table,
   TableBody,
   TableCell,
@@ -10,13 +13,13 @@ import {
   TableRow
 } from "@nextui-org/react";
 
-import {columns } from "./InterviewHistoryTableConstant";
+import {columns} from "./InterviewHistoryTableConstant";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {InterviewState, MyInterview} from "@/types/interview";
 import InterviewHistoryPagination from "@/components/InterviewHistoryTable/InterviewHistoryPagination";
 import InterviewHistoryTableTopContent from "@/components/InterviewHistoryTable/InterviewHistoryTableTopContent";
 import {dateToString} from "@/utils/Date";
-import { HiDotsVertical } from "react-icons/hi";
+import {HiDotsVertical} from "react-icons/hi";
 import {useMyInterviewQuery} from "@/hooks/api/interview/useMyInterviewQuery";
 import {useNavigate} from "react-router-dom";
 import {PATH} from "@/constants/path";
@@ -81,7 +84,6 @@ const InterviewHistoryTable = () => {
       case "createdAt":
         return <time>{dateToString(new Date(item.createdAt))}</time>
       case "updatedAt":
-
         return <time>{item.interviewState === "PROGRESS" ? "" : dateToString(new Date(item.updatedAt))}</time>
       case "action":
         return (
@@ -106,8 +108,6 @@ const InterviewHistoryTable = () => {
       case "title":
         return <span className="truncate">{item.title}</span>
       default:
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
         return <div>{cellValue}</div>;
     }
 

@@ -1,4 +1,4 @@
-import {Modal,Spacer, useDisclosure,} from "@nextui-org/react";
+import {Modal, Spacer, useDisclosure,} from "@nextui-org/react";
 import {useQuestionSetQuery} from "@/hooks/api/question/useQuestionSetQuery";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {InterviewSettings} from "@/types/interview";

@@ -1,4 +1,4 @@
-import { Chat} from "@/types/question";
+import {Chat} from "@/types/question";
 
 const UserChat = ({content}: Chat) => {
   return (

@@ -1,7 +1,5 @@
 import {useInterviewResultQuery} from "@/hooks/api/interview/useInterviewResultQuery";
 import {Chip, Spacer} from "@nextui-org/react";
-import {InterviewQuestionDetail, MyInterviewResult, TailQuestionDetail} from "@/types/interview";
-
 
 
 interface InterviewItemBlockProps {

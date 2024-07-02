@@ -1,4 +1,4 @@
-import {AxiosError,  InternalAxiosRequestConfig} from "axios";
+import {AxiosError, InternalAxiosRequestConfig} from "axios";
 import {TOKEN} from "@/constants/api";
 import {PATH} from "@/constants/path";
 import {reIssueToken} from "@/api/auth/ReIssueToken";

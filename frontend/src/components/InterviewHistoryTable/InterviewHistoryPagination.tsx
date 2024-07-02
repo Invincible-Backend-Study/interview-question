@@ -2,7 +2,7 @@ import {Pagination} from "@nextui-org/react";
 
 
 interface InterviewHistoryPaginationProps {
-  totalPages: number;
+  totalPages?: number;
   page: number;
   changePage?: (page: number) => void;
 }
@@ -17,8 +17,8 @@ const InterviewHistoryPagination = ({totalPages, page, changePage}: InterviewHis
           cursor: "bg-foreground text-background",
         }}
         color="default"
-        page={page}
-        total={totalPages}
+        page={page }
+        total={totalPages ?? 0}
         variant="light"
 
         onChange={changePage}
