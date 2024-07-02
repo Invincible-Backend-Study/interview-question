@@ -2,3 +2,7 @@
 [submodule "backend/secret"]
 	path = "backend/secret"
 	url = https://github.com/JaeHongDev/mubaegseu-secret
+
+[submodule "frontend/secret"]
+	path = frontend/secret
+	url = https://github.com/JaeHongDev/mubaegseu-secret
