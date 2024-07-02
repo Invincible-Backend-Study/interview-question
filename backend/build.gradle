@@ -39,6 +39,7 @@ jib {
 
     container {
         jvmFlags = [
+                '--enable-preview',
                 String.format('-Dspring.profiles.active=%s', "prod"),
                 '-Xms1024m',
                 '-Xms1024m'
