@@ -1,5 +1,6 @@
 import {useInterviewResultQuery} from "@/hooks/api/interview/useInterviewResultQuery";
 import {Chip, Spacer} from "@nextui-org/react";
+import {Fragment} from "react";
 
 
 interface InterviewItemBlockProps {
@@ -61,14 +62,14 @@ const InterviewResultView = ({interviewId}: InterviewResultViewProps) => {
       </div>
 
       <div className='p-8 rounded shadow'>
-        {interviewResult.interviewQuestions.map(interviewQuestion => (
-          <>
-          <InterviewItemBlock id={interviewQuestion.interviewQuestionId} {...interviewQuestion} />
-            {interviewQuestion.tailQuestions.map(tailQuestion => (
-              <InterviewItemBlock id={tailQuestion.tailQuestionId} {...tailQuestion} />
+        {interviewResult.interviewQuestions.map((interviewQuestion, index) => (
+          <Fragment key={interviewQuestion.interviewQuestionId}>
+          <InterviewItemBlock key={index} id={interviewQuestion.interviewQuestionId} {...interviewQuestion} />
+            {interviewQuestion.tailQuestions.map((tailQuestion, index) => (
+              <InterviewItemBlock key={index} id={tailQuestion.tailQuestionId} {...tailQuestion} />
             ))}
-          </>
-        ))}
+          </Fragment>
+          ))}
       </div>
     </div>
   )
