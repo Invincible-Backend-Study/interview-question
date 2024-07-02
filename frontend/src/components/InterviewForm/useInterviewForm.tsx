@@ -34,7 +34,7 @@ export const useInterviewForm = (interviewId: number) => {
     submitType: 'Question',
     chatList: [],
     answer: "",
-    remainTailQuestionCount:  interview.remainTailQuestionCount
+    remainTailQuestionCount:  interview.remainTailQuestionCount,
   })
 
   useEffect(() => {
@@ -97,7 +97,6 @@ export const useInterviewForm = (interviewId: number) => {
     if (tailQuestionId === null) {
       if (interview.index + 1 === interview.size) {
         navigate(PATH.INTERVIEW_RESULT(interviewId))
-        return;
       }
 
       clearChat();
@@ -124,6 +123,7 @@ export const useInterviewForm = (interviewId: number) => {
    *   5. 만약 현재 질문이 마지막 질문이면 면접을 종료 함
    */
   const handleSubmit = useCallback(async () => {
+
     if(interviewForm.answer.trim() === "") {
       toast.error("답변칸이 빈칸입니다.")
       return ;
@@ -161,6 +161,7 @@ export const useInterviewForm = (interviewId: number) => {
     }
 
     if(interviewForm.submitType === 'Question') {
+
       appendChat({type: 'Answer', content: interviewForm.answer})
 
       const { tailQuestion, feedback,score} = await requestAiFeedback({
@@ -188,7 +189,6 @@ export const useInterviewForm = (interviewId: number) => {
 
 
   const handlePass = useCallback(async () => {
-
     if(interviewForm.submitType === 'Question') {
       const {tailQuestionId} = await interviewSubmitMutation.mutateAsync({
         ...interview,
@@ -223,10 +223,6 @@ export const useInterviewForm = (interviewId: number) => {
       })
       await submitAfterCleanup(tailQuestionId);
     }
-
-
-
-    await refetch();
   }, [interview, interviewForm])
 
 
