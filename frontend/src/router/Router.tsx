@@ -7,6 +7,7 @@ import ReportPage from "@/pages/ReportPage";
 import InterviewHistoryPage from "@/pages/InterviewHistoryPage";
 import {lazy, Suspense} from "react";
 import InterviewResultPage from "@/pages/InterviewResultPage";
+import NotFoundPage from "@/pages/NotFoundPage";
 
 
 const DefaultLayout = lazy(() => import("@/router/DefaultLayout"));
@@ -34,6 +35,7 @@ function Router() {
     {
       path: '/',
       element: (<Suspense fallback={<WaitingView/>}><DefaultLayout/></Suspense>),
+      errorElement: <NotFoundPage/>,
       children: [
         {index: true, element: <MainPage/>},
         {path: '/report', element: <ReportPage/>},
@@ -43,6 +45,7 @@ function Router() {
     },
     {
       path: '/auth',
+      errorElement: <NotFoundPage/>,
       element: <Suspense fallback={<WaitingView/>}><LoginLayout/></Suspense>,
       children:[
         {index: true, element: <LoginPage/>},
@@ -51,6 +54,7 @@ function Router() {
     },
     {
       path: '/interviews/:interviewId',
+      errorElement: <NotFoundPage/>,
       element: <Suspense fallback={<WaitingView/>}><InterviewLayout></InterviewLayout></Suspense>,
       children: [
         {index: true, element: <InterviewPage/>}
@@ -58,7 +62,7 @@ function Router() {
     }
   ])
 
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router}  />
 }
 
 export default Router;
