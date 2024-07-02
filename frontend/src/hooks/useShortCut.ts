@@ -4,12 +4,17 @@ import {useCallback, useEffect} from "react";
 interface useShortCutProps {
   save: () => void;
   pass: () => void;
+  quit: () => void;
   isBlocking: boolean;
 }
 
-export const useShortCut = ({save, pass, isBlocking}: useShortCutProps) => {
+export const useShortCut = ({save, pass, isBlocking, quit}: useShortCutProps) => {
 
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
+    if(event.metaKey && event.key.toLowerCase() === 'q') {
+      event.stopPropagation();
+      quit();
+    }
     if(isBlocking){
       return ;
     }
