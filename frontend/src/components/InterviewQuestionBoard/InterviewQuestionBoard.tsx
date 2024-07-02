@@ -36,16 +36,16 @@ const InterviewQuestionBoard = ({question, remainTailQuestionCount, chatList}: I
   }, [remainTailQuestionCount, chatList])
 
   return (
-    <>
+    <div className="max-w-full min-w-full ">
       <div className='row-span-4 col-auto'>
         <p className="text-3xl">{question}</p>
         <TailQuestionMessage/>
 
-        <ScrollShadow className="h-[55vh] p-5 flex flex-col gap-4" ref={scrollRef}>
+        <ScrollShadow className="h-[calc(100vh-400px)] p-5 flex flex-col gap-4" ref={scrollRef}>
           {chatList.map((chat, index)=> chat.type === "TailQuestion" ? <ComputerChat  key={index} {...chat}/> : <UserChat key={index}{...chat}/>)}
         </ScrollShadow>
       </div>
-    </>
+    </div>
   )
 }
 
