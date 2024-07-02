@@ -10,7 +10,7 @@ defaults:
 
 env:
   PROJECT_ID: ${{secrets.PROJECT_ID}}
-  SERVICE: ${{secrets.SERVICE}}
+  SERVICE: ${{secrets.FE_SERVICE}}
   REGION: ${{secrets.REGION}}
   ARTIFACT_REGISTRY: ${{secrets.FE_ARTIFACT_REGISTRY}}
   node-version: '20.12.2'
