@@ -33,7 +33,7 @@ export default function(){
 
   return (
     <div className="p-3">
-      <span className="text-2xl">질문 목록</span>
+      <span className="text-2xl text-warning">질문 목록</span>
       <Spacer y={10}/>
 
       <div className="p-5 flex flex-wrap gap-4">

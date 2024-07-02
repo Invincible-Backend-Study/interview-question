@@ -15,13 +15,13 @@ const InterviewLayout = lazy( () => import("@/router/InterviewLayout"));
 
 const WaitingView = () => {
   return (
-    <div className='flex items-center justify-center min-h-screen bg-gray-100'>
+    <div className='flex items-center justify-center min-h-screen '>
       <div className='text-center'>
         <div className='flex justify-center mb-4'>
           <div className='w-16 h-16 border-t-4 border-blue-500 border-solid rounded-full animate-spin'></div>
         </div>
         <h2 className='text-xl font-semibold text-gray-700'>Loading...</h2>
-        <p className='text-gray-500'>Please wait while we fetch your data.</p>
+        <p className='text-gray-500'>페이지를 가져오는 중이에요</p>
       </div>
     </div>
   )

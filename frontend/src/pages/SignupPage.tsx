@@ -11,8 +11,6 @@ const SignupPage = () => {
     return;
   }
 
-
-
   return <SignupForm providerId={providerId}/>
 }
 

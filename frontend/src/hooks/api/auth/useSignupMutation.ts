@@ -16,6 +16,7 @@ export const useSignupMutation = () => {
     mutationFn: signup,
     onSuccess: ({accessToken})=> {
       localStorage.setItem(TOKEN.ACCESS, accessToken);
+      toast.info("환영합니다~")
       setLoggedIn(true)
       navigate(PATH.MAIN_PAGE)
     },
