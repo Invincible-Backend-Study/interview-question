@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name = "interview")
+@Table(name = "interviews")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class InterviewEntity extends BaseEntity {
 
@@ -42,7 +42,7 @@ public class InterviewEntity extends BaseEntity {
     /**
      * 현재 진행 중인 면접 질문 번호
      */
-    @Column(nullable = false)
+    @Column(nullable = false, name = "interview_index")
     private int index;
     /**
      * 인터뷰 면접 질문의 수
