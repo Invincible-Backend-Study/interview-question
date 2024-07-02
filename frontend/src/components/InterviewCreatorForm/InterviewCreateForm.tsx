@@ -78,7 +78,7 @@ const InterviewCreateForm = ({ interviewSettings: {questionSetId, count, tailQue
           <p>*아직 지원하지 않습니다.</p>
           <InterviewSettingsSlider label={"문항 별 대기 시간"} disabled={true}/>
           <InterviewSettingsSlider label={"문항 별 제한 시간"} disabled={true}/>
-          <Button onClick={handleInterviewCreate}>인터뷰 생성하기</Button>
+          <Button onClick={handleInterviewCreate}>면접 시작</Button>
         </ModalBody>
         </>
       )}
