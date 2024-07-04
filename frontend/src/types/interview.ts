@@ -164,6 +164,7 @@ export interface TailQuestionDetail {
 export interface FeedbackRequest{
   question: string;
   answer: string;
+  tailQuestions: string[];
 }
 
 export interface FeedbackResponse {
