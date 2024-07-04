@@ -7,7 +7,7 @@ const size = 10;
 
 export const useMyInterviewQuery = (page: number) => {
 
-  const {data, refetch} = useQuery({
+  const {data, refetch, isLoading} = useQuery({
     queryKey: ['my interview'],
     queryFn: () => myInterview({page: page - 1, size}),
     placeholderData: keepPreviousData,
@@ -18,6 +18,7 @@ export const useMyInterviewQuery = (page: number) => {
   return {
     totalPages: data?.totalPages,
     data: data?.content,
-    refetch
+    refetch,
+    isLoading
   }
 }

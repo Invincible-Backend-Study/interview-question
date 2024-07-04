@@ -4,7 +4,7 @@ import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
-  DropdownTrigger,
+  DropdownTrigger, Spinner,
   Table,
   TableBody,
   TableCell,
@@ -40,7 +40,7 @@ const InterviewHistoryTable = () => {
 
 
   const [page, setPage] = useState(1);
-  const {data, totalPages, refetch} = useMyInterviewQuery(page);
+  const {data, totalPages, refetch, isLoading} = useMyInterviewQuery(page);
   const navigate = useNavigate();
 
 
@@ -117,6 +117,7 @@ const InterviewHistoryTable = () => {
     <Table
       isCompact
       removeWrapper
+
       classNames={tableClassNames}
       aria-label="Example table with custom cells, pagination and sorting"
       bottomContent={bottomContent}
@@ -136,7 +137,10 @@ const InterviewHistoryTable = () => {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody items={data === undefined ? [] : data} emptyContent={"참여한 면접 이력이 없습니다."}>
+      <TableBody
+        isLoading={isLoading}
+        loadingContent={<Spinner label="Loading..." />}
+        items={data === undefined ? [] : data} emptyContent={"참여한 면접 이력이 없습니다."}>
         {(row) => (
           <TableRow key={row.interviewId}>
             {(columnKey) => <TableCell>{renderCell(row, columnKey)}</TableCell>}
