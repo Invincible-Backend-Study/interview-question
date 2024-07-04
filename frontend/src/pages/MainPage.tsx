@@ -42,8 +42,8 @@ export default function(){
         {isLoading ? <QuestionSetItemListSkeleton/> : <></>}
         <div ref={ref}/>
       </div>
-      <Modal backdrop="blur" isDismissable={false} isKeyboardDismissDisabled={true} isOpen={isOpen} placement={"top"} className={`text-foreground bg-background dark`} onClose={onClose}>
-        <InterviewCreateForm interviewSettings={settings} />
+      <Modal backdrop="opaque" isDismissable={false} isKeyboardDismissDisabled={true} isOpen={isOpen} placement={"top"}  onClose={onClose}>
+        <InterviewCreateForm interviewSettings={settings}/>
       </Modal>
     </div>
   )

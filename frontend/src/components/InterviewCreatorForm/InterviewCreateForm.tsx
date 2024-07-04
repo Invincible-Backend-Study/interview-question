@@ -2,7 +2,6 @@ import {Button, ModalBody, ModalContent, ModalHeader, Slider} from "@nextui-org/
 import {problemCount, tailQuestionCount} from "@/components/InterviewCreatorForm/InterviewCreateForm.constant";
 import {InterviewSettings} from "@/types/interview";
 import {useInterviewCreateMutation} from "@/hooks/api/interview/useInterviewCreateMutation";
-import {useCallback} from "react";
 import {useInterviewCreateForm} from "@/components/InterviewCreatorForm/useInterviewCreateForm";
 
 
@@ -46,12 +45,8 @@ interface InterviewCreateFormProps {
 }
 
 const InterviewCreateForm = ({ interviewSettings: {questionSetId, count, tailQuestionDepth}}: InterviewCreateFormProps) => {
-  const {mutate} = useInterviewCreateMutation();
+  const {mutate, isPending,isSuccess} = useInterviewCreateMutation();
   const {interviewCreateForm, handleOnChange} = useInterviewCreateForm({tailQuestionDepth, totalProblemCount:count})
-
-  const handleInterviewCreate = useCallback(() => {
-    mutate({questionSetId, ...interviewCreateForm});
-  }, [interviewCreateForm]);
 
   return (
     <ModalContent>
@@ -78,7 +73,9 @@ const InterviewCreateForm = ({ interviewSettings: {questionSetId, count, tailQue
           <p>*아직 지원하지 않습니다.</p>
           <InterviewSettingsSlider label={"문항 별 대기 시간"} disabled={true}/>
           <InterviewSettingsSlider label={"문항 별 제한 시간"} disabled={true}/>
-          <Button onClick={handleInterviewCreate}>면접 시작</Button>
+          <Button onClick={() => {
+            mutate({questionSetId, ...interviewCreateForm});
+          }} isLoading={isPending || isSuccess}>면접 시작</Button>
         </ModalBody>
         </>
       )}
