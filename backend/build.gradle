@@ -20,7 +20,7 @@ version = '0.0.1-SNAPSHOT'
 
 jib {
     from {
-        image = 'bellsoft/liberica-openjdk-alpine'
+        image = 'bellsoft/liberica-openjdk-alpine:21'
     }
 
     to {
