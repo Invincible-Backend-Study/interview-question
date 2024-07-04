@@ -38,7 +38,6 @@ const statusDisplay: Record<InterviewState, string> = {
 
 const InterviewHistoryTable = () => {
 
-
   const [page, setPage] = useState(1);
   const {data, totalPages, refetch, isLoading} = useMyInterviewQuery(page);
   const navigate = useNavigate();
