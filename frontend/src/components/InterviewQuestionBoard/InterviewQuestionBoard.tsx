@@ -37,7 +37,7 @@ const InterviewQuestionBoard = ({question, remainTailQuestionCount, chatList, is
   return (
     <div className="max-w-full min-w-full ">
       <div className='row-span-4 col-auto'>
-        <p className='text-3xl'>{isLoading ? "질문을 가져옵니다....": question}</p>
+        <p className='text-1xl font-thin'>{isLoading ? "질문을 가져옵니다....": question}</p>
         <TailQuestionMessage/>
 
 

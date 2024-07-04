@@ -9,7 +9,7 @@ interface QuestionSetItemProps {
   openInterviewSetting: (command: InterviewCreateFormCommand) => void;
 }
 
-const QuestionSetItem = ({questionSet:{questionSetId, title, description, tailQuestionDepth, count}, openInterviewSetting}: QuestionSetItemProps) => {
+const QuestionSetItem = ({questionSet:{questionSetId, title, description, tailQuestionDepth, count, thumbnailUrl}, openInterviewSetting}: QuestionSetItemProps) => {
 
   const handleOpenSettings = useCallback(() => {
     openInterviewSetting({
@@ -23,14 +23,13 @@ const QuestionSetItem = ({questionSet:{questionSetId, title, description, tailQu
       <CardHeader className="flex flex-col items-start ">
         <span className="text-blue-500">NEW</span>
         <span>{title}</span>
-        <span>{description}</span>
+        <span className="text-xs">{description}</span>
       </CardHeader>
       <CardBody>
         <Image
-          isBlurred
           width={270}
           height={200}
-          src="https://velog.velcdn.com/images/pak4184/post/98ba8b4f-7b89-4d28-8376-0dc8d1be805a/image.png"
+          src={ thumbnailUrl === null ? "https://velog.velcdn.com/images/pak4184/post/98ba8b4f-7b89-4d28-8376-0dc8d1be805a/image.png" : thumbnailUrl}
         />
       </CardBody>
       <Divider/>

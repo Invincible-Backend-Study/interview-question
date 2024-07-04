@@ -6,7 +6,7 @@ import {useInterviewForm} from "@/components/InterviewForm/useInterviewForm";
 import {useShortCut} from "@/hooks/useShortCut";
 import InterviewNotification from "@/components/InterviewNotification/InterviewNotification";
 import {useNavigate} from "react-router-dom";
-import {useCallback} from "react";
+import {useCallback, useEffect} from "react";
 import {PATH} from "@/constants/path";
 import {toast} from "sonner";
 
@@ -41,6 +41,10 @@ const InterviewForm = ({interviewId}: InterviewFormProps) => {
   useShortCut({save: handleSubmit, pass: handlePass, isBlocking:feedbackWaiting, quit});
 
   const disclosure = useDisclosure();
+
+  useEffect(() => {
+    disclosure.onOpen();
+  }, []);
 
   return <>
     <div className="min-h-screen max-h-screen w-full flex ">

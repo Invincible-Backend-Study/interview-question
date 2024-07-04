@@ -15,10 +15,12 @@ const InterviewController = ({onSubmit, onQuit, onPass, disabled, info}: Intervi
     <Button onClick={onSubmit} isLoading={disabled}>
       제출 <Kbd keys={["command"]}>s</Kbd>
     </Button>
+
+    <Button isDisabled>일시정지</Button>
+
     <Button onClick={onPass} isLoading={disabled}>
       패스 <Kbd keys={["command"]}>p</Kbd>
     </Button>
-    <Button isDisabled>일시정지</Button>
     <Button onClick={onQuit}>
       그만두기
       <Kbd keys={["command"]}>q</Kbd>
