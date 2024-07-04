@@ -5,9 +5,10 @@ import {InterviewSettings} from "@/types/interview";
 import InterviewCreateForm from "@/components/InterviewCreatorForm/InterviewCreateForm";
 import QuestionSetItemList from "@/components/QuestionSetItem/QuestionSetItemList";
 import {useIntersectionObserver} from "@/hooks/useIntersectionObserver";
+import QuestionSetItemListSkeleton from "@/components/QuestionSetItem/QuestionSetItemListSkeleton";
 
 export default function(){
-  const {data, fetchNextPage} = useQuestionSetQuery();
+  const {data, fetchNextPage, isLoading} = useQuestionSetQuery();
   const {isOpen, onClose, onOpen} = useDisclosure();
 
   const ref = useRef<HTMLDivElement>(null)
@@ -38,6 +39,7 @@ export default function(){
 
       <div className="p-5 flex flex-wrap gap-4">
         {data?.pages.map((data, index)=> <QuestionSetItemList key={index} questionSetItems={data.content} openInterviewSetting={handleOpenInterviewSettings}/>)}
+        {isLoading ? <QuestionSetItemListSkeleton/> : <></>}
         <div ref={ref}/>
       </div>
       <Modal backdrop="blur" isDismissable={false} isKeyboardDismissDisabled={true} isOpen={isOpen} placement={"top"} className={`text-foreground bg-background dark`} onClose={onClose}>
