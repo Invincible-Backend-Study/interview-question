@@ -65,8 +65,16 @@ export const useInterviewForm = (interviewId: number) => {
   }
 
   const requestAiFeedback = async ({answer, question} : {answer: string, question: string}) => {
-     return await answerFeedbackMutation.mutateAsync({
-       answer, question
+    return await answerFeedbackMutation.mutateAsync({
+      answer,
+      question,
+      tailQuestions: [
+        interview.question === question ? "" : interview.question,
+        ...interviewForm.chatList
+        .filter(chat => chat.type === "TailQuestion")
+        .map(chat => chat.content)
+        .filter((_, index, arr) => arr.length - 1 !== index)]
+        .filter(str => str.length !== 0)
     })
   }
 
@@ -134,9 +142,9 @@ export const useInterviewForm = (interviewId: number) => {
       appendChat({type: 'Answer', content: interviewForm.answer});
 
       const {tailQuestion, feedback, score} = await requestAiFeedback({
-          answer: interviewForm.answer,
-          question: interviewForm.currentTailQuestion
-        });
+        answer: interviewForm.answer,
+        question: interviewForm.currentTailQuestion
+      });
 
       appendChat({type: 'TailQuestion', content: tailQuestion});
       registerTailQuestion(tailQuestion);
