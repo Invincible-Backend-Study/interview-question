@@ -28,7 +28,7 @@ const QuestionSetItem = ({questionSet:{questionSetId, title, description, tailQu
       <CardBody>
         <Image
           isBlurred
-          width={300}
+          width={270}
           height={200}
           src="https://velog.velcdn.com/images/pak4184/post/98ba8b4f-7b89-4d28-8376-0dc8d1be805a/image.png"
         />

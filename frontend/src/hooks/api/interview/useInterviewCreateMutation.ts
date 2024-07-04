@@ -5,6 +5,7 @@ import {PATH} from "@/constants/path";
 import {toast} from "sonner";
 
 
+
 export const useInterviewCreateMutation = () => {
   const navigate = useNavigate();
   return useMutation({
@@ -14,9 +15,7 @@ export const useInterviewCreateMutation = () => {
       navigate(PATH.INTERVIEW(interviewId));
     },
     onError:(error) => {
-      console.log(error.message);
       toast.error(error.message)
     }
-
   })
 }

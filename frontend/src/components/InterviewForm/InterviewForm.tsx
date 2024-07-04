@@ -21,6 +21,7 @@ const border = "1px solid rgb(54, 54, 54)";
 const InterviewForm = ({interviewId}: InterviewFormProps) => {
   const {
     interview,
+    interviewLoading,
     handleSubmit,
     handlePass,
     chatList,
@@ -51,25 +52,25 @@ const InterviewForm = ({interviewId}: InterviewFormProps) => {
         borderLeft: border
       }}>
         <div className='p-3'>
-          <InterviewQuestionBoard question={interview.question}
-                                  chatList={chatList}
-                                  remainTailQuestionCount={remainTailQuestionCount}/>
+          <InterviewQuestionBoard
+            isLoading={interviewLoading}
+            question={interview.question}
+            chatList={chatList}
+            remainTailQuestionCount={remainTailQuestionCount}/>
         </div>
 
         <div className="gap-1 h-full flex flex-col max-h-[310px] p-4"  style={{
           borderTop:border
         }}>
-          <div>
-            <Textarea
-              placeholder="여기에 답을 적어주세요"
-              value={answer}
-              onChange={(e) => handleAnswerChange(e.target.value)}
-              minRows={10}
-              rows={10}
-              maxRows={10}
-              disabled={feedbackWaiting}
-            />
-          </div>
+          <Textarea
+            placeholder="여기에 답을 적어주세요"
+            value={answer}
+            onChange={(e) => handleAnswerChange(e.target.value)}
+            minRows={10}
+            rows={10}
+            maxRows={10}
+            disabled={feedbackWaiting}
+          />
           <div className="row-span-1 flex flex-col-reverse" >
             <InterviewController
               onQuit={quit}

@@ -4,15 +4,14 @@ import UserChat from "@/components/Chat/UserChat";
 import {Chat} from "@/types/question";
 import {useCallback, useEffect, useRef} from "react";
 
-
 interface InterviewQuestionBoardProps {
   question: string;
   remainTailQuestionCount: number;
-  chatList: Chat[]
+  chatList: Chat[],
+  isLoading: boolean;
 }
 
-const InterviewQuestionBoard = ({question, remainTailQuestionCount, chatList}: InterviewQuestionBoardProps) => {
-
+const InterviewQuestionBoard = ({question, remainTailQuestionCount, chatList, isLoading}: InterviewQuestionBoardProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,7 +37,7 @@ const InterviewQuestionBoard = ({question, remainTailQuestionCount, chatList}: I
   return (
     <div className="max-w-full min-w-full ">
       <div className='row-span-4 col-auto'>
-        <p className='text-3xl'>{question}</p>
+        <p className='text-3xl'>{isLoading ? "질문을 가져옵니다....": question}</p>
         <TailQuestionMessage/>
 
 

@@ -23,7 +23,7 @@ interface InterviewForm {
 export const useInterviewForm = (interviewId: number) => {
 
   const navigate = useNavigate();
-  const {interview, refetch, error} = useInterviewQuestionLoadQuery(interviewId);
+  const {interview, refetch, error, isLoading: interviewLoading} = useInterviewQuestionLoadQuery(interviewId);
   const interviewSubmitMutation = useInterviewSubmitMutation();
 
   const answerFeedbackMutation = useAnswerFeedbackMutation();
@@ -228,9 +228,10 @@ export const useInterviewForm = (interviewId: number) => {
 
   return {
     interview,
+    interviewLoading,
     handleSubmit,
     handlePass,
-    feedbackWaiting: answerFeedbackMutation.isPending,
+    feedbackWaiting: answerFeedbackMutation.isPending || (interviewSubmitMutation.isPending || tailQuestionSubmitMutation.isPending),
     remainTailQuestionCount: interviewForm.remainTailQuestionCount,
     chatList: interviewForm.chatList,
     answer: interviewForm.answer,
