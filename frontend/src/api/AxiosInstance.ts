@@ -1,6 +1,6 @@
 import axios from "axios";
 import {NETWORK} from "@/constants/api";
-import {checkAndSetToken, handleTokenError} from "@/api/Interceptors";
+import {checkAndSetToken, delayFulfilled, handleTokenError, waitingFulfilled} from "@/api/Interceptors";
 
 export const axiosInstance = axios.create({
   baseURL: `${import.meta.env.VITE_API}/api`,
@@ -10,4 +10,5 @@ export const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use(checkAndSetToken);
-axiosInstance.interceptors.response.use(response => response, handleTokenError);
+axiosInstance.interceptors.request.use(delayFulfilled);
+axiosInstance.interceptors.response.use(waitingFulfilled, handleTokenError);
