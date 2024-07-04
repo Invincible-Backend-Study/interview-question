@@ -15,6 +15,7 @@ import in.backend.core.interview.presentation.payload.InterviewCreateResponse;
 import in.backend.core.interview.presentation.payload.InterviewQuestionResponse;
 import in.backend.core.interview.presentation.payload.InterviewSubmitRequest;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -87,10 +88,10 @@ public class InterviewApi {
             @Auth Visitor visitor,
             @RequestBody FeedbackRequest request
     ) {
-        return feedbackProvider.execute(request.question, request.answer);
+        return feedbackProvider.execute(request.question, request.answer, request.tailQuestions);
     }
 
-    public record FeedbackRequest(String question, String answer) {
+    public record FeedbackRequest(String question, String answer, List<String> tailQuestions) {
     }
 
 }
