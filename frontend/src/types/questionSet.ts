@@ -19,6 +19,8 @@ export interface QuestionSetSearchResponse {
    */
   count: number;
 
+  thumbnailUrl: string | null;
+
   tailQuestionDepth: number;
 }
 
@@ -29,4 +31,6 @@ export interface QuestionSet {
   description: string;
   count: number;
   tailQuestionDepth: number;
+
+  thumbnailUrl: string | null;
 }

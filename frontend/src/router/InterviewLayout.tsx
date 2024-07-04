@@ -5,6 +5,7 @@ import {useEffect} from "react";
 import {PATH} from "@/constants/path";
 import {ErrorBoundary} from "react-error-boundary";
 import ErrorFallback from "@/components/ErrorFallback/ErrorFallback";
+import {ScrollShadow} from "@nextui-org/react";
 
 
 const InterviewLayout = () => {
@@ -19,7 +20,9 @@ const InterviewLayout = () => {
 
   return (
     <ErrorBoundary fallbackRender={ErrorFallback}>
-      <Outlet/>
+      <ScrollShadow className="h-full">
+        <Outlet/>
+      </ScrollShadow>
     </ErrorBoundary>
   )
 }
