@@ -39,6 +39,7 @@ jib {
 
     container {
         jvmFlags = [
+                '-Duser.timezone="Asia/Seoul"',
                 '--enable-preview',
                 String.format('-Dspring.profiles.active=%s', "prod"),
                 '-Xms1024m',
