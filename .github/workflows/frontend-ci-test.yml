@@ -41,7 +41,7 @@ jobs:
       - name: build
         run: npm run build
       - name: 검사
-        run: ls -al
+        run: ls -al && ls -al ./secret &&  ls -al ./secret/frontend && npm run cp:security && ls -al
       - name: Google Auth
         id: auth
         uses: 'google-github-actions/auth@v2'
