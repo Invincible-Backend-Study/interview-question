@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "tailwind:dev": "npx tailwindcss -i ./src/index.css -o ./src/output.css --watch",
     "tailwind:prod": "npx tailwindcss -i ./src/index.css -o ./src/output.css",
-    "cp:security": "cp -R secret/frontend/.env* ."
+    "cp:security": "cp -R secret/frontend/ ."
   },
   "dependencies": {
     "@nextui-org/react": "^2.4.1",
