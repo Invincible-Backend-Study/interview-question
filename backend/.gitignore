@@ -37,4 +37,9 @@ out/
 .vscode/
 
 
-/src/main/resources/**
+/src/main/resources/*.yml
+/src/main/resources/*.key
+/src/main/resources/*.pub
+/src/main/resources/*.properties
+/src/main/resources/*.st
+
