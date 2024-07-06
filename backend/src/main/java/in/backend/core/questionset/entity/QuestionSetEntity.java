@@ -65,7 +65,12 @@ public class QuestionSetEntity extends BaseEntity {
 
 
     @Builder
-    public QuestionSetEntity(Long adminId, String title, String description, QuestionSetRules questionSetRules) {
+    public QuestionSetEntity(
+            Long adminId,
+            String title,
+            String description,
+            QuestionSetRules questionSetRules
+    ) {
         this.adminId = adminId;
         this.title = title;
         this.questionSetRules = questionSetRules;
@@ -89,10 +94,6 @@ public class QuestionSetEntity extends BaseEntity {
                 .toList();
     }
 
-
-    public int getQuestionSize() {
-        return questions.size();
-    }
 
     public int getTailQuestionDepth() {
         return questionSetRules.getDefaultTailQuestionDepth();
