@@ -66,7 +66,6 @@ public class QuestionEntity extends BaseEntity {
 
     public void update(QuestionInfo questionInfo) {
         applyIfPresent(questionInfo.content(), value -> this.content = value);
-        applyIfPresent(questionInfo.referenceLinks(), value -> this.referenceLinks = value);
         applyIfPresent(questionInfo.sequence(), value -> this.sequence = value);
     }
 
