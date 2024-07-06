@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -69,17 +70,14 @@ public class AuthApi {
         return socialLoginProcessor.findProfile(profile);
     }
 
-    @MemberOnly
     @PostMapping("/token/reissue")
     public ResponseEntity<AccessTokenResponse> reIssue(
-            @Auth Visitor visitor,
-            HttpServletResponse response
+            @CookieValue("refreshToken") final String refreshToken
     ) {
-        var issuedToken = tokenReissue.publish(visitor);
-        response.addHeader(SET_COOKIE, cookieProvider.createCookie(issuedToken.refreshToken()).toString());
+        var accessToken = tokenReissue.publish(refreshToken);
 
         return ResponseEntity.status(CREATED)
-                .body(new AccessTokenResponse(issuedToken.accessToken()));
+                .body(new AccessTokenResponse(accessToken));
     }
 
 

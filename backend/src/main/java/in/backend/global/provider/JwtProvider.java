@@ -13,15 +13,15 @@ import java.util.Map;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.security.oauth2.jwt.JwtValidationException;
+import org.springframework.stereotype.Service;
 
 @Slf4j
-@Configuration
+@Service
 @RequiredArgsConstructor
 public class JwtProvider {
     private static final String issuer = "MUBAEGSEU";
@@ -60,14 +60,6 @@ public class JwtProvider {
         return jwtDecoder.decode(token).getClaims();
     }
 
-
-    public Long extractToValueFrom(final String token) {
-        return Long.parseLong(this.decode(token)
-                .get("id")
-                .toString()
-        );
-    }
-
     public Long decodeAccessToken(final String accessToken) {
         try {
             return Long.parseLong(String.valueOf(this.decode(accessToken).get("id")));
@@ -91,10 +83,18 @@ public class JwtProvider {
     public String extractToken(final HttpServletRequest request) {
         final String token = request.getHeader(HEADER_AUTHORIZATION);
 
-        if (!Objects.isNull(token) && token.startsWith(TOKEN_PREFIX)) {
-            return token.substring(TOKEN_PREFIX.length());
+        return extractToken(token);
+
+    }
+
+    public String extractToken(final String headerValue) {
+        if (!Objects.isNull(headerValue) && headerValue.startsWith(TOKEN_PREFIX)) {
+            return headerValue.substring(TOKEN_PREFIX.length());
         }
         return null;
     }
 
+    public void validRefreshToken(String refreshToken) {
+        decodeRefreshToken(refreshToken);
+    }
 }
