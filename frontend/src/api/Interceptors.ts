@@ -37,7 +37,7 @@ export const handleTokenError = async(error: AxiosError<ErrorResponseData>) => {
 
   const { data, status } = error.response;
 
-  if (status === 401 && data.code === 10003){
+  if (status === 400 && data.code === 10003){
     const { accessToken } = await reIssueToken();
     originalRequest.headers.Authorization = TOKEN.bearer(accessToken);
     localStorage.setItem(TOKEN.ACCESS, accessToken);
@@ -46,7 +46,7 @@ export const handleTokenError = async(error: AxiosError<ErrorResponseData>) => {
   }
 
   if (
-    status === 401 && data.code >= 10000
+    status === 400 && (data.code >= 10000 || data.code <= 10006)
   ) {
     localStorage.removeItem(TOKEN.ACCESS);
     window.location.href = PATH.AUTH;
