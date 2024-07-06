@@ -4,6 +4,6 @@ import {END_POINT} from "@/constants/api";
 
 
 export const reIssueToken = async () => {
-  const {data} = await axiosInstance.get<AccessTokenResponse>(END_POINT.TOKEN_REISSUE);
+  const {data} = await axiosInstance.post<AccessTokenResponse>(END_POINT.TOKEN_REISSUE);
   return data;
 }
