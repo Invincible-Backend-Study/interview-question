@@ -92,7 +92,7 @@ dependencies {
 
     // mysql
     implementation platform("com.google.cloud:spring-cloud-gcp-dependencies:5.4.3")
-    implementation "com.google.cloud:spring-cloud-gcp-starter-sql-mysq"
+    implementation "com.google.cloud:spring-cloud-gcp-starter-sql-mysql"
     implementation "com.google.cloud:spring-cloud-gcp-starter-storage"
 
     compileOnly 'org.projectlombok:lombok'
