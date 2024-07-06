@@ -21,7 +21,9 @@ public enum GlobalExceptionCode {
     UNAUTHORIZED_MEMBER(10007, "허가받지 않은 사용자입니다."),
 
     INVALID_OAUTH_CODE(10008, "유효하지 않은 OAUTH 요청입니다."),
-    INVALID_OAUTH_SERVER(100009, "현재 서버 연결이 불안정합니다.");
+    INVALID_OAUTH_SERVER(10009, "현재 서버 연결이 불안정합니다."),
+
+    IMAGE_SAVE_FAIL(100010, "이미지 저장에 실패했습니다.");
 
     private final int code;
     private final String message;
