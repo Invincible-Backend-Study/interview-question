@@ -31,6 +31,7 @@ export interface QuestionSet {
   description: string;
   count: number;
   tailQuestionDepth: number;
-
-  thumbnailUrl: string | null;
+  thumbnailUrl: string;
 }
+
+
