@@ -1,7 +1,7 @@
 import {CSSProperties, PropsWithChildren} from "react";
 import AdminEditorButton from "@/components/AdminEditorButton/AdminEditorButton";
 import QuestionSetTable from "@/components/QuestionSetTable/QuestionSetTable";
-import useQuestionSetManage from "@/pages/QuestionSetManage/useQuestionSetMaange";
+import useQuestionSetManage from "@/pages/QuestionSetManage/useQuestionSetManage";
 import QuestionSetPreview from "@/components/QuestionSetPreview/QuestionSetPreview";
 import QuestionSetEditForm from "@/components/QuestionSetTable/QuestionSetEditForm";
 import {Modal, useDisclosure} from "@nextui-org/react";
