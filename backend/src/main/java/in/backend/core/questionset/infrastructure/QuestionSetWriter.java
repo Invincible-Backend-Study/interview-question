@@ -15,6 +15,7 @@ public class QuestionSetWriter {
     private final QuestionSetRepository questionSetRepository;
 
     public QuestionSetEntity write(QuestionSetCreator questionSetCreator, Long adminId) {
+
         var questionSet = QuestionSetEntity.builder()
                 .adminId(adminId)
                 .title(questionSetCreator.title())
