@@ -1,17 +1,18 @@
 import {Button, ButtonGroup} from "@nextui-org/react";
-import {CiSearch, CiSquarePlus} from "react-icons/ci";
+import {CiFloppyDisk, CiFolderOn, CiSquarePlus} from "react-icons/ci";
 
 
 interface AdminEditorButtonProps {
-  add: () => void;
+  add?: () => void;
+  file?:() => void;
+  save?: () => void;
 }
 
-const AdminEditorButton = ({add}: AdminEditorButtonProps) => {
+const AdminEditorButton = ({add, file, save}: AdminEditorButtonProps) => {
   return <ButtonGroup className="pt-3 pb-3" variant="ghost" radius="none">
-    <Button isIconOnly onClick={add}><CiSquarePlus/></Button>
-    <Button isIconOnly><CiSearch/></Button>
-    <Button isIconOnly><CiSearch/></Button>
-    <Button isIconOnly><CiSearch/></Button>
+    {add  && <Button isIconOnly onClick={add}><CiSquarePlus size={26}/></Button>}
+    {file && <Button isIconOnly onClick={file}><CiFolderOn size={26}/></Button>}
+    {save && <Button isIconOnly onClick={save}><CiFloppyDisk size={26}/></Button> }
   </ButtonGroup>
 }
 export default AdminEditorButton;
