@@ -1,26 +1,45 @@
 import {Button, Image, Input, ModalBody, ModalContent, ModalHeader, Slider} from "@nextui-org/react";
 import {QuestionSetRow} from "@/types/admin/questionSet";
 import {ChangeQuestionForm} from "@/components/QuestionSetTable/useQuestionSetEditForm";
-import axios from "axios";
 import {FileUploader} from "react-drag-drop-files";
-import {useState} from "react";
+import {useCallback, useState} from "react";
+import {useImageUploadMutation} from "@/hooks/api/image/useImageUploadMutation";
+import {toast} from "sonner";
+import {useQuestionSetMutation} from "@/hooks/api/question/useQuestionSetMutation";
 
 
 interface QuestionSetEditFormProps {
-  form: QuestionSetRow,
-  change: ChangeQuestionForm,
+  form: QuestionSetRow;
+  change: ChangeQuestionForm;
+  confirm:() => void;
 }
 
-const QuestionSetEditForm = ({change, form: {description, title, thumbnailUrl, defaultTailQuestionCount}}: QuestionSetEditFormProps) => {
-
+const QuestionSetEditForm = ({confirm, change, form: {description, title, thumbnailUrl, defaultTailQuestionCount}}: QuestionSetEditFormProps) => {
+  const imageUploadMutation = useImageUploadMutation();
   const [file, setFile] = useState<File | undefined>();
+
   const handleChange = (file: File) => {
     setFile(file);
+    const formData = new FormData();
+    formData.append("thumbnail", file);
+
+    imageUploadMutation.mutate({thumbnail: formData}, {
+      onSuccess: (thumbnailUrl) => {
+        change("thumbnailUrl", thumbnailUrl)
+      },
+      onError: () => {
+        toast.error("이미지 업로드에 실패했습니다.")
+      }
+    });
   };
+
+
+
+
 
   return (
     <ModalContent>
-      {_ => (
+      {onClose => (
         <>
           <ModalHeader>질문 집합 등록/편집 폼</ModalHeader>
           <ModalBody>
@@ -30,14 +49,17 @@ const QuestionSetEditForm = ({change, form: {description, title, thumbnailUrl, d
 
             <Input placeholder={"설명"} value={description} onValueChange={t => change("description",t)}/>
 
-
-            <Slider label="기본 꼬리질문 개수" minValue={0} maxValue={20} defaultValue={defaultTailQuestionCount}  onChange={(n) => typeof n === 'number' && change("defaultTailQuestionCount", n)}/>
+            <Slider label="기본 꼬리질문 개수" minValue={0} maxValue={20} defaultValue={defaultTailQuestionCount}  onChange={(n) => typeof n === 'number' && change("defaultTailQuestionDepth", n)}/>
 
             <FileUploader label="이미지를 올려주세요" handleChange={handleChange} name="file" types={["PNG", "JPEG", "WEBP"]}/>
+
             {!thumbnailUrl && <Image src={file && URL.createObjectURL(file)}/>}
             {thumbnailUrl && <Image src={thumbnailUrl}/>}
 
-            <Button>등록</Button>
+            <Button onClick={() => {
+              confirm();
+              onClose();
+            }}>등록</Button>
 
           </ModalBody>
         </>

@@ -12,7 +12,14 @@ const QuestionSetPreview = ({questionSet}: QuestionSetPreviewProps) => {
       <span>미리보기</span>
       <div className="flex flex-row gap-3">
         {questionSet && <QuestionSetItem
-            questionSet={{...questionSet, count: 0, tailQuestionDepth: questionSet.defaultTailQuestionCount}}
+            questionSet={{
+              questionSetId: 1,
+              count: 10,
+              title: questionSet.title,
+              tailQuestionDepth: 10,
+              description: questionSet.description,
+              thumbnailUrl: questionSet.thumbnailUrl
+            }}
             openInterviewSetting={() => {}}/>}
         <QuestionSetItem questionSet={{
           questionSetId: 1,

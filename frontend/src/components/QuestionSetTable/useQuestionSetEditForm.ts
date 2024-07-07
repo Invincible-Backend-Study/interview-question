@@ -6,7 +6,8 @@ const INITIAL_STATE = {
   title: "",
   description: "",
   thumbnailUrl: "",
-  questionSetId: -1
+  questionSetId: -1,
+  defaultTailQuestionDepth: 0,
 }
 
 export type ChangeQuestionForm = <K extends keyof QuestionSetRow>(key: K, value: QuestionSetRow[K]) => void;

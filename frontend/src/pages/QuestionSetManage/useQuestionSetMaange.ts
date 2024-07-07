@@ -1,25 +1,37 @@
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {QuestionSet, QuestionSetRow} from "@/types/admin/questionSet";
+import useQuestionSetEditForm from "@/components/QuestionSetTable/useQuestionSetEditForm";
+import {useQuestionSetMutation} from "@/hooks/api/question/useQuestionSetMutation";
 
 
 const useQuestionSetManage = (questions: QuestionSet[]) => {
   // 임시 id
-  const [id, setId] = useState(-1);
+  const {form,updateInputValue} = useQuestionSetEditForm();
+  const questionSetSaveMutation = useQuestionSetMutation();
   const [newRows, setNewRows] = useState<QuestionSetRow[]>([])
-  const [deleteRows, setDeleteRows] = useState<number[]>([]);
 
 
-  const handlePrependQuestionSet = useCallback(() => {
-    setNewRows(r => [{title: "", description: "", questionSetId: id, defaultTailQuestionCount: 10}, ...r])
-    setId(id => id - 1);
-  }, [questions, newRows])
+  const handleRegisterNewQuestionSet = useCallback(() => {
+    console.log(form);
+    questionSetSaveMutation.mutate({...form}, {
+      onSuccess: ({questionSetId}) => {
+        setNewRows(rows => [{...form, questionSetId}, ...rows]);
+      }
+    })
+  }, [questionSetSaveMutation,form])
+
+  useEffect(() => {
+    setNewRows([]);
+  }, [questions])
 
 
   const rows: QuestionSetRow[] = [...newRows, ...questions];
 
   return {
+    form,
+    updateInputValue,
+    handleRegisterNewQuestionSet,
     rows,
-    handlePrependQuestionSet
   }
 }
 
