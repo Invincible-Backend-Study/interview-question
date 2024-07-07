@@ -8,8 +8,10 @@ import InterviewHistoryPage from "@/pages/InterviewHistoryPage";
 import {lazy, Suspense} from "react";
 import InterviewResultPage from "@/pages/InterviewResultPage";
 import NotFoundPage from "@/pages/NotFoundPage";
+import QuestionSetManagePage from "@/pages/QuestionSetManagePage";
 
 
+const AdminLayout = lazy(() => import("@/router/AdminLayout"));
 const DefaultLayout = lazy(() => import("@/router/DefaultLayout"));
 const LoginLayout = lazy(() => import("@/router/LoginLayout"));
 const InterviewLayout = lazy( () => import("@/router/InterviewLayout"));
@@ -58,6 +60,13 @@ function Router() {
       element: <Suspense fallback={<WaitingView/>}><InterviewLayout></InterviewLayout></Suspense>,
       children: [
         {index: true, element: <InterviewPage/>}
+      ]
+    },
+    {
+      path: '/admin',
+      element: <Suspense fallback={<WaitingView/>}><AdminLayout/></Suspense>,
+      children: [
+        {path: '/admin/manage/question-set', element: <QuestionSetManagePage/>},
       ]
     }
   ])
