@@ -5,17 +5,19 @@ export interface QuestionSet {
   thumbnailUrl: string;
   title: string;
   description: string;
-  defaultTailQuestionCount: number;
   defaultTailQuestionDepth: number;
 }
 
 export interface QuestionSetRow {
   questionSetId: number;
-  thumbnailUrl?: string;
+  thumbnailUrl: string;
   title: string;
   description: string;
-  defaultTailQuestionCount: number;
+  defaultTailQuestionDepth:number;
 }
+
+export type QuestionSetSaveBody = Omit<QuestionSetRow, "questionSetId" >
+
 
 
 export interface QuestionSetResponse extends PageResponse<QuestionSet>{
