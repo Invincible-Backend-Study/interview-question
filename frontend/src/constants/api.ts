@@ -38,6 +38,8 @@ export const END_POINT = {
 
 
   admin: {
+    IMAGE: "/admin/images",
+    QUESTION_SET: "/admin/question-set",
     QUESTION_SETS: wrap("/admin/question-set"),
     QUESTIONS: wrap( "/admin/questions")
   }
