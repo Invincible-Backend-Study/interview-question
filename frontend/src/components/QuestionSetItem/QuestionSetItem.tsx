@@ -28,7 +28,7 @@ const QuestionSetItem = ({questionSet:{questionSetId, title, description, tailQu
       <CardBody>
         <Image
           isZoomed
-          className={"w-[300px] h-[150px] object-scale-down"}
+          className={"w-[300px] h-[150px] object-cover"}
           src={ thumbnailUrl === null ? "https://velog.velcdn.com/images/pak4184/post/98ba8b4f-7b89-4d28-8376-0dc8d1be805a/image.png" : thumbnailUrl}
         />
       </CardBody>
