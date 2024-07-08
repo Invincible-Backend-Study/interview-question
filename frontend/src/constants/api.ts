@@ -12,6 +12,11 @@ const wrap = (url: string) => {
 }
 
 export const END_POINT = {
+
+  /******************************************************************
+   * member
+   * ******************************************************************
+   */
   ME: '/members/me',
 
   TAIL_QUESTION_SUBMIT: "/tail-questions/submit",
@@ -29,7 +34,16 @@ export const END_POINT = {
   LOGOUT: "/auth/logout",
   TOKEN_REISSUE: "/auth/token/reissue",
 
-  QUESTION_SETS: wrap( "/question-set")
+  QUESTION_SETS: wrap( "/question-set"),
+
+
+  admin: {
+    IMAGE: "/admin/images",
+    QUESTION_SET: "/admin/question-set",
+    QUESTION_SETS: wrap("/admin/question-set"),
+    QUESTION: "/admin/questions",
+    QUESTIONS: wrap( "/admin/questions")
+  }
 
 } as const;
 
