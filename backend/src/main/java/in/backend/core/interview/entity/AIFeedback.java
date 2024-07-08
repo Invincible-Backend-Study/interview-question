@@ -46,6 +46,7 @@ public class AIFeedback {
                 .feedbackContent(feedbackInfo.aiFeedback())
                 .score(feedbackInfo.score())
                 .tailQuestion(feedbackInfo.tailQuestion())
+                .referenceLinks(feedbackInfo.referenceLinks())
                 .build();
     }
 
