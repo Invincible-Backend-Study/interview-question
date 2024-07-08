@@ -6,7 +6,6 @@ interface QuestionSetPreviewProps {
 }
 
 const QuestionSetPreview = ({questionSet}: QuestionSetPreviewProps) => {
-  console.log(questionSet);
   return (
     <div className='w-full h-[50%] p-3'>
       <span>미리보기</span>
