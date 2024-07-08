@@ -2,7 +2,7 @@ import {Button, Image, Input, ModalBody, ModalContent, ModalHeader, Slider} from
 import {QuestionSetRow} from "@/types/admin/questionSet";
 import {ChangeQuestionForm} from "@/components/QuestionSetTable/useQuestionSetEditForm";
 import {FileUploader} from "react-drag-drop-files";
-import {useCallback, useState} from "react";
+import {useCallback} from "react";
 import {useImageUploadMutation} from "@/hooks/api/image/useImageUploadMutation";
 import {toast} from "sonner";
 import imageCompression from "browser-image-compression";
@@ -16,7 +16,6 @@ interface QuestionSetEditFormProps {
 
 const QuestionSetEditForm = ({confirm, change, form: {description, title, thumbnailUrl, defaultTailQuestionDepth}}: QuestionSetEditFormProps) => {
   const imageUploadMutation = useImageUploadMutation();
-  const [file, setFile] = useState<File | undefined>();
 
 
   const compressImage = useCallback(async (originalImageFile: File) => {
@@ -45,7 +44,6 @@ const QuestionSetEditForm = ({confirm, change, form: {description, title, thumbn
   const handleChange = useCallback(async(file: File) => {
 
     const compressedFile = await compressImage(file);
-    setFile(compressedFile);
     const formData = new FormData();
     formData.append("thumbnail", compressedFile);
 

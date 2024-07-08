@@ -19,7 +19,7 @@ export interface QuestionSetSearchResponse {
    */
   count: number;
 
-  thumbnailUrl: string | null;
+  thumbnailUrl: string;
 
   tailQuestionDepth: number;
 }
