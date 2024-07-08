@@ -20,7 +20,7 @@ version = '0.0.1-SNAPSHOT'
 
 jib {
     from {
-        image = 'openjdk:21-jdk'
+        image = 'bellsoft/liberica-openjdk-alpine:21'
     }
 
     to {
@@ -39,6 +39,7 @@ jib {
 
     container {
         jvmFlags = [
+                '-Duser.timezone="Asia/Seoul"',
                 '--enable-preview',
                 String.format('-Dspring.profiles.active=%s', "prod"),
                 '-Xms1024m',
@@ -75,7 +76,7 @@ dependencies {
 
 
     // jwt
-    implementation 'org.springframework.security:spring-security-oauth2-jose:6.2.4'
+    implementation 'org.springframework.security:spring-security-oauth2-jose:6.2.3'
 
     // cloud speech
     implementation 'com.google.cloud:google-cloud-speech:4.38.0'
@@ -84,6 +85,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     // validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // flyway
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-mysql'
+
+    // mysql
+    implementation platform("com.google.cloud:spring-cloud-gcp-dependencies:5.4.3")
+    implementation "com.google.cloud:spring-cloud-gcp-starter-sql-mysql"
+    implementation "com.google.cloud:spring-cloud-gcp-starter-storage"
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
@@ -96,6 +106,7 @@ dependencies {
     //developmentOnly 'org.springframework.boot:spring-boot-devtools'
     // h2
     runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.mysql:mysql-connector-j'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
