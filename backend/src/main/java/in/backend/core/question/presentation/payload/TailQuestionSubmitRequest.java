@@ -5,6 +5,7 @@ import in.backend.core.interview.application.InterviewSubmitCommand.FeedbackInfo
 import in.backend.core.question.application.TailQuestionSubmitCommand;
 import in.backend.core.question.entity.AnswerState;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.Builder;
 
 @Builder
@@ -16,15 +17,16 @@ public record TailQuestionSubmitRequest(
         @NotNull String tailQuestion,
         @NotNull Integer timeToAnswer,
         @NotNull String answerContent,
-        @NotNull Integer score
+        @NotNull Integer score,
+        List<String> referenceLinks
 
 ) {
     public TailQuestionSubmitCommand to() {
-
         var feedback = FeedbackInfo.builder()
                 .aiFeedback(aiFeedback)
                 .tailQuestion(tailQuestion)
                 .score(score)
+                .referenceLinks(referenceLinks)
                 .build();
 
         var answer = AnswerInfo.builder()
