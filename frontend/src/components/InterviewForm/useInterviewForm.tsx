@@ -1,41 +1,46 @@
 import {useInterviewQuestionLoadQuery} from "@/hooks/api/interview/useInterviewQuestionLoadQuery";
 import {useInterviewSubmitMutation} from "@/hooks/api/interview/useInterviewSubmitMutation";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import useTailQuestionSubmitMutation from "@/hooks/api/question/useTailQuestionSubmitMutation";
 import useAnswerFeedbackMutation from "@/hooks/api/answer/useAnswerFeedbackMutation";
-import {Chat} from "@/types/question";
 import {useNavigate} from "react-router-dom";
 import {PATH} from "@/constants/path";
 import {HTTPError} from "@/api/Interceptors";
 import {toast} from "sonner";
-
+import {useManageChatList} from "@/components/InterviewForm/useManageChatList";
+import {FeedbackResponse} from "@/types/interview";
 
 interface InterviewForm {
   tailQuestionId?: number;
   currentTailQuestion: string;
   submitType: 'Question' | 'TailQuestion';
   remainTailQuestionCount: number;
-  chatList: Chat[];
   answer: string;
 }
 
 
 export const useInterviewForm = (interviewId: number) => {
-
   const navigate = useNavigate();
   const {interview, refetch, error, isLoading: interviewLoading} = useInterviewQuestionLoadQuery(interviewId);
   const interviewSubmitMutation = useInterviewSubmitMutation();
-
   const answerFeedbackMutation = useAnswerFeedbackMutation();
   const tailQuestionSubmitMutation = useTailQuestionSubmitMutation();
-
+  const {chatList, handleAppendComputerChat, handleAppendUserChat} = useManageChatList({
+    mainQuestion: interview.question
+  });
   const [interviewForm, setInterviewForm] = useState<InterviewForm>({
     currentTailQuestion: "",
     submitType: 'Question',
-    chatList: [],
     answer: "",
     remainTailQuestionCount:  interview.remainTailQuestionCount,
   })
+  const focusRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    // 컴포넌트가 마운트되면 input에 포커스 설정
+    focusRef.current?.focus();
+  }, [interviewForm, interview]);
+
 
   useEffect(() => {
     if(error instanceof HTTPError) {
@@ -49,41 +54,29 @@ export const useInterviewForm = (interviewId: number) => {
     setInterviewForm({...interviewForm, answer})
   } , [interviewForm])
 
-
-
-  const appendChat = (chat: Chat) => {
-    setInterviewForm(interviewForm => ({
-        ...interviewForm,
-        chatList: [
-          ...interviewForm.chatList, chat
-        ]}
-    ))
-  }
-
-  const clearInput = () => {
+  const clearInput = useCallback(() => {
     setInterviewForm(interviewForm => ({...interviewForm, answer: ""}));
-  }
+    focusRef.current?.focus();
+  }, [interviewForm])
 
-  const requestAiFeedback = async ({answer, question} : {answer: string, question: string}) => {
-    return await answerFeedbackMutation.mutateAsync({
+  const requestAiFeedback = (
+    {answer, question}: {answer: string, question: string},
+    {onSuccess} : {onSuccess: (feedback: FeedbackResponse) => void}
+  ) => {
+    answerFeedbackMutation.mutate({
       answer,
       question,
-      tailQuestions: [
-        interview.question === question ? "" : interview.question,
-        ...interviewForm.chatList
-        .filter(chat => chat.type === "TailQuestion")
+      tailQuestions: chatList.filter(chat => chat.type !== "Answer")
         .map(chat => chat.content)
-        .filter((_, index, arr) => arr.length - 1 !== index)]
         .filter(str => str.length !== 0)
-    })
+    }, {onSuccess, onError: (error) => toast.error(error.message)})
   }
 
-  const clearChat = () => {
-    setInterviewForm(interviewForm => ({...interviewForm, submitType: "Question", chatList: []}))
-  }
+
+
 
   const resetTailQuestionCount = () => {
-    setInterviewForm(interviewForm => ({...interviewForm, remainTailQuestionCount: interview.remainTailQuestionCount}));
+    setInterviewForm(interviewForm => ({...interviewForm, submitType: "Question", remainTailQuestionCount: interview.remainTailQuestionCount}));
   }
 
   const consumeTailQuestionCount = (tailQuestionId: number) => {
@@ -101,14 +94,13 @@ export const useInterviewForm = (interviewId: number) => {
 
   const submitAfterCleanup =  async (tailQuestionId: number | null) => {
     clearInput()
-
     if (tailQuestionId === null) {
       if (interview.index + 1 === interview.size) {
         navigate(PATH.INTERVIEW_RESULT(interviewId))
       }
-
-      clearChat();
       await refetch();
+
+      focusRef.current?.focus();
       resetTailQuestionCount()
       return;
     }
@@ -130,75 +122,83 @@ export const useInterviewForm = (interviewId: number) => {
    *   4. 꼬리질문이 생성되지 않았다면 다음 질문으로 넘어감
    *   5. 만약 현재 질문이 마지막 질문이면 면접을 종료 함
    */
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = useCallback(() => {
 
     if(interviewForm.answer.trim() === "") {
       toast.error("답변칸이 빈칸입니다.")
       return ;
     }
-
-
     if(interviewForm.submitType === 'TailQuestion'){
-      appendChat({type: 'Answer', content: interviewForm.answer});
+      handleAppendUserChat({answer:interviewForm.answer})
 
-      const {tailQuestion, feedback, score} = await requestAiFeedback({
-        answer: interviewForm.answer,
-        question: interviewForm.currentTailQuestion
-      });
+      requestAiFeedback({answer: interviewForm.answer, question: interviewForm.currentTailQuestion,}, {
+        onSuccess: ({tailQuestion, feedback,score}) => {
+          if(interviewForm.tailQuestionId === undefined) {
+            throw Error("알 수 없는 에러가 발생했습니다")
+          }
 
-      appendChat({type: 'TailQuestion', content: tailQuestion});
-      registerTailQuestion(tailQuestion);
-
-      if(interviewForm.tailQuestionId === undefined) {
-        throw Error("알 수 없는 에러가 발생했습니다")
-      }
-
-      const {tailQuestionId} = await tailQuestionSubmitMutation.mutateAsync({
-        aiFeedback: feedback,
-        answerContent: interviewForm.answer,
-        answerState: "COMPLETE",
-        interviewQuestionId: interview.interviewQuestionId,
-        tailQuestion: tailQuestion,
-        tailQuestionId:  interviewForm.tailQuestionId,
-        timeToAnswer: 1,
-        score: score
+          tailQuestionSubmitMutation.mutate({
+            aiFeedback: feedback,
+            answerContent: interviewForm.answer,
+            answerState: "COMPLETE",
+            interviewQuestionId: interview.interviewQuestionId,
+            tailQuestion: tailQuestion,
+            tailQuestionId:  interviewForm.tailQuestionId,
+            timeToAnswer: 1,
+            score: score
+          }, {
+            onSuccess: ({tailQuestionId}) =>  {
+              if(interviewForm.remainTailQuestionCount !== 0){
+                registerTailQuestion(tailQuestion);
+                handleAppendComputerChat({tailQuestion})
+              }
+              submitAfterCleanup(tailQuestionId)
+            }
+          })
+        }
       })
-
-      await submitAfterCleanup(tailQuestionId)
       return ;
     }
 
     if(interviewForm.submitType === 'Question') {
+      handleAppendUserChat({answer: interviewForm.answer});
 
-      appendChat({type: 'Answer', content: interviewForm.answer})
-
-      const { tailQuestion, feedback,score} = await requestAiFeedback({
+      requestAiFeedback({
         answer: interviewForm.answer,
         question: interview.question
-      });
+      }, {
+        onSuccess: ({ tailQuestion, feedback,score }) => {
 
-      setInterviewForm(interviewForm => ({...interviewForm, chatList: [...interviewForm.chatList, {type: 'TailQuestion', content: tailQuestion}]}))
-      registerTailQuestion(tailQuestion);
 
-      const {tailQuestionId} = await interviewSubmitMutation.mutateAsync({
-        ...interview,
-        answerState: "COMPLETE",
-        answerContent: interviewForm.answer,
-        timeToAnswer: 0,
-        aiFeedback: feedback,
-        currentIndex: interview.index,
-        tailQuestion: tailQuestion,
-        score
+          interviewSubmitMutation.mutate({
+            ...interview,
+            answerState: "COMPLETE",
+            answerContent: interviewForm.answer,
+            timeToAnswer: 0,
+            aiFeedback: feedback,
+            currentIndex: interview.index,
+            tailQuestion: tailQuestion,
+            score
+          }, {
+            onSuccess: ({tailQuestionId}) => {
+              if(interviewForm.remainTailQuestionCount !== 0){
+                handleAppendComputerChat({tailQuestion});
+                registerTailQuestion(tailQuestion);
+              }
+              submitAfterCleanup(tailQuestionId)
+            },
+            onError: (error) => toast.error(error.message)
+          })
+        }
       })
-
-      await submitAfterCleanup(tailQuestionId);
     }
-  }, [interview, interviewForm]);
+  }, [interview, interviewForm, chatList]);
 
 
-  const handlePass = useCallback(async () => {
+  const handlePass = useCallback(() => {
+
     if(interviewForm.submitType === 'Question') {
-      const {tailQuestionId} = await interviewSubmitMutation.mutateAsync({
+      interviewSubmitMutation.mutate({
         ...interview,
         answerState: "PASS",
         answerContent: "",
@@ -207,19 +207,22 @@ export const useInterviewForm = (interviewId: number) => {
         currentIndex: interview.index,
         tailQuestion: "",
         score: 0
+      }, {
+        onSuccess: ({tailQuestionId}) => {
+          submitAfterCleanup(tailQuestionId)
+          setInterviewForm(form => ({...form, submitType: 'Question'}))
+        },
+        onError: (error) => toast.error(error.message)
       })
-      await submitAfterCleanup(tailQuestionId);
       return ;
     }
 
     if(interviewForm.submitType === 'TailQuestion') {
-
       if(interviewForm.tailQuestionId === undefined) {
         //해당 에러 발생하면 잘못 작성한거임
         throw Error("알 수 없는 에러가 발생했습니다")
       }
-
-      const {tailQuestionId} = await tailQuestionSubmitMutation.mutateAsync({
+      tailQuestionSubmitMutation.mutate ({
         aiFeedback: "",
         answerContent: interviewForm.answer,
         answerState: "PASS",
@@ -228,20 +231,26 @@ export const useInterviewForm = (interviewId: number) => {
         tailQuestionId:  interviewForm.tailQuestionId,
         timeToAnswer: 0,
         score: 0
+      }, {
+        onSuccess: ({tailQuestionId}) => {
+          submitAfterCleanup(tailQuestionId)
+          setInterviewForm(form => ({...form, submitType: 'Question'}))
+        },
+        onError: (error) => toast.error(error.message)
       })
-      await submitAfterCleanup(tailQuestionId);
     }
-  }, [interview, interviewForm])
+  }, [interview, interviewForm, chatList])
 
 
   return {
+    focusRef,
     interview,
     interviewLoading,
     handleSubmit,
     handlePass,
     feedbackWaiting: answerFeedbackMutation.isPending || (interviewSubmitMutation.isPending || tailQuestionSubmitMutation.isPending),
     remainTailQuestionCount: interviewForm.remainTailQuestionCount,
-    chatList: interviewForm.chatList,
+    chatList: chatList,
     answer: interviewForm.answer,
     handleAnswerChange
   }

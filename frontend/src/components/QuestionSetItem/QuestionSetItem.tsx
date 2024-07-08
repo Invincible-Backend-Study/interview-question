@@ -19,7 +19,7 @@ const QuestionSetItem = ({questionSet:{questionSetId, title, description, tailQu
     })
   },[])
   return (
-    <Card className="max-w-[270px] ">
+    <Card className="max-w-[280px] ">
       <CardHeader className="flex flex-col items-start ">
         <span className="text-blue-500">NEW</span>
         <span>{title}</span>
@@ -27,8 +27,8 @@ const QuestionSetItem = ({questionSet:{questionSetId, title, description, tailQu
       </CardHeader>
       <CardBody>
         <Image
-          width={270}
-          height={200}
+          isZoomed
+          className={"w-[300px] h-[150px] object-scale-down"}
           src={ thumbnailUrl === null ? "https://velog.velcdn.com/images/pak4184/post/98ba8b4f-7b89-4d28-8376-0dc8d1be805a/image.png" : thumbnailUrl}
         />
       </CardBody>

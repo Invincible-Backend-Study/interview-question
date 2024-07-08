@@ -6,7 +6,7 @@ export const axiosInstance = axios.create({
   baseURL: `${import.meta.env.VITE_API}/api`,
   timeout: NETWORK.TIMEOUT,
   withCredentials: true,
-  useAuth: true
+  useAuth: true,
 })
 
 axiosInstance.interceptors.request.use(checkAndSetToken);

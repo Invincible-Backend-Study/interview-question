@@ -9,6 +9,7 @@ import {useNavigate} from "react-router-dom";
 import {useCallback, useEffect} from "react";
 import {PATH} from "@/constants/path";
 import {toast} from "sonner";
+import WaitingView from "@/components/WaitingView/WatingView";
 
 
 interface InterviewFormProps{
@@ -19,8 +20,11 @@ const border = "1px solid rgb(54, 54, 54)";
 
 
 const InterviewForm = ({interviewId}: InterviewFormProps) => {
+
+
   const {
     interview,
+    focusRef,
     interviewLoading,
     handleSubmit,
     handlePass,
@@ -51,40 +55,45 @@ const InterviewForm = ({interviewId}: InterviewFormProps) => {
       <div className="w-[20%] p-3" style={{borderRight: border}}>
         <InterviewQuestionHistory size={interview.size} index={interview.index}/>
       </div>
+
+
       <div className='min-h-full w-full flex flex-col justify-between' style={{
         borderBottom: border,
         borderLeft: border
       }}>
-        <div className='p-3'>
-          <InterviewQuestionBoard
-            isLoading={interviewLoading}
-            question={interview.question}
-            chatList={chatList}
-            remainTailQuestionCount={remainTailQuestionCount}/>
-        </div>
+        {interviewLoading ? <WaitingView message={"다음 문제로 넘어갑니다"}/> : (
+          <>
+            <div className='p-3'>
+              <InterviewQuestionBoard
+                chatList={chatList}
+                remainTailQuestionCount={remainTailQuestionCount}/>
+            </div>
 
-        <div className="gap-1 h-full flex flex-col max-h-[310px] p-4"  style={{
-          borderTop:border
-        }}>
-          <Textarea
-            placeholder="여기에 답을 적어주세요"
-            value={answer}
-            onChange={(e) => handleAnswerChange(e.target.value)}
-            minRows={10}
-            rows={10}
-            maxRows={10}
-            disabled={feedbackWaiting}
-          />
-          <div className="row-span-1 flex flex-col-reverse" >
-            <InterviewController
-              onQuit={quit}
-              info={disclosure.onOpen}
-              disabled={feedbackWaiting}
-              onSubmit={handleSubmit}
-              onPass={handlePass}
-            />
-          </div>
-        </div>
+            <div className="gap-1 h-full flex flex-col max-h-[310px] p-4"  style={{
+              borderTop:border
+            }}>
+              <Textarea
+                placeholder="여기에 답을 적어주세요"
+                value={answer}
+                ref={focusRef}
+                onChange={(e) => handleAnswerChange(e.target.value)}
+                minRows={10}
+                rows={10}
+                maxRows={10}
+                disabled={feedbackWaiting}
+              />
+              <div className="row-span-1 flex flex-col-reverse" >
+                <InterviewController
+                  onQuit={quit}
+                  info={disclosure.onOpen}
+                  disabled={feedbackWaiting}
+                  onSubmit={handleSubmit}
+                  onPass={handlePass}
+                />
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <InterviewNotification {...disclosure}/>
     </div>
