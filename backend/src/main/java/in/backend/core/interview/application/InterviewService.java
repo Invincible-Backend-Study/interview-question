@@ -38,9 +38,7 @@ public class InterviewService {
                 visitor.memberId(),
                 interview.getCurrentProgressIndex()
         );
-
         return InterviewQuestionInfo.from(interview, interviewQuestion);
-
     }
 
 
