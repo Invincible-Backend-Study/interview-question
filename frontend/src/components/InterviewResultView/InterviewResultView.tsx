@@ -1,5 +1,5 @@
 import {useInterviewResultQuery} from "@/hooks/api/interview/useInterviewResultQuery";
-import {Chip, Spacer} from "@nextui-org/react";
+import {Chip, Link, Snippet, Spacer} from "@nextui-org/react";
 import {Fragment} from "react";
 
 
@@ -8,12 +8,12 @@ interface InterviewItemBlockProps {
   answerState: "INIT" | "PASS" | "COMPLETE",
   question: string;
   answer: string;
-  referenceLinks?: string;
+  referenceLinks: string[];
   feedback: string;
   score: number;
 }
 
-const InterviewItemBlock = ({id, answer, question, answerState, feedback, score}: InterviewItemBlockProps) => {
+const InterviewItemBlock = ({id, answer, question, answerState, feedback, score, referenceLinks}: InterviewItemBlockProps) => {
   return <section id={question} key={id} className='mb-8'>
     <h2 className='text-3xl font-semibold mb-3 flex items-center gap-1'>
       <span>{question}</span>
@@ -28,6 +28,19 @@ const InterviewItemBlock = ({id, answer, question, answerState, feedback, score}
         <span className="text-2xl">AI 피드백</span>
         <br/>{feedback}</p>
     }
+    <p className="mb-4">
+      <span className='text-2xl'>참고링크</span>
+      <br/>
+      <span className='text-sm text-danger'>해당 링크가 유효하지 않을 수 있습니다.</span>
+      <br/>
+      <div className="flex flex-col">
+        {referenceLinks.map((link, key) => <Fragment key={key}>
+          <Link href={link} key={key}>참고링크{key+1}</Link>
+          <Snippet>{link}</Snippet>
+        </Fragment>)
+        }
+      </div>
+    </p>
   </section>
 }
 
@@ -45,6 +58,7 @@ const InterviewResultView = ({interviewId}: InterviewResultViewProps) => {
         <h2 className='text-2xl font-semibold mb-2'>질문목록</h2>
         <ul className='list-disc list-inside'>
         {interviewResult.interviewQuestions.map(({interviewQuestionId, question, tailQuestions}) => (
+
             <li key={interviewQuestionId}>
               <a href={`#${question}`} className='text-blue-500 hover:underline'>{question}</a>
               <ul className='list-disc list-inside ml-4'>

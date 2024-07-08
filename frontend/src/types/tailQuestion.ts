@@ -41,6 +41,11 @@ export interface TailQuestionSubmitRequest {
    * 내 답변에 대한 점수
    */
   score: number;
+
+  /**
+   * 참고 링크
+   */
+  referenceLinks: string[];
 }
 
 export interface TailQuestionSubmitResponse {

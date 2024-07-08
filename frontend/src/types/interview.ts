@@ -62,7 +62,6 @@ export interface InterviewSubmitRequest {
    */
   tailQuestion: string;
 
-
   /**
    * 답변에 걸린 시간
    */
@@ -72,12 +71,12 @@ export interface InterviewSubmitRequest {
    * 내가 작성한 답변
    */
   answerContent: string;
-
-
   /**
    * 몇점인지
    */
   score: number;
+
+  referenceLinks: string[];
 }
 
 export interface InterviewSubmitResponse {
@@ -143,7 +142,7 @@ export interface InterviewQuestionDetail {
   answerState: "INIT" | "PASS" | "COMPLETE",
   question: string;
   answer: string;
-  referenceLinks: string;
+  referenceLinks: string[];
   feedback: string;
   remainTailQuestionCount: number;
   score: number;
@@ -157,6 +156,7 @@ export interface TailQuestionDetail {
   answer: string;
   score: number;
   feedback: string;
+  referenceLinks: string[]
 }
 
 
@@ -171,4 +171,5 @@ export interface FeedbackResponse {
   score: number;
   feedback: string;
   tailQuestion: string;
+  referenceLinks: string[];
 }

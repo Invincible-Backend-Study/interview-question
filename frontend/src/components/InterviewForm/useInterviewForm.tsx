@@ -129,10 +129,12 @@ export const useInterviewForm = (interviewId: number) => {
       return ;
     }
     if(interviewForm.submitType === 'TailQuestion'){
+
       handleAppendUserChat({answer:interviewForm.answer})
 
       requestAiFeedback({answer: interviewForm.answer, question: interviewForm.currentTailQuestion,}, {
-        onSuccess: ({tailQuestion, feedback,score}) => {
+        onSuccess: ({tailQuestion, feedback,score, referenceLinks}) => {
+
           if(interviewForm.tailQuestionId === undefined) {
             throw Error("알 수 없는 에러가 발생했습니다")
           }
@@ -142,6 +144,7 @@ export const useInterviewForm = (interviewId: number) => {
             answerContent: interviewForm.answer,
             answerState: "COMPLETE",
             interviewQuestionId: interview.interviewQuestionId,
+            referenceLinks,
             tailQuestion: tailQuestion,
             tailQuestionId:  interviewForm.tailQuestionId,
             timeToAnswer: 1,
@@ -162,16 +165,14 @@ export const useInterviewForm = (interviewId: number) => {
 
     if(interviewForm.submitType === 'Question') {
       handleAppendUserChat({answer: interviewForm.answer});
-
       requestAiFeedback({
         answer: interviewForm.answer,
         question: interview.question
       }, {
-        onSuccess: ({ tailQuestion, feedback,score }) => {
-
-
+        onSuccess: ({ tailQuestion, feedback,score , referenceLinks}) => {
           interviewSubmitMutation.mutate({
             ...interview,
+            referenceLinks,
             answerState: "COMPLETE",
             answerContent: interviewForm.answer,
             timeToAnswer: 0,
@@ -204,6 +205,7 @@ export const useInterviewForm = (interviewId: number) => {
         answerContent: "",
         timeToAnswer: 0,
         aiFeedback: "",
+        referenceLinks: [],
         currentIndex: interview.index,
         tailQuestion: "",
         score: 0
@@ -227,6 +229,7 @@ export const useInterviewForm = (interviewId: number) => {
         answerContent: interviewForm.answer,
         answerState: "PASS",
         interviewQuestionId: interview.interviewQuestionId,
+        referenceLinks: [],
         tailQuestion: "",
         tailQuestionId:  interviewForm.tailQuestionId,
         timeToAnswer: 0,
