@@ -9,9 +9,6 @@ export const useQuestionSetLoader = () => {
   const [page, setPage] = useState<number>(0);
   const {data: questionSetList, refetch, isLoading, totalPages} = useAdminQuestionSetQuery(page);
 
-
-
-
   useEffect(() => {
     refetch()
   }, [page])

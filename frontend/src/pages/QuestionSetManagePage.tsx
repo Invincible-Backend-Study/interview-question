@@ -18,7 +18,7 @@ const QuestionSetManagePage = () => {
   const {questionSetList, pageInfo,selected} = useQuestionSetLoader();
   const {rows: questionSetRows, form, updateInputValue, handleRegisterNewQuestionSet} = useQuestionSetManage(questionSetList ?? []);
 
-  const {questions, isLoading, handlePrependRow, handlePrependRows, handleRemove, handleSave} = useQuestionsManage(selected.selectedQuestionSetId);
+  const {questions, isLoading, handlePrependRows, handleRemove, handleSave} = useQuestionsManage(selected.selectedQuestionSetId);
 
   return <>
     <div className="flex flex-row justify-between gap-3 ">
@@ -28,7 +28,7 @@ const QuestionSetManagePage = () => {
       </Box>
 
       <Box>
-        <AdminEditorButton add={handlePrependRow} save={handleSave} file={textPreviewOpen}/>
+        <AdminEditorButton  save={handleSave} file={textPreviewOpen}/>
         <QuestionsTable rows={questions} isLoading={isLoading}/>
         <QuestionSetPreview questionSet={selected.selectedQuestionSet}/>
       </Box>

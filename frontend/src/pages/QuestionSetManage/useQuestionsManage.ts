@@ -1,11 +1,13 @@
 import {useAdminQuestionsQuery} from "@/hooks/api/question/useAdminQuestionsQuery";
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {Question} from "@/types/admin/question";
+import {useQuestionSaveMutation} from "@/hooks/api/question/useQuestionSaveMutation";
 
 
 export const useQuestionsManage = (questionSetId: number | undefined) => {
+  const questionSaveMutation = useQuestionSaveMutation();
   const [tempId, setTempId] = useState<number>(-1)
-  const {questions,  isLoading} = useAdminQuestionsQuery(questionSetId)
+  const {questions,  isLoading, refetch} = useAdminQuestionsQuery(questionSetId)
   const [newRows, setNewRows] = useState<Question[]>([]);
 
   const handlePrependRow =  useCallback(() => {
@@ -21,7 +23,13 @@ export const useQuestionsManage = (questionSetId: number | undefined) => {
     if(questionSetId === undefined){
       return ;
     }
-    console.log(questions);
+
+    setNewRows(rows => [
+      ...questions.map((question, sequence) => ({questionSetId, sequence: sequence + 1, question, questionId: tempId - sequence}) as Question),
+      ...rows
+    ])
+
+    setTempId(t => t + -questions.length);
 
   }, [questionSetId, newRows, tempId]);
 
@@ -30,8 +38,20 @@ export const useQuestionsManage = (questionSetId: number | undefined) => {
   }, [newRows])
 
   const handleSave = useCallback(() => {
-
+    newRows.forEach((question, index, arr) => questionSaveMutation.mutate(question, {onSuccess: () => {
+        if(index === arr.length - 1) {
+          setNewRows([])
+          refetch();
+        }
+      }}))
   }, [newRows]);
+
+  useEffect(() => {
+    setNewRows([]);
+  } , [questionSetId])
+
+  useEffect(() => {
+  }, [questions]);
 
   const rows = [...newRows, ...questions];
 

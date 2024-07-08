@@ -12,7 +12,6 @@ const useQuestionSetManage = (questions: QuestionSet[]) => {
 
 
   const handleRegisterNewQuestionSet = useCallback(() => {
-    console.log(form);
     questionSetSaveMutation.mutate({...form}, {
       onSuccess: ({questionSetId}) => {
         setNewRows(rows => [{...form, questionSetId}, ...rows]);
