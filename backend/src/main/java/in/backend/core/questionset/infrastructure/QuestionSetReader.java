@@ -26,4 +26,9 @@ public class QuestionSetReader {
         return questionSetRepository.findAll(pageable);
     }
 
+    public QuestionSetEntity readOne(Long questionSetId) {
+        return questionSetRepository.findById(questionSetId)
+                .orElseThrow(DomainExceptionCode.QUESTION_SET_NOT_FOUND::create);
+    }
+
 }

@@ -20,6 +20,7 @@ public class QuestionSetWriter {
                 .adminId(adminId)
                 .title(questionSetCreator.title())
                 .description(questionSetCreator.description())
+                .thumbnailUrl(questionSetCreator.thumbnailUrl())
                 .questionSetRules(QuestionSetRules.builder()
                         .defaultTimeToAnswer(questionSetCreator.defaultTimeToAnswer())
                         .defaultTimeToThink(questionSetCreator.defaultTimeToThink())
