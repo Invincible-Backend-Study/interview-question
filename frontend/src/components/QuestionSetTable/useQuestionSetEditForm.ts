@@ -1,4 +1,4 @@
-import {useCallback, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {QuestionSetRow} from "@/types/admin/questionSet";
 
 
@@ -21,10 +21,14 @@ const useQuestionSetEditForm = () => {
       [key]: value
     }))
   }, [form]);
+  const memoizedValues = useMemo(() => ({
+    form,
+    updateInputValue
+  }), [form, updateInputValue]);
 
 
   return {
-    form, updateInputValue
+    form: memoizedValues.form, updateInputValue:memoizedValues.updateInputValue
   }
 
 }

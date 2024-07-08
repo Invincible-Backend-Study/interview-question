@@ -5,7 +5,7 @@ import {FileUploader} from "react-drag-drop-files";
 import {useCallback, useState} from "react";
 import {useImageUploadMutation} from "@/hooks/api/image/useImageUploadMutation";
 import {toast} from "sonner";
-import {useQuestionSetMutation} from "@/hooks/api/question/useQuestionSetMutation";
+import imageCompression from "browser-image-compression";
 
 
 interface QuestionSetEditFormProps {
@@ -14,14 +14,40 @@ interface QuestionSetEditFormProps {
   confirm:() => void;
 }
 
-const QuestionSetEditForm = ({confirm, change, form: {description, title, thumbnailUrl, defaultTailQuestionCount}}: QuestionSetEditFormProps) => {
+const QuestionSetEditForm = ({confirm, change, form: {description, title, thumbnailUrl, defaultTailQuestionDepth}}: QuestionSetEditFormProps) => {
   const imageUploadMutation = useImageUploadMutation();
   const [file, setFile] = useState<File | undefined>();
 
-  const handleChange = (file: File) => {
-    setFile(file);
+
+  const compressImage = useCallback(async (originalImageFile: File) => {
+    let imageFile: File;
+    try {
+      const compressedImageFile = await imageCompression(
+        originalImageFile,
+        {
+          maxSizeMB: 1.5
+        }
+      );
+
+      const fileName = originalImageFile.name;
+
+      const fileType = compressedImageFile.type;
+
+      imageFile = new File([compressedImageFile], fileName, { type: fileType });
+    } catch (e) {
+      imageFile = originalImageFile;
+    }
+
+    return imageFile;
+  }, []);
+
+
+  const handleChange = useCallback(async(file: File) => {
+
+    const compressedFile = await compressImage(file);
+    setFile(compressedFile);
     const formData = new FormData();
-    formData.append("thumbnail", file);
+    formData.append("thumbnail", compressedFile);
 
     imageUploadMutation.mutate({thumbnail: formData}, {
       onSuccess: (thumbnailUrl) => {
@@ -31,7 +57,7 @@ const QuestionSetEditForm = ({confirm, change, form: {description, title, thumbn
         toast.error("이미지 업로드에 실패했습니다.")
       }
     });
-  };
+  }, []);
 
 
 
@@ -49,11 +75,10 @@ const QuestionSetEditForm = ({confirm, change, form: {description, title, thumbn
 
             <Input placeholder={"설명"} value={description} onValueChange={t => change("description",t)}/>
 
-            <Slider label="기본 꼬리질문 개수" minValue={0} maxValue={20} defaultValue={defaultTailQuestionCount}  onChange={(n) => typeof n === 'number' && change("defaultTailQuestionDepth", n)}/>
+            <Slider label="기본 꼬리질문 개수" minValue={0} maxValue={20} defaultValue={defaultTailQuestionDepth}  onChange={(n) => typeof n === 'number' && change("defaultTailQuestionDepth", n)}/>
 
             <FileUploader label="이미지를 올려주세요" handleChange={handleChange} name="file" types={["PNG", "JPEG", "WEBP"]}/>
 
-            {!thumbnailUrl && <Image src={file && URL.createObjectURL(file)}/>}
             {thumbnailUrl && <Image src={thumbnailUrl}/>}
 
             <Button onClick={() => {
