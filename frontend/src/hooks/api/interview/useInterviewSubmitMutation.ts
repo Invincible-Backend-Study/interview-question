@@ -6,6 +6,5 @@ export const useInterviewSubmitMutation = () => {
   return useMutation({
     mutationKey: ['useInterviewSubmitMutation'],
     mutationFn: submitInterview,
-    gcTime: 60 * 60 * 1000,
   })
 }
