@@ -3,6 +3,9 @@ package in.backend.core.interview.presentation;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import in.backend.acceptance.RequestFixtures.꼬리질문;
+import in.backend.acceptance.RequestFixtures.인터뷰;
+import in.backend.acceptance.RequestFixtures.인터뷰.답변요청;
 import in.backend.core.interview.application.InterviewSubmitResult;
 import in.backend.core.interview.presentation.payload.InterviewCreateRequest;
 import in.backend.core.interview.presentation.payload.InterviewCreateResponse;
@@ -33,10 +36,10 @@ class InterviewApiAcceptanceTest extends AcceptanceTest {
     @Autowired
     QuestionSetRepository questionSetRepository;
 
-    private InterviewSubmitResult submit(Long interviewId, InterviewQuestionResponse interviewQuestionResponse) {
+    private InterviewSubmitResult submit(Long interviewId, Long interviewQuestionId) {
         var interviewSubmitRequest = InterviewSubmitRequest.builder()
                 .interviewId(interviewId)
-                .interviewQuestionId(interviewQuestionResponse.interviewQuestionId())
+                .interviewQuestionId(interviewQuestionId)
                 .currentIndex(0)
                 .score(1)
                 .answerState(AnswerState.COMPLETE.toString())
@@ -113,7 +116,7 @@ class InterviewApiAcceptanceTest extends AcceptanceTest {
 
         var interviewQuestionResponse = getCurrentInterviewQuestion(interviewId);
 
-        submit(interviewId, interviewQuestionResponse);
+        submit(interviewId, interviewQuestionResponse.interviewQuestionId());
 
         var actual = getCurrentInterviewQuestion(interviewId);
 
@@ -136,7 +139,7 @@ class InterviewApiAcceptanceTest extends AcceptanceTest {
         var interviewId = createInterview(questionSet, 1);
         var interviewQuestionResponse = getCurrentInterviewQuestion(interviewId);
 
-        submit(interviewId, interviewQuestionResponse);
+        submit(interviewId, interviewQuestionResponse.interviewQuestionId());
 
         RestAssured.given().log().all()
                 .when().log().all()
@@ -157,7 +160,7 @@ class InterviewApiAcceptanceTest extends AcceptanceTest {
 
         var interviewQuestionResponse = getCurrentInterviewQuestion(interviewId);
 
-        var tailQuestionResponse = submit(interviewId, interviewQuestionResponse);
+        var tailQuestionResponse = submit(interviewId, interviewQuestionResponse.interviewQuestionId());
 
         var tailQuestionSubmitRequest = TailQuestionSubmitRequest.builder()
                 .interviewQuestionId(interviewId)
@@ -195,7 +198,7 @@ class InterviewApiAcceptanceTest extends AcceptanceTest {
 
         var interviewQuestionResponse = getCurrentInterviewQuestion(interviewId);
 
-        var tailQuestionResponse = submit(interviewId, interviewQuestionResponse);
+        var tailQuestionResponse = submit(interviewId, interviewQuestionResponse.interviewQuestionId());
 
         var tailQuestionSubmitRequest = TailQuestionSubmitRequest.builder()
                 .interviewQuestionId(interviewId)
@@ -238,5 +241,37 @@ class InterviewApiAcceptanceTest extends AcceptanceTest {
                 .then().log().all()
                 .statusCode(200)
                 .body("tailQuestionId", Matchers.notNullValue());
+    }
+
+
+    /**
+     * <pre>
+     * scenario
+     * - 1. 질문을 받은 다음 두 번 답변한 다음 패스 함
+     * - 2. 받은 질문을 제출 함
+     * - 3. 다시 패스 함
+     * </pre>
+     */
+    @Test
+    void 테스트_시나리오1() {
+        var questionSet = questionSetRepository.save(QuestionSetFixture.create());
+        questionRepository.saveAll(QuestionFixture.creates(questionSet, 10));
+        var interviewId = createInterview(questionSet, 10);
+
+        var interviewQuestionId = 인터뷰.질문_가져오기(interviewId).interviewQuestionId();
+        var tailQuestionId1 = 인터뷰.제출(답변요청.완료(interviewId, interviewQuestionId, 0)).tailQuestionId();
+        var tailQuestionId2 = 꼬리질문.제출(꼬리질문.답변요청.완료(interviewQuestionId, tailQuestionId1)).tailQuestionId();
+        var tailQuestionId3 = 꼬리질문.제출(꼬리질문.답변요청.완료(interviewQuestionId, tailQuestionId2)).tailQuestionId();
+
+        꼬리질문.제출(꼬리질문.답변요청.패스(interviewId, tailQuestionId3));
+
+        var interviewQuestionId2 = 인터뷰.질문_가져오기(interviewId).interviewQuestionId();
+
+        var tailQuestionId4 = 인터뷰.제출(답변요청.완료(interviewId, interviewQuestionId2, 1)).tailQuestionId();
+        var tailQuestionId5 = 꼬리질문.제출(꼬리질문.답변요청.완료(interviewQuestionId2, tailQuestionId4)).tailQuestionId();
+
+        assertThat(tailQuestionId5).isNotNull();
+
+
     }
 }
