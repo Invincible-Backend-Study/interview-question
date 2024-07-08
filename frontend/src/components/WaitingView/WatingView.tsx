@@ -1,7 +1,7 @@
 
 
 interface WaitingViewProps {
-  message: string;
+  message?: string;
 }
 const WaitingView = ({message="페이지를 가져오는 중이에요"}: WaitingViewProps) => {
   return (

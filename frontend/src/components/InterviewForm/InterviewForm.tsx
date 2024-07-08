@@ -6,7 +6,7 @@ import {useInterviewForm} from "@/components/InterviewForm/useInterviewForm";
 import {useShortCut} from "@/hooks/useShortCut";
 import InterviewNotification from "@/components/InterviewNotification/InterviewNotification";
 import {useNavigate} from "react-router-dom";
-import {useCallback, useEffect, useRef} from "react";
+import {useCallback, useEffect} from "react";
 import {PATH} from "@/constants/path";
 import {toast} from "sonner";
 import WaitingView from "@/components/WaitingView/WatingView";
@@ -65,7 +65,6 @@ const InterviewForm = ({interviewId}: InterviewFormProps) => {
           <>
             <div className='p-3'>
               <InterviewQuestionBoard
-                question={interview.question}
                 chatList={chatList}
                 remainTailQuestionCount={remainTailQuestionCount}/>
             </div>

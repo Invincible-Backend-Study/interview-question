@@ -1,6 +1,6 @@
 import {useInterviewQuestionLoadQuery} from "@/hooks/api/interview/useInterviewQuestionLoadQuery";
 import {useInterviewSubmitMutation} from "@/hooks/api/interview/useInterviewSubmitMutation";
-import {forwardRef, useCallback, useEffect, useRef, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import useTailQuestionSubmitMutation from "@/hooks/api/question/useTailQuestionSubmitMutation";
 import useAnswerFeedbackMutation from "@/hooks/api/answer/useAnswerFeedbackMutation";
 import {useNavigate} from "react-router-dom";
@@ -9,8 +9,6 @@ import {HTTPError} from "@/api/Interceptors";
 import {toast} from "sonner";
 import {useManageChatList} from "@/components/InterviewForm/useManageChatList";
 import {FeedbackResponse} from "@/types/interview";
-import {useInput} from "@nextui-org/react";
-
 
 interface InterviewForm {
   tailQuestionId?: number;

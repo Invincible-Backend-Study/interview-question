@@ -2,7 +2,7 @@ import {ScrollShadow} from "@nextui-org/react";
 import ComputerChat from "@/components/Chat/ComputerChat";
 import UserChat from "@/components/Chat/UserChat";
 import {Chat} from "@/types/question";
-import {useCallback, useEffect, useMemo, useRef} from "react";
+import {useCallback, useEffect,useRef} from "react";
 import MainQuestionChat from "@/components/Chat/MainQuestionChat";
 
 interface InterviewQuestionBoardProps {
