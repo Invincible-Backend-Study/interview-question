@@ -63,6 +63,9 @@ public class QuestionEntity extends BaseEntity {
         this.sequence = sequence;
     }
 
+    public Long getQuestionSetId() {
+        return questionSet.getId();
+    }
 
     public void update(QuestionInfo questionInfo) {
         applyIfPresent(questionInfo.content(), value -> this.content = value);

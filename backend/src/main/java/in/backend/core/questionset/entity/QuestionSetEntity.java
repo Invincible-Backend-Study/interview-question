@@ -69,11 +69,13 @@ public class QuestionSetEntity extends BaseEntity {
             Long adminId,
             String title,
             String description,
+            String thumbnailUrl,
             QuestionSetRules questionSetRules
     ) {
         this.adminId = adminId;
         this.title = title;
         this.questionSetRules = questionSetRules;
+        this.thumbnailUrl = thumbnailUrl;
         this.description = description;
         QuestionSetPolicy.validate(this);
     }

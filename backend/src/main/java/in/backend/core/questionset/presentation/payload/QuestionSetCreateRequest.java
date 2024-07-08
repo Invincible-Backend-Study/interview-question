@@ -10,8 +10,15 @@ public record QuestionSetCreateRequest(
          * 질문 제목
          */
         @NotNull
-        @Length(min = 6, max = 50, message = "제목은 최소 6자이며 최대50자 입니다.")
+        @Length(min = 3, max = 50, message = "제목은 최소 6자이며 최대50자 입니다.")
         String title,
+
+        @NotNull
+        @Length(min = 3, max = 100, message = "설명은 최소 3자이면 최대 100자입니다.")
+        String description,
+
+        @NotNull
+        String thumbnailUrl,
 
         /**
          * 질문 depth
@@ -32,14 +39,15 @@ public record QuestionSetCreateRequest(
 
     public QuestionSetCreateRequest {
         // 이후 추가될 기능
-        defaultTimeToThink = 1;
-        defaultTimeToAnswer = 1;
+        defaultTimeToThink = 5;
+        defaultTimeToAnswer = 5;
     }
 
 
-    public QuestionSetCreator from(String thumbnailUrl) {
+    public QuestionSetCreator from() {
         return QuestionSetCreator.builder()
                 .title(title)
+                .description(description)
                 .thumbnailUrl(thumbnailUrl)
                 .defaultTailQuestionDepth(defaultTailQuestionDepth)
                 .defaultTimeToThink(defaultTimeToThink)

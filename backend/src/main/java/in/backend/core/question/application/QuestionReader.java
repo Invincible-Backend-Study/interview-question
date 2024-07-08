@@ -16,6 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class QuestionReader {
     private final QuestionRepository questionRepository;
 
+
+    public List<QuestionEntity> readAll(Long questionSetId) {
+        return questionRepository.findByQuestionSetId(questionSetId);
+    }
+
     public QuestionEntity read(Long questionId) {
         return questionRepository.findById(questionId)
                 .orElseThrow(IllegalArgumentException::new);

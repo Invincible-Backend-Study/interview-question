@@ -3,6 +3,7 @@ package in.backend.core.question.application;
 
 import in.backend.core.question.entity.QuestionEntity;
 import in.backend.core.question.infrastrcuture.QuestionRepository;
+import in.backend.core.questionset.entity.QuestionSetEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +16,14 @@ public class QuestionWriter {
     private final QuestionReader questionReader;
 
 
-    public Long write(QuestionInfo questionInfo) {
-        return questionRepository.save(questionInfo.toEntity())
+    public Long write(QuestionInfo questionInfo, QuestionSetEntity questionSet) {
+        var question = QuestionEntity.builder()
+                .questionSet(questionSet)
+                .content(questionInfo.content)
+                .sequence(questionInfo.sequence)
+                .build();
+
+        return questionRepository.save(question)
                 .getId();
     }
 
@@ -37,12 +44,6 @@ public class QuestionWriter {
             this(command.question(), command.sequence());
         }
 
-        public QuestionEntity toEntity() {
-            return QuestionEntity.builder()
-                    .content(content)
-                    .sequence(sequence)
-                    .build();
-        }
     }
 
 
