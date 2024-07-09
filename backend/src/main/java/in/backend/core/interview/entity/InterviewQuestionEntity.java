@@ -14,6 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.List;
 import java.util.Optional;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -133,8 +134,8 @@ public class InterviewQuestionEntity extends BaseEntity {
         return answer.getAnswerState();
     }
 
-    public String getReferenceLinks() {
-        return "";
+    public List<String> getReferenceLinks() {
+        return aiFeedback.getReferenceLinks();
     }
 
     public String getFeedback() {
@@ -148,5 +149,6 @@ public class InterviewQuestionEntity extends BaseEntity {
     public int getScore() {
         return aiFeedback.getScore();
     }
+
 }
 

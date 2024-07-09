@@ -4,6 +4,7 @@ import in.backend.core.interview.application.InterviewSubmitCommand;
 import in.backend.core.interview.application.InterviewSubmitCommand.AnswerInfo;
 import in.backend.core.interview.application.InterviewSubmitCommand.FeedbackInfo;
 import in.backend.core.question.entity.AnswerState;
+import java.util.List;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,13 +19,14 @@ public record InterviewSubmitRequest(
         String tailQuestion,
         Integer timeToAnswer,
         String answerContent,
-        Integer score
+        Integer score,
+        List<String> referenceLinks
 ) {
     public InterviewSubmitCommand to() {
-        log.info("{}", this);
         var feedback = FeedbackInfo.builder()
                 .aiFeedback(aiFeedback)
                 .tailQuestion(tailQuestion)
+                .referenceLinks(referenceLinks)
                 .score(score)
                 .build();
 

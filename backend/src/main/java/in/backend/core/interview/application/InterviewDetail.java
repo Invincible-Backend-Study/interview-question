@@ -35,7 +35,7 @@ public record InterviewDetail(
             AnswerState answerState,
             String question,
             String answer,
-            String referenceLinks,
+            List<String> referenceLinks,
             String feedback,
             int score,
             int remainTailQuestionCount,
@@ -71,7 +71,8 @@ public record InterviewDetail(
             int score,
             String question,
             String answer,
-            String feedback
+            String feedback,
+            List<String> referenceLinks
     ) {
         public static TailQuestionDetail from(TailQuestionEntity tailQuestion) {
             return TailQuestionDetail.builder()
@@ -81,6 +82,7 @@ public record InterviewDetail(
                     .answer(tailQuestion.getAnswer())
                     .feedback(tailQuestion.getFeedback())
                     .score(tailQuestion.getScore())
+                    .referenceLinks(tailQuestion.getReferenceLinks())
                     .build();
 
         }
