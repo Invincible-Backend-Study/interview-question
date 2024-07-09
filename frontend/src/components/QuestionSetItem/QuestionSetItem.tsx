@@ -10,7 +10,6 @@ interface QuestionSetItemProps {
 }
 
 const QuestionSetItem = ({questionSet:{questionSetId, title, description, tailQuestionDepth, count, thumbnailUrl}, openInterviewSetting}: QuestionSetItemProps) => {
-
   const handleOpenSettings = useCallback(() => {
     openInterviewSetting({
       questionSetId,

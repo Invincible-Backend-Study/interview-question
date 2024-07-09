@@ -46,7 +46,8 @@ export const handleTokenError = async(error: AxiosError<ErrorResponseData>) => {
   }
 
   if (
-    status === 400 && (data.code >= 10000 && data.code <= 10006)
+    (status === 401 || status === 400) &&
+    (data.code >= 10000 && data.code <= 10007)
   ) {
     localStorage.removeItem(TOKEN.ACCESS);
     window.location.href = PATH.AUTH;
