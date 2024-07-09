@@ -11,6 +11,7 @@ import in.backend.core.question.entity.AnswerState;
 import in.backend.global.fixture.InterviewFixture;
 import in.backend.global.fixture.InterviewQuestionFixture;
 import in.backend.global.layer.ImplementLayerTest;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,7 +32,7 @@ class InterviewManagerTest extends ImplementLayerTest {
         var result = interviewManager.submit(memberId(), InterviewSubmitCommand.builder()
                 .answerState(AnswerState.COMPLETE)
                 .answer(new AnswerInfo("대답", 1))
-                .feedback(new FeedbackInfo("피드백", "꼬리질문", 100))
+                .feedback(new FeedbackInfo("피드백", "꼬리질문", List.of(), 100))
                 .currentIndex(interview.getIndex())
                 .interviewId(interviewQuestion.getInterviewId())
                 .interviewQuestionId(interviewQuestion.getId())
@@ -60,7 +61,7 @@ class InterviewManagerTest extends ImplementLayerTest {
         interviewManager.submit(memberId(), InterviewSubmitCommand.builder()
                 .answerState(AnswerState.COMPLETE)
                 .answer(new AnswerInfo("대답", 1))
-                .feedback(new FeedbackInfo("피드백", "꼬리질문", 100))
+                .feedback(new FeedbackInfo("피드백", "꼬리질문", List.of(), 100))
                 .currentIndex(0)
                 .interviewId(interview.getId())
                 .interviewQuestionId(interviewQuestion.getId())

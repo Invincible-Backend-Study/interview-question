@@ -22,4 +22,5 @@ public class MemberWriter {
         return memberRepository.save(memberInfo.toEntity())
                 .getId();
     }
+
 }

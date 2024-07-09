@@ -6,6 +6,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -47,5 +48,11 @@ public class Questions {
         Collections.shuffle(temp);
 
         return temp;
+    }
+
+    public List<QuestionEntity> getOrderedSequenceValue() {
+        return this.value.stream()
+                .sorted(Comparator.comparingInt(QuestionEntity::getSequence))
+                .toList();
     }
 }

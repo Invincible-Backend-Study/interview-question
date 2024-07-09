@@ -2,6 +2,7 @@ package in.backend.global.layer;
 
 
 import in.backend.core.auth.domain.Visitor;
+import in.backend.core.auth.infrastrcutrue.RefreshTokenRepository;
 import in.backend.core.interview.infrastructure.InterviewQuestionRepository;
 import in.backend.core.interview.infrastructure.InterviewRepository;
 import in.backend.core.member.infrastructure.MemberRepository;
@@ -47,6 +48,9 @@ public class ImplementLayerTest {
 
     @Autowired
     protected TailQuestionRepository tailQuestionRepository;
+
+    @Autowired
+    protected RefreshTokenRepository refreshTokenRepository;
 
 
     protected void given(Runnable runnable) {

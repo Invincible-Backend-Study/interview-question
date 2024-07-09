@@ -86,7 +86,7 @@ public class QuestionSetEntity extends BaseEntity {
         INTERVIEW_CREATE_FAIL.invokeByCondition(questions.size() < count);
 
         if (questions.hasSameSize(count)) {
-            return questions.getValue();
+            return questions.getOrderedSequenceValue();
         }
 
         return questions.shuffle()

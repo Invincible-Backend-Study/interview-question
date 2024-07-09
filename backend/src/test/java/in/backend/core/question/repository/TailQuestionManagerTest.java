@@ -9,6 +9,7 @@ import in.backend.core.question.entity.AnswerState;
 import in.backend.core.question.infrastrcuture.TailQuestionManager;
 import in.backend.global.fixture.InterviewQuestionFixture;
 import in.backend.global.layer.ImplementLayerTest;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,7 +27,7 @@ class TailQuestionManagerTest extends ImplementLayerTest {
             interviewQuestion.submit(
                     AnswerState.COMPLETE,
                     new AnswerInfo("", 1),
-                    new FeedbackInfo("대충 피드백", "1234", 1)
+                    new FeedbackInfo("대충 피드백", "1234", List.of(), 1)
             );
 
             return tailQuestionRepository.save(interviewQuestion.createTailQuestion()
@@ -40,7 +41,7 @@ class TailQuestionManagerTest extends ImplementLayerTest {
                 .tailQuestionId(tailQuestion.getId())
                 .answerState(AnswerState.COMPLETE)
                 .answerInfo(new AnswerInfo("질문", 1))
-                .feedbackInfo(new FeedbackInfo("피드백", "다음 질문", 100))
+                .feedbackInfo(new FeedbackInfo("피드백", "다음 질문", List.of(), 100))
                 .build(), 1L);
 
         assertThat(tailQuestionSubmitResult.question()).isEqualTo("다음 질문");
