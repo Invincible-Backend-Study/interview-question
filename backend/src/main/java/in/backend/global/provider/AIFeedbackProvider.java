@@ -18,7 +18,6 @@ public class AIFeedbackProvider {
     private final PromptProperty promptProperty;
 
     public FeedbackResponse execute(String question, String answer, List<String> tailQuestions) {
-
         var beanOutputConverter = new BeanOutputConverter<>(FeedbackResponse.class);
         var prompt = promptProperty.backendPromptTemplate()
                 .create(Map.of(

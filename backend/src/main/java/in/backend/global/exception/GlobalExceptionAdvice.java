@@ -3,6 +3,7 @@ package in.backend.global.exception;
 
 import in.backend.core.exception.DomainException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.retry.NonTransientAiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -41,6 +42,21 @@ public class GlobalExceptionAdvice {
                 .body(new ErrorResponse(exception.getCode(), exception.getMessage()));
     }
 
+    @ExceptionHandler({NonTransientAiException.class})
+    public ResponseEntity<ErrorResponse> exception(NonTransientAiException exception) {
+        log.info("gpt retry fails message: {}", exception.getMessage());
+        var exceptionType = GlobalExceptionCode.GPT_API_DID_NOT_WORK;
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(exceptionType.getCode(), exception.getMessage()));
+    }
+
+    @ExceptionHandler({RuntimeException.class})
+    public ResponseEntity<ErrorResponse> exception(RuntimeException exception) {
+        log.info("message: {}", exception.getMessage());
+        var exceptionType = GlobalExceptionCode.INVALID_REQUEST;
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(exceptionType.getCode(), exception.getMessage()));
+    }
 
     public record ErrorResponse(
             int code,
