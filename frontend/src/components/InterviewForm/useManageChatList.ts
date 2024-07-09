@@ -32,6 +32,6 @@ export const useManageChatList = ({mainQuestion}: IUseManageChatList) => {
     chatList,
     resetChatList,
     handleAppendUserChat,
-    handleAppendComputerChat
+    handleAppendComputerChat,
   }
 }

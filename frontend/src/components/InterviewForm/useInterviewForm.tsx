@@ -59,6 +59,7 @@ export const useInterviewForm = (interviewId: number) => {
     focusRef.current?.focus();
   }, [interviewForm])
 
+
   const requestAiFeedback = (
     {answer, question}: {answer: string, question: string},
     {onSuccess} : {onSuccess: (feedback: FeedbackResponse) => void}
@@ -69,7 +70,9 @@ export const useInterviewForm = (interviewId: number) => {
       tailQuestions: chatList.filter(chat => chat.type !== "Answer")
         .map(chat => chat.content)
         .filter(str => str.length !== 0)
-    }, {onSuccess, onError: (error) => toast.error(error.message)})
+    }, {onSuccess, onError: () => {
+        toast.error("답변을 피드백 하는데 실패했거나 서버가 불안정하여 실패했습니다. 재시도 하거나 복구 후 시도해주세요.")
+    }})
   }
 
 
@@ -134,7 +137,6 @@ export const useInterviewForm = (interviewId: number) => {
 
       requestAiFeedback({answer: interviewForm.answer, question: interviewForm.currentTailQuestion,}, {
         onSuccess: ({tailQuestion, feedback,score, referenceLinks}) => {
-
           if(interviewForm.tailQuestionId === undefined) {
             throw Error("알 수 없는 에러가 발생했습니다")
           }
