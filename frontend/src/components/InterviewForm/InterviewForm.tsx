@@ -20,8 +20,6 @@ const border = "1px solid rgb(54, 54, 54)";
 
 
 const InterviewForm = ({interviewId}: InterviewFormProps) => {
-
-
   const {
     interview,
     focusRef,

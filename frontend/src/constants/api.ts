@@ -12,12 +12,8 @@ const wrap = (url: string) => {
 }
 
 export const END_POINT = {
-
-  /******************************************************************
-   * member
-   * ******************************************************************
-   */
   ME: '/members/me',
+  MEMBERS: '/members',
 
   TAIL_QUESTION_SUBMIT: "/tail-questions/submit",
 

@@ -15,6 +15,7 @@ export interface TailQuestion extends Question {
 export interface Answer extends Question {
   type: 'Answer'
   content: string;
+  isError?: boolean
 }
 
 export interface MainQuestion extends Question {

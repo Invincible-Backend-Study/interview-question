@@ -1,7 +1,7 @@
 import {ScrollShadow} from "@nextui-org/react";
 import ComputerChat from "@/components/Chat/ComputerChat";
 import UserChat from "@/components/Chat/UserChat";
-import {Chat} from "@/types/question";
+import {Answer, Chat} from "@/types/question";
 import {useCallback, useEffect,useRef} from "react";
 import MainQuestionChat from "@/components/Chat/MainQuestionChat";
 
@@ -43,7 +43,7 @@ const InterviewQuestionBoard = ({remainTailQuestionCount, chatList}: InterviewQu
       return <MainQuestionChat  key={index} {...chat}/>
     }
 
-    return <UserChat key={index} {...chat}/>;
+    return <UserChat key={index} {...chat as Answer}/>;
   }, [chatList])
 
   return (

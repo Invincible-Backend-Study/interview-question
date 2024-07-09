@@ -62,7 +62,7 @@ const CompactNavbar = ({profile}: CompactNavbarProps) => {
       </div>
 
       <Modal backdrop="blur" isDismissable={false} isKeyboardDismissDisabled={true} isOpen={isOpen} placement={"top"} className={`text-foreground bg-background dark`} onClose={onClose}>
-        <IndividualSettingForm/>
+        <IndividualSettingForm isOpen />
       </Modal>
     </nav>
   )
