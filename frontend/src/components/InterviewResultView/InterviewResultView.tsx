@@ -36,7 +36,7 @@ const InterviewItemBlock = ({id, answer, question, answerState, feedback, score,
       <div className="flex flex-col">
         {referenceLinks.map((link, key) => <Fragment key={key}>
           <Link href={link} key={key}>참고링크{key+1}</Link>
-          <Snippet>{link}</Snippet>
+          <Snippet symbol="#" variant="bordered" className="overflow-hidden">{link}</Snippet>
         </Fragment>)
         }
       </div>
