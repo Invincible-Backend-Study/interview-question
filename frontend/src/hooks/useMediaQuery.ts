@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 
 const MOBILE_MEDIA_QUERY = '(max-width: 780px)';
 
@@ -18,5 +18,12 @@ export const useMediaQuery = () => {
     };
   }, []);
 
-  return { isMobile: matches };
+
+  const modalStatement = useMemo<"bottom-center" | "top">(() => matches ? "bottom-center" : "top", [])
+
+
+
+  return { isMobile: matches , modalPlacement: modalStatement};
 };
+
+

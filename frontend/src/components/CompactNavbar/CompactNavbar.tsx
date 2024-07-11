@@ -23,6 +23,7 @@ const CompactNavbar = ({profile}: CompactNavbarProps) => {
   const navigate = useNavigate();
   const {isOpen, onClose, onOpen} = useDisclosure();
   const handleLogout = useCallback(() => logoutMutation.mutate(), [])
+
   return (
     <nav
       className="z-1 flex flex-col items-center w-16 py-4  min-h-screen " style={{
@@ -44,6 +45,7 @@ const CompactNavbar = ({profile}: CompactNavbarProps) => {
 
       <div className={"p-2 flex flex-col items-center"}>
         <ProfileAvatar profile={profile}/>
+
         <Spacer y={5}/>
 
         <Tooltip placement="right" content={"설정"} color={"secondary"}>
@@ -54,6 +56,7 @@ const CompactNavbar = ({profile}: CompactNavbarProps) => {
         </Tooltip>
 
         <Spacer y={5}/>
+
         <Tooltip placement="right" content={"로그아웃"} color={"secondary"}>
           <Button color="danger" isIconOnly onClick={handleLogout}>
             <SlLogout size={20}/>

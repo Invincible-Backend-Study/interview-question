@@ -11,7 +11,7 @@ interface SignupFormProps {
 
 const SignupForm = ({providerId}: SignupFormProps) => {
   const {profile} = useOAuthProfileQuery({providerId});
-  const {memberInfo, updateInputValue, handleSignup} = useSignupForm(profile);
+  const {memberInfo, updateInputValue, handleSignup, isValid} = useSignupForm(profile);
   const signInMutation = useSignInMutation();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const SignupForm = ({providerId}: SignupFormProps) => {
 
   return (
     !profile.isRegistered && (
-      <Card className="p-4 bg-default-100 w-[40vw]" >
+      <Card className="p-4 bg-default-100 w-[40vw] min-w-[310px]" >
         <CardHeader className="flex justify-between ">
           <div className="flex">
             <span className="text-2xl text-success">회원가입</span>
@@ -43,7 +43,14 @@ const SignupForm = ({providerId}: SignupFormProps) => {
             event.preventDefault();
             handleSignup();
           }}>
-          <Input color="primary" placeholder="닉네임" value={memberInfo.nickname} radius="none" onChange={(e) => updateInputValue('nickname', e.target.value)}/>
+          <Input
+          errorMessage="닉네임은 3~20글자 사이로 구성해야 합니다."
+          isInvalid={isValid}
+            color="primary"
+                 placeholder="닉네임"
+                 value={memberInfo.nickname}
+                 radius="none"
+                 onChange={(e) => updateInputValue('nickname', e.target.value)}/>
           <Button type={"submit"}   radius="none">확인</Button>
           </form>
         </CardFooter>

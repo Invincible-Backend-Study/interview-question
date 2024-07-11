@@ -51,7 +51,7 @@ interface InterviewResultViewProps {
 const InterviewResultView = ({interviewId}: InterviewResultViewProps) => {
   const {interviewResult} = useInterviewResultQuery(interviewId);
   return (
-    <div className='container mx-auto py-8'>
+    <div className='container mx-auto py-8 px-3'>
       <h1 className='text-4xl font-bold mb-4'>{interviewResult.title}</h1>
 
       <div className='p-4 rounded shadow mb-8'>
