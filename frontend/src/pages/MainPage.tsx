@@ -42,9 +42,9 @@ export default function(){
       <div className="flex justify-center">
         <div className={`flex flex-wrap gap-6 ${isMobile ? "justify-center" : "justify-start"} min-w-full max-w-screen-lg`}>
           {data?.pages.map((data, index)=> <QuestionSetItemList key={index} questionSetItems={data.content} openInterviewSetting={handleOpenInterviewSettings}/>)}
+          {isLoading && <QuestionSetItemListSkeleton/>}
           <div ref={ref}/>
         </div>
-        {isLoading ? <QuestionSetItemListSkeleton/> : <></>}
       </div>
       <Modal backdrop="opaque"
              isDismissable={false}
