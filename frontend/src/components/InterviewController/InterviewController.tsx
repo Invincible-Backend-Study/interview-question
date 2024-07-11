@@ -16,7 +16,7 @@ const InterviewController = ({onSubmit, onQuit, onPass, disabled, info}: Intervi
   return <div className="flex flex-row-reverse gap-3 p-3">
     <Button color="success" onClick={onSubmit} isLoading={disabled}>
       제출
-      {!isMobile ?? <Kbd keys={["command"]}>s</Kbd>}
+      {isMobile ? <></> :<Kbd keys={["command"]}>s</Kbd>}
     </Button>
 
     <Spacer x={1}/>
@@ -25,11 +25,11 @@ const InterviewController = ({onSubmit, onQuit, onPass, disabled, info}: Intervi
 
     <Button color="danger" onClick={onPass} isLoading={disabled}>
       패스
-      {!isMobile ??<Kbd keys={["command"]}>p</Kbd>}
+      {isMobile ? <></> : <Kbd keys={["command"]}>p</Kbd>}
     </Button>
     <Button onClick={onQuit}>
       그만두기
-      {isMobile ?? <Kbd keys={["command"]}>q</Kbd>}
+      {isMobile ? <></> : <Kbd keys={["command"]}>q</Kbd>}
     </Button>
 
     {!info ?? <Button onClick={info} color={"warning"}>

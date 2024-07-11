@@ -91,8 +91,8 @@ const InterviewHistoryTable = () => {
           </Button>
             </DropdownTrigger>
             <DropdownMenu>
-              <DropdownItem onClick={() => navigate(PATH.INTERVIEW_RESULT(item.interviewId))}>결과 보기</DropdownItem>
-              {item.interviewState === "PROGRESS" ? <DropdownItem onClick={() => navigate(PATH.INTERVIEW(item.interviewId))}>이어서 풀기</DropdownItem> : <></>}
+              <DropdownItem key={"result"} onClick={() => navigate(PATH.INTERVIEW_RESULT(item.interviewId))}>결과 보기</DropdownItem>
+              <DropdownItem key={"resolution"} onClick={() => navigate(PATH.INTERVIEW(item.interviewId))} isDisabled={item.interviewState !== "PROGRESS"}>이어서 풀기</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         )

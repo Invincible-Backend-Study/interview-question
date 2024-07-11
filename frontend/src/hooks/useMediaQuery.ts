@@ -19,7 +19,7 @@ export const useMediaQuery = () => {
   }, []);
 
 
-  const modalStatement = useMemo<"bottom-center" | "top">(() => matches ? "bottom-center" : "top", [])
+  const modalStatement = useMemo<"bottom-center" | "top">(() => matches ? "bottom-center" : "top", [matches])
 
 
 
