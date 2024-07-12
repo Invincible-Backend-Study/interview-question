@@ -10,6 +10,8 @@ import {useCallback, useEffect} from "react";
 import {PATH} from "@/constants/path";
 import {toast} from "sonner";
 import WaitingView from "@/components/WaitingView/WatingView";
+import {useMediaQuery} from "@/hooks/useMediaQuery";
+import InterviewQuestionCompactHistory from "@/components/InterviewQuestionHistory/InterviewQuestionCompactHistory";
 
 
 interface InterviewFormProps{
@@ -30,19 +32,15 @@ const InterviewForm = ({interviewId}: InterviewFormProps) => {
     feedbackWaiting,
     remainTailQuestionCount,
     answer,handleAnswerChange
-  } = useInterviewForm(interviewId);
-
-  const navigator = useNavigate();
-
+  } = useInterviewForm(interviewId); const navigator = useNavigate(); const disclosure = useDisclosure();
+  const {isMobile } = useMediaQuery();
   const quit = useCallback(() => {
     navigator(PATH.MAIN_PAGE)
     toast.info("면접을 일시중답합니다.(다시 풀 수 있습니다)");
   }, [])
 
-
   useShortCut({save: handleSubmit, pass: handlePass, isBlocking:feedbackWaiting, quit});
 
-  const disclosure = useDisclosure();
 
   useEffect(() => {
     disclosure.onOpen();
@@ -50,16 +48,21 @@ const InterviewForm = ({interviewId}: InterviewFormProps) => {
 
   return <>
     <div className="min-h-screen max-h-screen w-full flex ">
-      <div className="w-[20%] p-3" style={{borderRight: border}}>
-        <InterviewQuestionHistory size={interview.size} index={interview.index}/>
+      {!isMobile && <div className="w-[20%] min-w-[200px] p-3" style={{borderRight: border}}>
+          <InterviewQuestionHistory size={interview.size} index={interview.index}/>
       </div>
-
+      }
 
       <div className='min-h-full w-full flex flex-col justify-between' style={{
         borderBottom: border,
         borderLeft: border
       }}>
-        {interviewLoading ? <WaitingView message={"다음 문제로 넘어갑니다"}/> : (
+        {isMobile &&
+            <div>
+                <InterviewQuestionCompactHistory size={interview.size} index={interview.index}/>
+            </div>
+        }
+        {interviewLoading ? <div className="h-full"><WaitingView message={"다음 문제로 넘어갑니다"}/></div>: (
           <>
             <div className='p-3'>
               <InterviewQuestionBoard
@@ -83,7 +86,6 @@ const InterviewForm = ({interviewId}: InterviewFormProps) => {
               <div className="row-span-1 flex flex-col-reverse" >
                 <InterviewController
                   onQuit={quit}
-                  info={disclosure.onOpen}
                   disabled={feedbackWaiting}
                   onSubmit={handleSubmit}
                   onPass={handlePass}

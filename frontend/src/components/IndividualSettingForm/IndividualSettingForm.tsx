@@ -45,11 +45,11 @@ const IndividualSettingForm = ({isOpen}: IndividualSettingFormProps) => {
             설정
           </ModalHeader>
           <ModalBody>
-
             <p className='text-xs'>언어 변경 기능/지원 예정</p>
 
             <Button color='primary' onClick={() => location.assign("https://github.com/invincible-Backend-Study/")}>무백스 Repository 보러가기</Button>
             <Button color='success' onClick={() => location.assign("https://discord.gg/3MEzKMPm")}>무백스 디스코드 참여하기</Button>
+            <Button color='default' onClick={() => location.assign("https://github.com/JaehongDev")}>만든 사람</Button>
 
             <Spacer y={5}/>
             <Divider/>

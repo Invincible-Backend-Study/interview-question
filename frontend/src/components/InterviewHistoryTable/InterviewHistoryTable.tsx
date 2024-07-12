@@ -17,7 +17,6 @@ import {columns} from "./InterviewHistoryTableConstant";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {InterviewState, MyInterview} from "@/types/interview";
 import InterviewHistoryPagination from "@/components/InterviewHistoryTable/InterviewHistoryPagination";
-import InterviewHistoryTableTopContent from "@/components/InterviewHistoryTable/InterviewHistoryTableTopContent";
 import {dateToString} from "@/utils/Date";
 import {HiDotsVertical} from "react-icons/hi";
 import {useMyInterviewQuery} from "@/hooks/api/interview/useMyInterviewQuery";
@@ -66,7 +65,7 @@ const InterviewHistoryTable = () => {
   );
 
   const topContent = React.useMemo(() => {
-    return <InterviewHistoryTableTopContent/>
+    return <></> //<InterviewHistoryTableTopContent/>
   }, [])
 
   const bottomContent = useMemo(() => {
@@ -91,8 +90,10 @@ const InterviewHistoryTable = () => {
             <HiDotsVertical />
           </Button>
             </DropdownTrigger>
-            {item.interviewState === "DONE" && <DropdownMenu><DropdownItem onClick={() => navigate(PATH.INTERVIEW_RESULT(item.interviewId))}>결과 보기</DropdownItem></DropdownMenu>}
-            {item.interviewState === "PROGRESS" && <DropdownMenu><DropdownItem onClick={() => navigate(PATH.INTERVIEW(item.interviewId))}>이어서 풀기</DropdownItem></DropdownMenu>}
+            <DropdownMenu>
+              <DropdownItem key={"result"} onClick={() => navigate(PATH.INTERVIEW_RESULT(item.interviewId))}>결과 보기</DropdownItem>
+              <DropdownItem key={"resolution"} onClick={() => navigate(PATH.INTERVIEW(item.interviewId))} isDisabled={item.interviewState !== "PROGRESS"}>이어서 풀기</DropdownItem>
+            </DropdownMenu>
           </Dropdown>
         )
       case "interviewState":

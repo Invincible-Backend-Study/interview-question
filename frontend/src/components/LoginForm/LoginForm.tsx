@@ -10,7 +10,7 @@ const LoginForm = () => {
 
 
   return (
-    <Card className="p-4 bg-default-100 w-[40vw]">
+    <Card className="p-4 bg-default-100 w-[40vw] min-w-[300px]">
       <CardHeader className="flex justify-between">
         <div className="flex items-center">
           <span className="text-2xl text-success">{AUTH_TEXT.LOGIN}</span>

@@ -14,7 +14,7 @@ export const useSignupForm = (profile: DefaultProfile) => {
   const [memberInfo, setMemberInfo] = useState<MemberInfo>({
     nickname: "",
   });
-
+  const [isValid, setValid] = useState(false);
   const mutation = useSignupMutation();
 
 
@@ -26,6 +26,11 @@ export const useSignupForm = (profile: DefaultProfile) => {
   }, []);
 
   const handleSignup = useCallback(() => {
+    if(memberInfo.nickname.length < 3 || memberInfo.nickname.length > 20){
+      setValid(true);
+      return;
+    }
+    setValid(false);
     mutation.mutate({
       ...memberInfo,
       ...profile
@@ -33,6 +38,6 @@ export const useSignupForm = (profile: DefaultProfile) => {
   }, [memberInfo])
 
   return {
-    memberInfo, updateInputValue, handleSignup
+    memberInfo, updateInputValue, handleSignup, isValid
   }
 }

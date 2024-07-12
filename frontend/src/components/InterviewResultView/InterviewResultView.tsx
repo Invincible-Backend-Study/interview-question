@@ -36,7 +36,7 @@ const InterviewItemBlock = ({id, answer, question, answerState, feedback, score,
       <div className="flex flex-col">
         {referenceLinks.map((link, key) => <Fragment key={key}>
           <Link href={link} key={key}>참고링크{key+1}</Link>
-          <Snippet>{link}</Snippet>
+          <Snippet symbol="#" variant="bordered" className="overflow-hidden">{link}</Snippet>
         </Fragment>)
         }
       </div>
@@ -51,7 +51,7 @@ interface InterviewResultViewProps {
 const InterviewResultView = ({interviewId}: InterviewResultViewProps) => {
   const {interviewResult} = useInterviewResultQuery(interviewId);
   return (
-    <div className='container mx-auto py-8'>
+    <div className='container mx-auto py-8 px-3'>
       <h1 className='text-4xl font-bold mb-4'>{interviewResult.title}</h1>
 
       <div className='p-4 rounded shadow mb-8'>

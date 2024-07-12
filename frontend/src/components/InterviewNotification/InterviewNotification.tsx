@@ -1,4 +1,5 @@
 import {Modal, ModalBody, ModalContent, ModalHeader} from "@nextui-org/react";
+import {useMediaQuery} from "@/hooks/useMediaQuery";
 
 const messages = [
   "새로 고침 혹은 패스 버튼을 누르게 되면 다음 꼬리 질문이 아닌 다음 질문으로 넘어갑니다.",
@@ -18,10 +19,14 @@ interface InterviewNotificationProps{
   isControlled?: boolean;
 }
 const InterviewNotification = (props: InterviewNotificationProps) => {
+  const {modalPlacement} = useMediaQuery();
   return (
     <Modal backdrop="blur"
            {...props}
-           isDismissable={false} isKeyboardDismissDisabled={true} placement={"top"} className={`text-foreground bg-background dark`} >
+           isDismissable={false}
+           isKeyboardDismissDisabled={true}
+           placement={modalPlacement}
+    >
       <ModalContent className={"w-[600px]"}>
         {() => (
           <>
