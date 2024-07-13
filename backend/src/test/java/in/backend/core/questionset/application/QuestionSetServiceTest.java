@@ -20,15 +20,13 @@ class QuestionSetServiceTest extends ImplementLayerTest {
     @Test
     void QuestionSet을_조회하면_포함된_문제가_몇개_인지_알_수_있습니다() {
 
-        given(() -> {
-            questionRepository.saveAll(
-                    QuestionFixture.creates(questionSetRepository.save(QuestionSetFixture.create()), 10)
-            );
+        questionRepository.saveAll(
+                QuestionFixture.creates(questionSetRepository.save(QuestionSetFixture.create()), 10)
+        );
 
-            questionRepository.saveAll(
-                    QuestionFixture.creates(questionSetRepository.save(QuestionSetFixture.create()), 5)
-            );
-        });
+        questionRepository.saveAll(
+                QuestionFixture.creates(questionSetRepository.save(QuestionSetFixture.create()), 5)
+        );
 
         var expected = questionSetService.find(PageRequest.of(0, 2))
                 .toList();

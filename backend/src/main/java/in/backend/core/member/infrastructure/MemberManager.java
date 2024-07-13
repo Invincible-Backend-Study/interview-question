@@ -12,12 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberManager {
     private final MemberReader memberReader;
     private final RefreshTokenWriter refreshTokenWriter;
+    private final MemberRepository memberRepository;
 
     public void widthDraw(Long memberId) {
         var member = memberReader.read(memberId);
 
         member.withDraw();
         refreshTokenWriter.delete(memberId);
+        memberRepository.delete(member);
     }
 
 }

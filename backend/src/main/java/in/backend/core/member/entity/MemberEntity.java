@@ -20,7 +20,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Table(name = "members")
 @SQLRestriction("is_deleted = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLDelete(sql = "UPDATE MemberEntity SET is_deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE MEMBERS SET is_deleted = true WHERE id = ?")
 public class MemberEntity extends BaseEntity {
 
     @Id

@@ -21,20 +21,18 @@ class TailQuestionManagerTest extends ImplementLayerTest {
 
     @Test
     void 꼬리질문에_답변하면_다음_질문을_받습니다() {
-        var tailQuestion = given(() -> {
-            var interviewQuestion = interviewQuestionRepository.save(InterviewQuestionFixture.create(1L, 3));
+        var interviewQuestion = interviewQuestionRepository.save(InterviewQuestionFixture.create(1L, 3));
 
-            interviewQuestion.submit(
-                    AnswerState.COMPLETE,
-                    new AnswerInfo("", 1),
-                    new FeedbackInfo("대충 피드백", "1234", List.of(), 1)
-            );
+        interviewQuestion.submit(
+                AnswerState.COMPLETE,
+                new AnswerInfo("", 1),
+                new FeedbackInfo("대충 피드백", "1234", List.of(), 1)
+        );
 
-            return tailQuestionRepository.save(interviewQuestion.createTailQuestion()
-                    .orElseThrow(IllegalArgumentException::new)
-            );
+        interviewQuestionRepository.save(interviewQuestion);
 
-        });
+        var tailQuestion = tailQuestionRepository.save(interviewQuestion.createTailQuestion()
+                .orElseThrow(IllegalArgumentException::new));
 
         var tailQuestionSubmitResult = tailQuestionManager.submit(TailQuestionSubmitCommand.builder()
                 .interviewQuestionId(tailQuestion.getInterviewQuestionId())
