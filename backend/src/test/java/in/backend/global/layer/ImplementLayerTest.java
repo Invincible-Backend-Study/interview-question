@@ -9,22 +9,18 @@ import in.backend.core.member.infrastructure.MemberRepository;
 import in.backend.core.question.infrastrcuture.QuestionRepository;
 import in.backend.core.question.infrastrcuture.TailQuestionRepository;
 import in.backend.core.questionset.infrastructure.QuestionSetRepository;
+import in.backend.global.utils.DatabaseCleaner;
 import jakarta.persistence.EntityManager;
-import java.util.function.Supplier;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 
-@Transactional
 @SpringBootTest
 @ActiveProfiles("test")
-@Execution(ExecutionMode.SAME_THREAD)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class ImplementLayerTest {
 
@@ -53,21 +49,8 @@ public class ImplementLayerTest {
     protected RefreshTokenRepository refreshTokenRepository;
 
 
-    protected void given(Runnable runnable) {
-        runnable.run();
-        entityManager.flush();
-        entityManager.clear();
-    }
-
-
-    protected <T> T given(Supplier<T> supplier) {
-        var value = supplier.get();
-
-        entityManager.flush();
-        entityManager.clear();
-
-        return value;
-    }
+    @Autowired
+    private DatabaseCleaner databaseCleaner;
 
     protected Long memberId() {
         return visitor().memberId();
@@ -75,6 +58,11 @@ public class ImplementLayerTest {
 
     protected Visitor visitor() {
         return Visitor.member(1L);
+    }
+
+    @AfterEach
+    void teardown() {
+        databaseCleaner.execute();
     }
 
 }

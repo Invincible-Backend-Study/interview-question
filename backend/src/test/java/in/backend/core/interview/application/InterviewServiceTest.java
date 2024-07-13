@@ -25,18 +25,14 @@ class InterviewServiceTest extends ImplementLayerTest {
 
     @Test
     void 인터뷰를_생성하고_현재_문제를_불러오면_첫_번째_질문을_가져옵니다() {
-        var questionSetId = given(() -> {
-            var questionSet = questionSetRepository.save(QuestionSetFixture.create());
-            questionRepository.saveAll(QuestionFixture.creates(questionSet, 10));
-            return questionSet.getId();
-        });
-
-        var interviewId = given(() -> interviewWriter.write(1L, InterviewCreateCommand.builder()
+        var questionSet = questionSetRepository.save(QuestionSetFixture.create());
+        questionRepository.saveAll(QuestionFixture.creates(questionSet, 10));
+        var questionSetId = questionSet.getId();
+        var interviewId = interviewWriter.write(1L, InterviewCreateCommand.builder()
                 .questionSetId(questionSetId)
                 .totalOfProblemCount(5)
                 .tailQuestionDepth(3)
-                .build())
-        );
+                .build());
 
         var interviewInfo = interviewService.loadByCurrentProblem(Visitor.member(1L), interviewId);
 

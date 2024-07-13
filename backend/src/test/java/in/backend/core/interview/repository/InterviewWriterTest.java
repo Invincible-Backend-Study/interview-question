@@ -23,11 +23,9 @@ class InterviewWriterTest extends ImplementLayerTest {
 
     @Test
     void 인터뷰를_생성하면_요청한_개수만큼_질문을_만듭니다() {
-        var questionSetId = given(() -> {
-            var questionSet = questionSetRepository.save(QuestionSetFixture.create());
-            questionRepository.saveAll(QuestionFixture.creates(questionSet, 10));
-            return questionSet.getId();
-        });
+        var questionSet = questionSetRepository.save(QuestionSetFixture.create());
+        questionRepository.saveAll(QuestionFixture.creates(questionSet, 10));
+        var questionSetId = questionSet.getId();
 
         interviewWriter.write(2L, InterviewCreateCommand.builder()
                 .questionSetId(questionSetId)
